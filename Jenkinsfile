@@ -28,7 +28,6 @@ pipeline {
         script {
           openshift.withCluster() {
             // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
-            // running without this will cause jenkins to try with the "default" serviceaccount (which fails)
             openshift.doAs('jenkins-oc-client') {
               echo "${openshift.raw( "version" ).out}"
               echo "In project: ${openshift.project()}"
@@ -37,8 +36,7 @@ pipeline {
                 '--context-dir',
                 './print',
                 '--name',
-                'demo-geomapfish-print',
-                '--follow'
+                'demo-geomapfish-print'
               )
             }
           }
