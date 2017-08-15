@@ -31,10 +31,12 @@ pipeline {
             openshift.doAs('jenkins-oc-client') {
               echo "${openshift.raw( "version" ).out}"
               echo "In project: ${openshift.project()}"
-              openshift.raw(
-                'new-build',
-                './print',
-              )
+              echo "${
+                openshift.raw(
+                  'new-build',
+                  './print',
+                ).out
+              }"
               // openshift.raw(
               //   'start-build',
               //   'demo-geomapfish-print',
