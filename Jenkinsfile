@@ -21,7 +21,7 @@ pipeline {
       }
     }
 
-    stage('build-base') {
+    stage('build-print') {
       // TODO
       steps {
         script {
