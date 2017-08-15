@@ -22,37 +22,41 @@ pipeline {
       }
     }
 
-    stage('build-print-image') {
-      // TODO
+    stage('build-images') {
       steps {
-        script {
-          openshift.withCluster() {
-            // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
-            openshift.doAs('jenkins-oc-client') {
-              echo "${openshift.raw( "version" ).out}"
-              echo "In project: ${openshift.project()}"
-              // echo """${
-              //   openshift.raw(
-              //     'new-build',
-              //     './print',
-              //     '--name',
-              //     'demo-geomapfish-print'
-              //   ).out
-              // }"""
-              openshift.raw(
-                'start-build',
-                'demo-geomapfish-print',
-                '--from-dir',
-                './print',
-                '--wait',
-                '--follow'
-              )
+        parallel (
+            "print" : {
+              script {
+                openshift.withCluster() {
+                  // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
+                  openshift.doAs('jenkins-oc-client') {
+                    echo "${openshift.raw( "version" ).out}"
+                    echo "In project: ${openshift.project()}"
+                    // echo """${
+                    //   openshift.raw(
+                    //     'new-build',
+                    //     './print',
+                    //     '--name',
+                    //     'demo-geomapfish-print'
+                    //   ).out
+                    // }"""
+                    echo """${
+                      openshift.raw(
+                        'start-build',
+                        'demo-geomapfish-print',
+                        '--from-dir',
+                        './print',
+                        '--wait',
+                        '--follow'
+                      )
+                    }"""
+                  }
+                }
+              }
             }
           }
-        }
+        )    
       }
-
-
     }
 
     stage('deploy-staging') {
