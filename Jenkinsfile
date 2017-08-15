@@ -22,7 +22,7 @@ pipeline {
       }
     }
 
-    stage('build-print') {
+    stage('build-print-image') {
       // TODO
       steps {
         script {
@@ -32,11 +32,12 @@ pipeline {
               echo "${openshift.raw( "version" ).out}"
               echo "In project: ${openshift.project()}"
               openshift.raw(
-                'new-build',
-                '--context-dir',
+                'start-build',
+                '--from-dir',
                 './print',
                 '--name',
-                'demo-geomapfish-print'
+                'demo-geomapfish-print',
+                '--follow'
               )
             }
           }
