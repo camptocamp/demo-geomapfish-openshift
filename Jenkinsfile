@@ -36,6 +36,7 @@ pipeline {
                 'demo-geomapfish-print',
                 '--from-dir',
                 './print',
+                '--allow-missing-imagestream-tags=true',
                 '--follow'
               )
             }
