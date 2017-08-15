@@ -11,16 +11,31 @@ pipeline {
   }
 
   stages {
-    stage('build') {
+    stage('build-base') {
       // TODO
     steps {
-        sh 'cd'
-        checkout scm
         sh returnStdout: true, script: 'pwd'
         sh 'rm -rf node_modules || true'
         sh 'ln -s /usr/lib/node_modules .'
         sh returnStdout: true, script: 'make build'
       }
+    }
+
+    stage('build-base') {
+      // TODO
+      steps {
+        script {
+          openshift.withCluster() {
+            // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
+            // running without this will cause jenkins to try with the "default" serviceaccount (which fails)
+            openshift.doAs('jenkins-oc-client') {
+              openshift.raw('get', 'bc')
+            }
+          }
+        }
+      }
+
+
     }
 
     stage('deploy-staging') {
