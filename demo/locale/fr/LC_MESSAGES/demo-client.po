@@ -1,0 +1,931 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  demo-js.pot  #-#-#-#-#\n"
+"#-#-#-#-#  demo-db.pot  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "1 A4 portrait"
+msgstr "A4 portrait"
+
+msgid "2 A4 landscape"
+msgstr "A4 paysage"
+
+msgid "3 A3 portrait"
+msgstr "A3 portrait"
+
+msgid "4 A3 landscape"
+msgstr "A3 paysage"
+
+msgid "Add a layer"
+msgstr "Ajouter une couche"
+
+msgid "Add a sub theme"
+msgstr "Ajouter des données"
+
+msgid "Add a theme"
+msgstr "Ajouter un theme"
+
+msgid "Administration"
+msgstr "Administration"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Background"
+msgstr "Fond de carte"
+
+msgid "Cadastre"
+msgstr "Cadastre"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Coordinate"
+msgstr "Coordonnée"
+
+msgid "Demo"
+msgstr "Démo"
+
+msgid "Desktop Application"
+msgstr "Application bureau"
+
+msgid "Draw & Measure"
+msgstr "Mesure et dessin"
+
+msgid ""
+"Draw a line on the map to display the corresponding elevation profile.\n"
+"                    Use double-click to finish the drawing."
+msgstr ""
+"Dessine une ligne sur la carte pour afficher le profile d'élévation "
+"correspondant.\n"
+"                    Double clique pour finir la ligne."
+
+msgid "Draw profile line"
+msgstr "Dessine la ligne de profile"
+
+msgid "Edit"
+msgstr "Edition"
+
+msgid "Editing"
+msgstr "Edition"
+
+msgid "Elevation (Aster)"
+msgstr "Altitude (Aster)"
+
+msgid "Elevation (SRTM)"
+msgstr "Altitude (SRTM)"
+
+msgid "Enseignement"
+msgstr "Enseignement"
+
+msgid "Enseignement 2"
+msgstr "Enseignement"
+
+msgid "Equipement"
+msgstr "Equipement"
+
+msgid "External"
+msgstr "Externe"
+
+msgid "Filter"
+msgstr "Filtre"
+
+msgid "Filters"
+msgstr "Filtres"
+
+msgid "Gestion des eaux"
+msgstr "Gestion des eaux"
+
+msgid "Group"
+msgstr "Groupe"
+
+msgid "Half query"
+msgstr "Partiellement interogable"
+
+msgid "In order to use the editing tool, you must log in first."
+msgstr "Pour pouvoir éditer vous devez d'abord être connecté."
+
+msgid "Layer with very very very very very long name"
+msgstr "Couche avec un nom très très très très très long"
+
+msgid "Layers"
+msgstr "Couches"
+
+msgid "Length"
+msgstr "Longueur"
+
+msgid "Loading..."
+msgstr "Chargement..."
+
+msgid "Login"
+msgstr "Se connecter"
+
+msgid "Loisirs"
+msgstr "Loisirs"
+
+msgid "Measure tools"
+msgstr "Outils de mesure"
+
+msgid "Mobile Application"
+msgstr "Application mobile"
+
+msgid "Multi-Line pas éditable mais queryable"
+msgstr "Multi-Line pas éditable mais queryable"
+
+msgid "Multi-Point pas éditable mais queryable"
+msgstr "Multi-Point pas éditable mais queryable"
+
+msgid "Multi-Polygon Query pas éditable mais queryable"
+msgstr "Multi-Polygon Query pas éditable mais queryable"
+
+msgid "Multi-Polygon Query2 pas éditable mais queryable"
+msgstr "Multi-Polygon Query2 pas éditable mais queryable"
+
+msgid "OSM functions"
+msgstr "Fonctions OSM"
+
+msgid "OSM functions mixed"
+msgstr "Fonctions OSM mixed"
+
+msgid "OSM map"
+msgstr "Carte OSM"
+
+msgid "OSM map WMS"
+msgstr "Carte OSM WMS"
+
+msgid "ObjectEditing"
+msgstr "Edition d'objet"
+
+msgid "Patrimoine"
+msgstr "Patrimoine"
+
+msgid "Paysage"
+msgstr "Paysage"
+
+msgid "Print"
+msgstr "Impression"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Search…"
+msgstr "Recherche…"
+
+msgid "Share this map"
+msgstr "Partager cette carte"
+
+msgid "Snapping"
+msgstr "Magnétisme"
+
+msgid "Snapping no edge"
+msgstr "Magnétisme sans segment"
+
+msgid "Snapping no vertex"
+msgstr "Magnétisme sans point"
+
+msgid "Snapping tollerance"
+msgstr "Magnétisme avec tollérance"
+
+msgid "Street View"
+msgstr "Street View"
+
+msgid "Swiss grid (LV03)"
+msgstr "Grille suisse (LV03)"
+
+msgid "Test aus Olten"
+msgstr ""
+
+msgid "Theme:"
+msgstr "Thème:"
+
+msgid "Themes"
+msgstr "Thèmes"
+
+msgid "Transport"
+msgstr "Transport"
+
+msgid "Wgs Coord."
+msgstr "Coordonées WGS"
+
+msgid "Wgs Coord. DMS"
+msgstr "Coordonée WGS DMS"
+
+#, fuzzy
+msgid "You're using the mobile application. Check out the"
+msgstr "Vous utilisez la version mobile. Passer à la"
+
+msgid "access"
+msgstr "Accès"
+
+msgid "accommodation"
+msgstr "Hébergement"
+
+msgid "aerialway"
+msgstr "Remontée méchanique"
+
+msgid "amenity"
+msgstr "Equipements"
+
+msgid "asitvd.fond_couleur"
+msgstr "ASIT VD - Fond couleur"
+
+msgid "asitvd.fond_gris"
+msgstr "ASIT VD - Fond gris"
+
+msgid "asitvd.fond_pourortho"
+msgstr "ASIT VD - Fond pour orthophoto"
+
+msgid "aster"
+msgstr "ASTER"
+
+msgid "background"
+msgstr "Fond de carte"
+
+msgid "bank"
+msgstr "Vide"
+
+msgid "barrier"
+msgstr "Barière"
+
+msgid "bench"
+msgstr "Banc"
+
+msgid "bicycle"
+msgstr "Vélo"
+
+msgid "brand"
+msgstr "Marque"
+
+msgid "buffer_stop"
+msgstr "Arrêt tempon"
+
+msgid "building"
+msgstr "Batiment"
+
+msgid "bus_stop"
+msgstr "Arrêt de bus"
+
+msgid "ch.are.alpenkonvention"
+msgstr "Convention des Alpes"
+
+msgid "ch.astra.ausnahmetransportrouten"
+msgstr "Itinéraires convois exceptionnels"
+
+msgid "ch.swisstopo.dreiecksvermaschung"
+msgstr "MN95 Maillage triangulaire"
+
+msgid "ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung"
+msgstr "Classification des roches"
+
+msgid "ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen"
+msgstr "Groupes lithologiques"
+
+msgid "ch.swisstopo.geologie-gravimetrischer_atlas"
+msgstr "Atlas gravimétrique 1:100000"
+
+msgid "cinema"
+msgstr "Cinéma"
+
+msgid "comments"
+msgstr "Commentaires"
+
+msgid "covered"
+msgstr "Couvert"
+
+msgid "crossing"
+msgstr "Intersection"
+
+msgid "datasource"
+msgstr "Source de donnée"
+
+msgid "debug"
+msgstr "Debug"
+
+msgid "denomination"
+msgstr "Informations"
+
+msgid "display_name"
+msgstr "Nom"
+
+msgid "district"
+msgstr "District"
+
+msgid "drinking_water"
+msgstr "Eau potable"
+
+msgid "ele"
+msgstr "Elévation"
+
+msgid "entertainment"
+msgstr "Divertissement"
+
+msgid "filters"
+msgstr "Filtres"
+
+msgid "firestations"
+msgstr "Caserne de pompiers"
+
+msgid "foot"
+msgstr "Foot"
+
+msgid "fountain"
+msgstr "Fontaines"
+
+msgid "fuel"
+msgstr "Station d'essence"
+
+msgid "good"
+msgstr "Correcte"
+
+msgid "height"
+msgstr "Hauteur"
+
+msgid "highway"
+msgstr "Routes"
+
+msgid "hospitals"
+msgstr "Hôpitaux"
+
+msgid "information"
+msgstr "Informations"
+
+msgid "internal_id"
+msgstr "Identifiant externe"
+
+msgid "kind"
+msgstr "Type"
+
+msgid "last_update_timestamp"
+msgstr "Data de mise à jours"
+
+msgid "last_update_user"
+msgstr "User"
+
+msgid "layer"
+msgstr "Couches"
+
+msgid "legend"
+msgstr "Légende"
+
+msgid "leisure"
+msgstr "Loisirs"
+
+msgid "level_crossing"
+msgstr "Passages à niveau"
+
+msgid "line"
+msgstr "Lignes"
+
+msgid "line snap"
+msgstr "Magetisme ligne"
+
+msgid "line snap no edge"
+msgstr "Magetisme ligne sans segment"
+
+msgid "line snap no vertex"
+msgstr "Magetisme ligne sans point"
+
+msgid "line snap tolerance"
+msgstr "Magetisme ligne avec tolerance"
+
+msgid "man_made"
+msgstr "Fabrication humaine"
+
+msgid "map"
+msgstr "Carte"
+
+msgid "motorcar"
+msgstr "Véhicules"
+
+msgid "name"
+msgstr "Nom"
+
+msgid "natural"
+msgstr "Naturel"
+
+msgid "no_wfs"
+msgstr "Pas de WFS"
+
+msgid "northArrow"
+msgstr "Fléche du nord"
+
+msgid "open"
+msgstr "Ouvert"
+
+msgid "operator"
+msgstr "Opérateur"
+
+msgid "osm"
+msgstr "OSM"
+
+msgid "osm_id"
+msgstr "ID OSM"
+
+msgid "osm_open"
+msgstr "Ouverture OSM"
+
+msgid "osm_scale"
+msgstr "Échelles OSM"
+
+msgid "osm_time"
+msgstr "Temps OSM"
+
+msgid "osm_time_d_year_mounth"
+msgstr "Temps OSM caleur année mois"
+
+msgid "osm_time_r_dp"
+msgstr "Temps OSM popup interval"
+
+msgid "osm_time_r_dp_2"
+msgstr "Temps OSM popup interval 2"
+
+msgid "osm_time_r_mounth_year"
+msgstr "Temps OSM interval mois année"
+
+msgid "osm_time_r_s"
+msgstr "Temps OSM curseur interval"
+
+msgid "osm_time_r_year_mounth"
+msgstr "Temps OSM interval année mois"
+
+msgid "osm_time_v_dp"
+msgstr "Temps OSM popup valeur"
+
+msgid "osm_time_v_mounth_year"
+msgstr "Temps OSM valeur mois année"
+
+msgid "osm_time_v_s"
+msgstr "Temps OSM curseur valeur"
+
+msgid "other"
+msgstr "Autres"
+
+msgid "parking"
+msgstr "Parking"
+
+msgid "picnic_site"
+msgstr "Site de picnic"
+
+msgid "place"
+msgstr "Place"
+
+msgid "place_of_worship"
+msgstr "Lieux de culte"
+
+msgid "point"
+msgstr "Point"
+
+msgid "point snap"
+msgstr "Magnétisme point"
+
+msgid "point snap tolerance"
+msgstr "Magnétisme point avec tolérance"
+
+msgid "police"
+msgstr "Police"
+
+msgid "polygon"
+msgstr "Polygon"
+
+msgid "polygon snap"
+msgstr "Magnétisme polygon"
+
+msgid "polygon snap no edge"
+msgstr "Magnétisme polygon sans segment"
+
+msgid "polygon snap no vertex"
+msgstr "Magnétisme polygon sans point"
+
+msgid "polygon snap tolerance"
+msgstr "Magnétisme polygon avec tolerance"
+
+msgid "population"
+msgstr "Population"
+
+msgid "post_box"
+msgstr "Boîte postale"
+
+msgid "post_office"
+msgstr "Poste"
+
+msgid "power"
+msgstr "Energie"
+
+msgid "railway"
+msgstr "Chemins de fer"
+
+msgid "recycling"
+msgstr "Recyclage"
+
+msgid "ref"
+msgstr "Réference"
+
+msgid "religion"
+msgstr "Religion"
+
+msgid "restaurant"
+msgstr "Restaurants"
+
+msgid "scalebar"
+msgstr "Barre d'échelle"
+
+msgid "shop"
+msgstr "Magasin"
+
+msgid "short_name"
+msgstr "Nom court"
+
+msgid "short_name2"
+msgstr "Nom court 2"
+
+msgid "short_name3"
+msgstr "Nom court 3"
+
+msgid "sport"
+msgstr "Sport"
+
+msgid "srtm"
+msgstr "SRTM"
+
+#, fuzzy
+msgid "standard application"
+msgstr "Application bureau"
+
+msgid "surface"
+msgstr "Surface"
+
+msgid "sustenance"
+msgstr "Nouriture"
+
+msgid "test"
+msgstr "Test"
+
+msgid "test2"
+msgstr "Deuxième test"
+
+msgid "timestamp"
+msgstr "Datation"
+
+msgid "title"
+msgstr "Titre"
+
+msgid "tourism"
+msgstr "Tourisme"
+
+msgid "tourism_activity"
+msgstr "Tourisme"
+
+msgid "traffic_signals"
+msgstr "Signaux de trafic"
+
+msgid "turning_circle"
+msgstr "Rond-point interne"
+
+msgid "two_layers"
+msgstr "Deux couches"
+
+msgid "type"
+msgstr "Type"
+
+msgid "waterway"
+msgstr "Cours d'eau"
+
+msgid "wood"
+msgstr "Bois"
+
+#~ msgid "Cluster_BaseFID"
+#~ msgstr "Grappe base FID"
+
+#~ msgid "Cluster_FeatureCount"
+#~ msgstr "Grappe nombre elements"
+
+#~ msgid "Cluster_Group"
+#~ msgstr "Grappe groupe"
+
+#~ msgid "aeroways10"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways11"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways12"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways13"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways14"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways15"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways16"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways17"
+#~ msgstr "Tarmac"
+
+#~ msgid "aeroways18"
+#~ msgstr "Tarmac"
+
+#~ msgid "buildings15"
+#~ msgstr "Batiments"
+
+#~ msgid "buildings16"
+#~ msgstr "Batiments"
+
+#~ msgid "buildings17"
+#~ msgstr "Batiments"
+
+#~ msgid "buildings18"
+#~ msgstr "Batiments"
+
+#~ msgid "cafe"
+#~ msgstr "Café"
+
+#~ msgid "ch.swisstopo.swissnames3d_feature_line"
+#~ msgstr "Noms géographiques swissNAMES3D"
+
+#~ msgid "ch.swisstopo.swissnames3d_feature_point"
+#~ msgstr "Noms géographiques swissNAMES3D"
+
+#~ msgid "ch.swisstopo.swissnames3d_feature_poly"
+#~ msgstr "Noms géographiques swissNAMES3D"
+
+#~ msgid "hotel"
+#~ msgstr "Hôtels"
+
+#~ msgid "landuse10"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse11"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse12"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse13"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse14"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse15"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse16"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse17"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse18"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse4"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse5"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse6"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse7"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse8"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "landuse9"
+#~ msgstr "Utilisation du sol"
+
+#~ msgid "places0"
+#~ msgstr "Places"
+
+#~ msgid "places1"
+#~ msgstr "Places"
+
+#~ msgid "places10"
+#~ msgstr "Places"
+
+#~ msgid "places11"
+#~ msgstr "Places"
+
+#~ msgid "places12"
+#~ msgstr "Places"
+
+#~ msgid "places13"
+#~ msgstr "Places"
+
+#~ msgid "places14"
+#~ msgstr "Places"
+
+#~ msgid "places15"
+#~ msgstr "Places"
+
+#~ msgid "places16"
+#~ msgstr "Places"
+
+#~ msgid "places17"
+#~ msgstr "Places"
+
+#~ msgid "places18"
+#~ msgstr "Places"
+
+#~ msgid "places2"
+#~ msgstr "Places"
+
+#~ msgid "places3"
+#~ msgstr "Places"
+
+#~ msgid "places4"
+#~ msgstr "Places"
+
+#~ msgid "places5"
+#~ msgstr "Places"
+
+#~ msgid "places6"
+#~ msgstr "Places"
+
+#~ msgid "places7"
+#~ msgstr "Places"
+
+#~ msgid "places8"
+#~ msgstr "Places"
+
+#~ msgid "places9"
+#~ msgstr "Places"
+
+#~ msgid "railways10"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways11"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways12"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways13"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways14"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways15"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways16"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways17"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways18"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways8"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "railways9"
+#~ msgstr "Voies ferrées"
+
+#~ msgid "roads10"
+#~ msgstr "Routes"
+
+#~ msgid "roads11"
+#~ msgstr "Routes"
+
+#~ msgid "roads12"
+#~ msgstr "Routes"
+
+#~ msgid "roads13"
+#~ msgstr "Routes"
+
+#~ msgid "roads14"
+#~ msgstr "Routes"
+
+#~ msgid "roads15"
+#~ msgstr "Routes"
+
+#~ msgid "roads16"
+#~ msgstr "Routes"
+
+#~ msgid "roads17"
+#~ msgstr "Routes"
+
+#~ msgid "roads18"
+#~ msgstr "Routes"
+
+#~ msgid "roads5"
+#~ msgstr "Routes"
+
+#~ msgid "roads6"
+#~ msgstr "Routes"
+
+#~ msgid "roads7"
+#~ msgstr "Routes"
+
+#~ msgid "roads8"
+#~ msgstr "Routes"
+
+#~ msgid "roads9"
+#~ msgstr "Routes"
+
+#~ msgid "standard version"
+#~ msgstr "version standard"
+
+#~ msgid "waterarea10"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea11"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea12"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea13"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea14"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea15"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea16"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea17"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea18"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea4"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea5"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea6"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea7"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea8"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterarea9"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways10"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways11"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways12"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways13"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways14"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways15"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways16"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways17"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways18"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways6"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways7"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways8"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "waterways9"
+#~ msgstr "Cours d'eau"
+
+#~ msgid "zoo"
+#~ msgstr "Zoo"

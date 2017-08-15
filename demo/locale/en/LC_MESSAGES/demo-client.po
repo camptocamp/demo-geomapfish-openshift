@@ -1,0 +1,921 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  demo-js.pot  #-#-#-#-#\n"
+"#-#-#-#-#  demo-db.pot  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "1 A4 portrait"
+msgstr "A4 portrait"
+
+msgid "2 A4 landscape"
+msgstr "A4 landscape"
+
+msgid "3 A3 portrait"
+msgstr "A3 portrait"
+
+msgid "4 A3 landscape"
+msgstr "A3 landscape"
+
+msgid "Add a layer"
+msgstr "Add a Layer"
+
+msgid "Add a sub theme"
+msgstr ""
+
+msgid "Add a theme"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Background"
+msgstr ""
+
+msgid "Cadastre"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Coordinate"
+msgstr ""
+
+msgid "Demo"
+msgstr ""
+
+msgid "Desktop Application"
+msgstr ""
+
+msgid "Draw & Measure"
+msgstr ""
+
+msgid ""
+"Draw a line on the map to display the corresponding elevation profile.\n"
+"                    Use double-click to finish the drawing."
+msgstr ""
+
+msgid "Draw profile line"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Editing"
+msgstr ""
+
+msgid "Elevation (Aster)"
+msgstr ""
+
+msgid "Elevation (SRTM)"
+msgstr ""
+
+msgid "Enseignement"
+msgstr "Learning"
+
+msgid "Enseignement 2"
+msgstr "Learning"
+
+msgid "Equipement"
+msgstr ""
+
+msgid "External"
+msgstr ""
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filters"
+msgstr "Filters"
+
+msgid "Gestion des eaux"
+msgstr "Water Management"
+
+msgid "Group"
+msgstr ""
+
+msgid "Half query"
+msgstr ""
+
+msgid "In order to use the editing tool, you must log in first."
+msgstr ""
+
+msgid "Layer with very very very very very long name"
+msgstr ""
+
+msgid "Layers"
+msgstr "Layers"
+
+msgid "Length"
+msgstr ""
+
+msgid "Loading..."
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Loisirs"
+msgstr "Hobbies"
+
+msgid "Measure tools"
+msgstr ""
+
+msgid "Mobile Application"
+msgstr ""
+
+msgid "Multi-Line pas éditable mais queryable"
+msgstr "Multi-Line queryable, non editable"
+
+msgid "Multi-Point pas éditable mais queryable"
+msgstr "Multi-Point queryable, non editable"
+
+msgid "Multi-Polygon Query pas éditable mais queryable"
+msgstr "Multi-Polygon queryable, non editable"
+
+msgid "Multi-Polygon Query2 pas éditable mais queryable"
+msgstr "Multi-Polygon2 queryable, non editable"
+
+msgid "OSM functions"
+msgstr ""
+
+msgid "OSM functions mixed"
+msgstr ""
+
+msgid "OSM map"
+msgstr ""
+
+msgid "OSM map WMS"
+msgstr ""
+
+msgid "ObjectEditing"
+msgstr ""
+
+msgid "Patrimoine"
+msgstr "Heritage"
+
+msgid "Paysage"
+msgstr "Landscape"
+
+msgid "Print"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Search…"
+msgstr ""
+
+msgid "Share this map"
+msgstr ""
+
+msgid "Snapping"
+msgstr ""
+
+msgid "Snapping no edge"
+msgstr ""
+
+msgid "Snapping no vertex"
+msgstr ""
+
+msgid "Snapping tollerance"
+msgstr ""
+
+msgid "Street View"
+msgstr ""
+
+msgid "Swiss grid (LV03)"
+msgstr ""
+
+msgid "Test aus Olten"
+msgstr ""
+
+msgid "Theme:"
+msgstr ""
+
+msgid "Themes"
+msgstr ""
+
+msgid "Transport"
+msgstr ""
+
+msgid "Wgs Coord."
+msgstr ""
+
+msgid "Wgs Coord. DMS"
+msgstr ""
+
+msgid "You're using the mobile application. Check out the"
+msgstr ""
+
+msgid "access"
+msgstr "Access"
+
+msgid "accommodation"
+msgstr "Accommodation"
+
+msgid "aerialway"
+msgstr "Aerialway"
+
+msgid "amenity"
+msgstr "Amenity"
+
+msgid "asitvd.fond_couleur"
+msgstr "ASIT VD - color background"
+
+msgid "asitvd.fond_gris"
+msgstr "ASIT VD - black&white background"
+
+msgid "asitvd.fond_pourortho"
+msgstr "ASIT VD - background for orthophoto"
+
+msgid "aster"
+msgstr "ASTER"
+
+msgid "background"
+msgstr "Background"
+
+msgid "bank"
+msgstr "Bank"
+
+msgid "barrier"
+msgstr "Barrier"
+
+msgid "bench"
+msgstr "Bench"
+
+msgid "bicycle"
+msgstr "Bicycle"
+
+msgid "brand"
+msgstr "Brand"
+
+msgid "buffer_stop"
+msgstr "Buffer stop"
+
+msgid "building"
+msgstr "Building"
+
+msgid "bus_stop"
+msgstr "Bus stop"
+
+msgid "ch.are.alpenkonvention"
+msgstr "Alpine Convention"
+
+msgid "ch.astra.ausnahmetransportrouten"
+msgstr "Cant. routes for exceptional loads"
+
+msgid "ch.swisstopo.dreiecksvermaschung"
+msgstr "LV95 Triangular network"
+
+msgid "ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung"
+msgstr "Classification of rocks"
+
+msgid "ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen"
+msgstr "Main lithological groups"
+
+msgid "ch.swisstopo.geologie-gravimetrischer_atlas"
+msgstr "Gravimetric Atlas 1:100000"
+
+msgid "cinema"
+msgstr "Cinema"
+
+msgid "comments"
+msgstr "Comments"
+
+msgid "covered"
+msgstr "Covered"
+
+msgid "crossing"
+msgstr "Crossing"
+
+msgid "datasource"
+msgstr "Data source"
+
+msgid "debug"
+msgstr "Debug"
+
+msgid "denomination"
+msgstr "Information"
+
+msgid "display_name"
+msgstr "Display name"
+
+msgid "district"
+msgstr "District"
+
+msgid "drinking_water"
+msgstr "Drinking water"
+
+msgid "ele"
+msgstr "Elevation"
+
+msgid "entertainment"
+msgstr "Entertainment"
+
+msgid "filters"
+msgstr "Filters"
+
+msgid "firestations"
+msgstr "Fire stations"
+
+msgid "foot"
+msgstr "Foot"
+
+msgid "fountain"
+msgstr "Fountain"
+
+msgid "fuel"
+msgstr "Fuel"
+
+msgid "good"
+msgstr "Good"
+
+msgid "height"
+msgstr "Height"
+
+msgid "highway"
+msgstr "Highway"
+
+msgid "hospitals"
+msgstr "Hospitals"
+
+msgid "information"
+msgstr "Information"
+
+msgid "internal_id"
+msgstr "Internal ID"
+
+msgid "kind"
+msgstr "Kind"
+
+msgid "last_update_timestamp"
+msgstr "Timestamp"
+
+msgid "last_update_user"
+msgstr "User"
+
+msgid "layer"
+msgstr "Layer"
+
+msgid "legend"
+msgstr "Legend"
+
+msgid "leisure"
+msgstr "Leisure"
+
+msgid "level_crossing"
+msgstr "Level crossing"
+
+msgid "line"
+msgstr "Line"
+
+msgid "line snap"
+msgstr "Line snapping"
+
+msgid "line snap no edge"
+msgstr "Line snapping without edge"
+
+msgid "line snap no vertex"
+msgstr "Line snapping without vertex"
+
+msgid "line snap tolerance"
+msgstr "Line snapping with tolerance"
+
+msgid "man_made"
+msgstr "Man made"
+
+msgid "map"
+msgstr "Map"
+
+msgid "motorcar"
+msgstr "Motorcar"
+
+msgid "name"
+msgstr "Name"
+
+msgid "natural"
+msgstr "Natural"
+
+msgid "no_wfs"
+msgstr "No WFS"
+
+msgid "northArrow"
+msgstr "North arrow"
+
+msgid "open"
+msgstr "Open"
+
+msgid "operator"
+msgstr "Operator"
+
+msgid "osm"
+msgstr "OSM"
+
+msgid "osm_id"
+msgstr "OSM ID"
+
+msgid "osm_open"
+msgstr "OSM open"
+
+msgid "osm_scale"
+msgstr "OSM scale"
+
+msgid "osm_time"
+msgstr "OSM time"
+
+msgid "osm_time_d_year_mounth"
+msgstr "OSM time value year mounth"
+
+msgid "osm_time_r_dp"
+msgstr "OSM time range picker"
+
+msgid "osm_time_r_dp_2"
+msgstr "OSM time range picker 2"
+
+msgid "osm_time_r_mounth_year"
+msgstr "OSM time range mounth year"
+
+msgid "osm_time_r_s"
+msgstr "OSM time range slider"
+
+msgid "osm_time_r_year_mounth"
+msgstr "OSM time range year mounth"
+
+msgid "osm_time_v_dp"
+msgstr "OSM time value picher"
+
+msgid "osm_time_v_mounth_year"
+msgstr "OSM time value mounth year"
+
+msgid "osm_time_v_s"
+msgstr "OSM time value slider"
+
+msgid "other"
+msgstr "Other"
+
+msgid "parking"
+msgstr "Parking"
+
+msgid "picnic_site"
+msgstr "Picnic site"
+
+msgid "place"
+msgstr "Place"
+
+msgid "place_of_worship"
+msgstr "Place of worship"
+
+msgid "point"
+msgstr "Point"
+
+msgid "point snap"
+msgstr "Point snapping"
+
+msgid "point snap tolerance"
+msgstr "Point snapping with tolerance"
+
+msgid "police"
+msgstr "Police"
+
+msgid "polygon"
+msgstr "Polygon"
+
+msgid "polygon snap"
+msgstr "Polygon snapping"
+
+msgid "polygon snap no edge"
+msgstr "Polygon snapping without edge"
+
+msgid "polygon snap no vertex"
+msgstr "Polygon snapping without vertex"
+
+msgid "polygon snap tolerance"
+msgstr "Polygon snapping with tolerance"
+
+msgid "population"
+msgstr "Population"
+
+msgid "post_box"
+msgstr "Post box"
+
+msgid "post_office"
+msgstr "Post office"
+
+msgid "power"
+msgstr "Power"
+
+msgid "railway"
+msgstr "Railway"
+
+msgid "recycling"
+msgstr "Recycling"
+
+msgid "ref"
+msgstr "Ref"
+
+msgid "religion"
+msgstr "Religion"
+
+msgid "restaurant"
+msgstr "Restaurant"
+
+msgid "scalebar"
+msgstr "Scale bar"
+
+msgid "shop"
+msgstr "Shop"
+
+msgid "short_name"
+msgstr "Short name"
+
+msgid "short_name2"
+msgstr "Short name 2"
+
+msgid "short_name3"
+msgstr "Short name 3"
+
+msgid "sport"
+msgstr "Sport"
+
+msgid "srtm"
+msgstr "SRTM"
+
+#, fuzzy
+msgid "standard application"
+msgstr "Standard version"
+
+msgid "surface"
+msgstr "Surface"
+
+msgid "sustenance"
+msgstr "Sustenance"
+
+msgid "test"
+msgstr "Test"
+
+msgid "test2"
+msgstr "Second test"
+
+msgid "timestamp"
+msgstr "Timestamp"
+
+msgid "title"
+msgstr "Title"
+
+msgid "tourism"
+msgstr "Tourism activity"
+
+msgid "tourism_activity"
+msgstr "Tourism activity"
+
+msgid "traffic_signals"
+msgstr "Traffic signals"
+
+msgid "turning_circle"
+msgstr "Turning circle"
+
+msgid "two_layers"
+msgstr "Two layer"
+
+msgid "type"
+msgstr "Type"
+
+msgid "waterway"
+msgstr "Waterway"
+
+msgid "wood"
+msgstr "Wood"
+
+#~ msgid "Cluster_BaseFID"
+#~ msgstr "Cluster Base FID"
+
+#~ msgid "Cluster_FeatureCount"
+#~ msgstr "Cluster Feature Count"
+
+#~ msgid "Cluster_Group"
+#~ msgstr "Cluster Group"
+
+#~ msgid "aeroways10"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways11"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways12"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways13"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways14"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways15"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways16"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways17"
+#~ msgstr "Aeroways"
+
+#~ msgid "aeroways18"
+#~ msgstr "Aeroways"
+
+#~ msgid "alpine_hut"
+#~ msgstr "Alpine hut"
+
+#~ msgid "buildings15"
+#~ msgstr "Buildings"
+
+#~ msgid "buildings16"
+#~ msgstr "Buildings"
+
+#~ msgid "buildings17"
+#~ msgstr "Buildings"
+
+#~ msgid "buildings18"
+#~ msgstr "Buildings"
+
+#~ msgid "cafe"
+#~ msgstr "Café"
+
+#~ msgid "geom"
+#~ msgstr "Geom"
+
+#~ msgid "hotel"
+#~ msgstr "Hotel"
+
+#~ msgid "landuse10"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse11"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse12"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse13"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse14"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse15"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse16"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse17"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse18"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse4"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse5"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse6"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse7"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse8"
+#~ msgstr "Landuse"
+
+#~ msgid "landuse9"
+#~ msgstr "Landuse"
+
+#~ msgid "places0"
+#~ msgstr "Places"
+
+#~ msgid "places1"
+#~ msgstr "Places"
+
+#~ msgid "places10"
+#~ msgstr "Places"
+
+#~ msgid "places11"
+#~ msgstr "Places"
+
+#~ msgid "places12"
+#~ msgstr "Places"
+
+#~ msgid "places13"
+#~ msgstr "Places"
+
+#~ msgid "places14"
+#~ msgstr "Places"
+
+#~ msgid "places15"
+#~ msgstr "Places"
+
+#~ msgid "places16"
+#~ msgstr "Places"
+
+#~ msgid "places17"
+#~ msgstr "Places"
+
+#~ msgid "places18"
+#~ msgstr "Places"
+
+#~ msgid "places2"
+#~ msgstr "Places"
+
+#~ msgid "places3"
+#~ msgstr "Places"
+
+#~ msgid "places4"
+#~ msgstr "Places"
+
+#~ msgid "places5"
+#~ msgstr "Places"
+
+#~ msgid "places6"
+#~ msgstr "Places"
+
+#~ msgid "places7"
+#~ msgstr "Places"
+
+#~ msgid "places8"
+#~ msgstr "Places"
+
+#~ msgid "places9"
+#~ msgstr "Places"
+
+#~ msgid "railways10"
+#~ msgstr "Railways"
+
+#~ msgid "railways11"
+#~ msgstr "Railways"
+
+#~ msgid "railways12"
+#~ msgstr "Railways"
+
+#~ msgid "railways13"
+#~ msgstr "Railways"
+
+#~ msgid "railways14"
+#~ msgstr "Railways"
+
+#~ msgid "railways15"
+#~ msgstr "Railways"
+
+#~ msgid "railways16"
+#~ msgstr "Railways"
+
+#~ msgid "railways17"
+#~ msgstr "Railways"
+
+#~ msgid "railways18"
+#~ msgstr "Railways"
+
+#~ msgid "railways8"
+#~ msgstr "Railways"
+
+#~ msgid "railways9"
+#~ msgstr "Railways"
+
+#~ msgid "roads10"
+#~ msgstr "Roads"
+
+#~ msgid "roads11"
+#~ msgstr "Roads"
+
+#~ msgid "roads12"
+#~ msgstr "Roads"
+
+#~ msgid "roads13"
+#~ msgstr "Roads"
+
+#~ msgid "roads14"
+#~ msgstr "Roads"
+
+#~ msgid "roads15"
+#~ msgstr "Roads"
+
+#~ msgid "roads16"
+#~ msgstr "Roads"
+
+#~ msgid "roads17"
+#~ msgstr "Roads"
+
+#~ msgid "roads18"
+#~ msgstr "Roads"
+
+#~ msgid "roads5"
+#~ msgstr "Roads"
+
+#~ msgid "roads6"
+#~ msgstr "Roads"
+
+#~ msgid "roads7"
+#~ msgstr "Roads"
+
+#~ msgid "roads8"
+#~ msgstr "Roads"
+
+#~ msgid "roads9"
+#~ msgstr "Roads"
+
+#~ msgid "waterarea10"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea11"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea12"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea13"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea14"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea15"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea16"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea17"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea18"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea4"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea5"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea6"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea7"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea8"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterarea9"
+#~ msgstr "Waterarea"
+
+#~ msgid "waterways10"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways11"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways12"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways13"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways14"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways15"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways16"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways17"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways18"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways6"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways7"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways8"
+#~ msgstr "Waterways"
+
+#~ msgid "waterways9"
+#~ msgstr "Waterways"
+
+#~ msgid "zoo"
+#~ msgstr "Zoo"
