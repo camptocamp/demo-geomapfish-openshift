@@ -11,16 +11,16 @@ pipeline {
   }
 
   stages {
-  //   stage('build-base') {
-  //     // TODO
-  //   steps {
-  //       sh returnStdout: true, script: 'pwd'
-  //       sh 'rm -rf node_modules || true'
-  //       sh 'ln -s /usr/lib/node_modules .'
-  //       sh 'export DEBUG=1'
-  //       sh returnStdout: true, script: 'make build'
-  //     }
-  //   }
+    stage('build-base') {
+      // TODO
+    steps {
+        sh returnStdout: true, script: 'pwd'
+        sh 'rm -rf node_modules || true'
+        sh 'ln -s /usr/lib/node_modules .'
+        sh 'export DEBUG=1'
+        sh returnStdout: true, script: 'make build'
+      }
+    }
 
     stage('build-print') {
       // TODO
@@ -40,7 +40,6 @@ pipeline {
                 'demo-geomapfish-print',
                 '--follow'
               )
-              oc new-build https://github.com/rhcarvalho/chained-builds-ex/ --context-dir=app -D $'FROM rhcarvalho/httphostname\nENV ok=1' -o yaml
             }
           }
         }
