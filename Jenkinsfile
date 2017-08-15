@@ -17,7 +17,7 @@ pipeline {
         sh returnStdout: true, script: 'pwd'
         sh 'rm -rf node_modules || true'
         sh 'ln -s /usr/lib/node_modules .'
-        sh returnStdout: true, script: 'make build'
+        sh returnStdout: true, script: 'make build 2>&1'
       }
     }
 
