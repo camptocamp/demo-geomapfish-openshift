@@ -10,7 +10,7 @@ pipeline {
     label 'geomapfish'
   }
 
-  // stages {
+  stages {
   //   stage('build-base') {
   //     // TODO
   //   steps {
