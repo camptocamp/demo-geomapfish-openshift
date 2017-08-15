@@ -32,6 +32,15 @@ pipeline {
             openshift.doAs('jenkins-oc-client') {
               echo "${openshift.raw( "version" ).out}"
               echo "In project: ${openshift.project()}"
+              openshift.raw(
+                'new-build',
+                '--context-dir',
+                './print',
+                '--name',
+                'demo-geomapfish-print',
+                '--follow'
+              )
+              oc new-build https://github.com/rhcarvalho/chained-builds-ex/ --context-dir=app -D $'FROM rhcarvalho/httphostname\nENV ok=1' -o yaml
             }
           }
         }
