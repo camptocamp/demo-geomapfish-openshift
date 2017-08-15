@@ -54,6 +54,35 @@ pipeline {
               }
             }
           }
+          "mapserver" : {
+            script {
+              openshift.withCluster() {
+                // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
+                openshift.doAs('jenkins-oc-client') {
+                  echo "${openshift.raw( "version" ).out}"
+                  echo "In project: ${openshift.project()}"
+                  echo """${
+                    openshift.raw(
+                      'new-build',
+                      './mapserver',
+                      '--name',
+                      'demo-geomapfish-mapserver'
+                    ).out
+                  }"""
+                  // echo """${
+                  //   openshift.raw(
+                  //     'start-build',
+                  //     'demo-geomapfish-mapserver',
+                  //     '--from-dir',
+                  //     './print',
+                  //     '--wait',
+                  //     '--follow'
+                  //   )
+                  // }"""
+                }
+              }
+            }
+          }
         )    
       }
     }
