@@ -32,13 +32,17 @@ pipeline {
               echo "${openshift.raw( "version" ).out}"
               echo "In project: ${openshift.project()}"
               openshift.raw(
-                'start-build',
-                'demo-geomapfish-print',
-                '--from-dir',
+                'new-build',
                 './print',
-                '--allow-missing-imagestream-tags=true',
-                '--follow'
               )
+              // openshift.raw(
+              //   'start-build',
+              //   'demo-geomapfish-print',
+              //   '--from-dir',
+              //   './print',
+              //   '--wait',
+              //   '--follow'
+              // )
             }
           }
         }
