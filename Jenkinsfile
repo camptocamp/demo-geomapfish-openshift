@@ -33,10 +33,9 @@ pipeline {
               echo "In project: ${openshift.project()}"
               openshift.raw(
                 'start-build',
+                'demo-geomapfish-print',
                 '--from-dir',
                 './print',
-                '--name',
-                'demo-geomapfish-print',
                 '--follow'
               )
             }
