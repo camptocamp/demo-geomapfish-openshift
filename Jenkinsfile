@@ -53,7 +53,7 @@ pipeline {
                 }
               }
             }
-          }
+          },
           "mapserver" : {
             script {
               openshift.withCluster() {
