@@ -6,4 +6,4 @@ RUN pip install --no-cache-dir --editable /app/
 
 EXPOSE 80
 
-CMD ["/app/gunicorn-run"]
+ENTRYPOINT ["/app/gunicorn-run"]
