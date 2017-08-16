@@ -31,8 +31,10 @@ pipeline {
               echo "In project: ${openshift.project()}"
             }
           } 
-        } 
+        }
+      } 
 
+      steps {
         parallel (
           "print" : {
             script {
@@ -78,9 +80,9 @@ pipeline {
                   echo """${
                     openshift.raw(
                       'start-build',
-                      'demo-geomapfish-mapserver',
+                      'demo-geomapfish-wsgi',
                       '--from-dir',
-                      './mapserver',
+                      './',
                       '--wait',
                       '--follow'
                     ).out
