@@ -86,21 +86,25 @@ pipeline {
 
     stage('deploy-staging') {
       steps {
-        sh 'ls'
-        // TODO
+        echo "TODO"
+      }
+    }
+
+    stage('test-staging') {
+      steps {
+        echo "TODO"
       }
     }
 
     stage('deploy-preprod') {
       steps {
-        sh 'pwd'
-        // TODO
+        echo "TODO"
       }
     }
 
     stage('deploy-prod') {
       steps {
-        sh 'pwd'
+        echo "TODO"
       }
     }
   }
