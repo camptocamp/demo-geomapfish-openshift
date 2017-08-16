@@ -1,19 +1,19 @@
 # A compose file for development.
 version: '2'
 services:
-  print:
+  demo-geomapfish-print:
     image: demo-geomapfish-print:latest
     links:
       - mapserver
     #ports:
     #  - 8280:8080
 
-  mapserver:
+  demo-geomapfish-mapserver:
     image: demo-geomapfish-mapserver:latest
     #ports:
     #  - 8380:80
 
-  wsgi:
+  demo-geomapfish-wsgi:
     image: demo-geomapfish-wsgi:latest
     links:
       - mapserver
