@@ -24,17 +24,6 @@ pipeline {
 
     stage('build-images') {
       steps {
-        script {
-          openshift.withCluster() {
-            openshift.doAs('jenkins-oc-client') {
-              echo "${openshift.raw( "version" ).out}"
-              echo "In project: ${openshift.project()}"
-            }
-          } 
-        }
-      } 
-
-      steps {
         parallel (
           "print" : {
             script {
