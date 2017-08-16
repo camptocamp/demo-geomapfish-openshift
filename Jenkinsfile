@@ -48,7 +48,7 @@ pipeline {
                       './print',
                       '--wait',
                       '--follow'
-                    )
+                    ).out
                   }"""
                 }
               }
@@ -77,7 +77,7 @@ pipeline {
                       './mapserver',
                       '--wait',
                       '--follow'
-                    )
+                    ).out
                   }"""
                 }
               }
