@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  creationTimestamp: null
+  name: demo-geomapfish-wsgi
+spec:
+  host: demo-geomapfish-wsgi-ci.cloudapp.openshift-poc.camptocamp.com
+  port:
+    targetPort: "8480"
+  to:
+    kind: Service
+    name: demo-geomapfish-wsgi
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2017-08-16T14:45:41Z
+      status: "True"
+      type: Admitted
+    host: demo-geomapfish-wsgi-ci.cloudapp.openshift-poc.camptocamp.com
+    routerName: router
+    wildcardPolicy: None
