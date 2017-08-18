@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+  creationTimestamp: null
+  labels:
+    build: jenkins-custom
+  name: jenkins-custom
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: jenkins-custom:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: git@github.com:camptocamp/openshift-jenkins-custom.git
+    sourceSecret:
+      name: ssh-github-c2c-ci-secret
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: jenkins:2
+        namespace: openshift
+    type: Source
+  triggers:
+  - github:
+      secret: BiytwSHcXCBM24KoEVp7
+    type: GitHub
+  - generic:
+      secret: WKSXkcFLcK0U_hYrSusQ
+    type: Generic
+  - type: ConfigChange
+  - imageChange: {}
+    type: ImageChange
+status:
+  lastVersion: 0

@@ -1,26 +1,10 @@
 apiVersion: v1
 kind: ImageStream
 metadata:
-  annotations:
-    openshift.io/image.dockerRepositoryCheck: 2017-08-16T09:11:02Z
-  creationTimestamp: null
-  generation: 2
   labels:
-    build: demo-geomapfish-mapserver
-  name: mapserver
+    build: demo-geomapfish-mapserver-from
+  name: demo-geomapfish-mapserver-from
 spec:
-  lookupPolicy:
-    local: false
+  dockerImageRepository: "docker.io/camptocamp/mapserver"
   tags:
-  - annotations:
-      openshift.io/imported-from: camptocamp/mapserver:latest
-    from:
-      kind: DockerImage
-      name: 172.30.26.108:5000/ci/mapserver:latest
-    generation: 2
-    importPolicy: {}
-    name: latest
-    referencePolicy:
-      type: Source
-status:
-  dockerImageRepository: ""
+    - name: latest

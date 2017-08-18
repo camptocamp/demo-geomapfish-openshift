@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  labels:
+    build: jenkins-slave-geomapfish
+  name: jenkins-slave-geomapfish
+spec: {}

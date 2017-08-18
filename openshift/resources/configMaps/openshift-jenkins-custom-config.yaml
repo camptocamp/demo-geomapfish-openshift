@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: openshift-jenkins-custom-config
+data:
+  jenkins.mail.address: jenkins@camptocamp.com
+  jenkins.mail.smtp.user: jenkins@camptocamp.com
+  jenkins.mail.smtp.host: smtp.gmail.com
+  jenkins.mail.smtp.port: '465'
+  jenkins.mail.smtp.ssl: 'true'

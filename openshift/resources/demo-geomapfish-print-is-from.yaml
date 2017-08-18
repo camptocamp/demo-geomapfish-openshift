@@ -1,23 +1,10 @@
 apiVersion: v1
 kind: ImageStream
 metadata:
-  annotations:
-    openshift.io/image.dockerRepositoryCheck: 2017-08-15T17:54:59Z
-  creationTimestamp: null
-  generation: 1
-  name: mapfish_print
+  labels:
+    build: demo-geomapfish-print-from
+  name: demo-geomapfish-print-from
 spec:
-  lookupPolicy:
-    local: false
+  dockerImageRepository: "docker.io/camptocamp/mapfish_print"
   tags:
-  - annotations: null
-    from:
-      kind: DockerImage
-      name: 172.30.26.108:5000/ci/mapfish_print:3.10.0
-    generation: 1
-    importPolicy: {}
-    name: 3.10.0
-    referencePolicy:
-      type: Source
-status:
-  dockerImageRepository: ""
+    - name: 3.10.0

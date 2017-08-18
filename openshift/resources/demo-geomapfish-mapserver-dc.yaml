@@ -27,7 +27,7 @@ spec:
         io.kompose.service: demo-geomapfish-mapserver
     spec:
       containers:
-      - image: 172.30.26.108:5000/ci/demo-geomapfish-mapserver@sha256:36d17d82368a5435cd4b7309804b67c1576491cf190943e42aa0376f5244c01b
+      - image: demo-geomapfish-mapserver
         imagePullPolicy: IfNotPresent
         name: demo-geomapfish-mapserver
         resources: {}
@@ -39,8 +39,7 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
   test: false
-  triggers:
-  - type: ConfigChange
+  triggers: []
 status:
   availableReplicas: 0
   latestVersion: 0

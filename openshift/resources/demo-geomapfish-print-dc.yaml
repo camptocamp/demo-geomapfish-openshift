@@ -27,7 +27,7 @@ spec:
         io.kompose.service: demo-geomapfish-print
     spec:
       containers:
-      - image: 172.30.26.108:5000/ci/demo-geomapfish-print@sha256:a110ab182abd0c3a5fe732702aa7abac219f9f3bd2229a15b09d581c2a58ad68
+      - image: demo-geomapfish-print
         imagePullPolicy: IfNotPresent
         name: demo-geomapfish-print
         resources: {}
@@ -39,8 +39,7 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
   test: false
-  triggers:
-  - type: ConfigChange
+  triggers: []
 status:
   availableReplicas: 0
   latestVersion: 0
