@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  creationTimestamp: null
+  generation: 1
+  labels:
+    io.kompose.service: demo-geomapfish-mapserver
+  name: demo-geomapfish-mapserver
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: demo-geomapfish-mapserver
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: demo-geomapfish-mapserver
+    spec:
+      containers:
+      - image: 172.30.26.108:5000/ci/demo-geomapfish-mapserver@sha256:36d17d82368a5435cd4b7309804b67c1576491cf190943e42aa0376f5244c01b
+        imagePullPolicy: IfNotPresent
+        name: demo-geomapfish-mapserver
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0

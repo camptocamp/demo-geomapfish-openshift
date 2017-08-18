@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  creationTimestamp: null
+  generation: 1
+  labels:
+    io.kompose.service: demo-geomapfish-wsgi
+  name: demo-geomapfish-wsgi
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: demo-geomapfish-wsgi
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: demo-geomapfish-wsgi
+    spec:
+      containers:
+      - image: 172.30.26.108:5000/ci/demo-geomapfish-wsgi@sha256:84333e2585a50a668f503747c57da14a0c01ad66dca0d728b9c498f5bf3defec
+        imagePullPolicy: IfNotPresent
+        name: demo-geomapfish-wsgi
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0

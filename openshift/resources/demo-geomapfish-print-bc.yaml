@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: null
+  labels:
+    build: demo-geomapfish-print
+  name: demo-geomapfish-print
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: demo-geomapfish-print:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/camptocamp/demo-geomapfish-openshift.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: mapfish_print:3.10.0
+    type: Docker
+  triggers:
+  - github:
+      secret: c8hOf4BSmEpOJhhd19-f
+    type: GitHub
+  - generic:
+      secret: _WdbA31psz3UWeq9Ol2p
+    type: Generic
+status:
+  lastVersion: 0
