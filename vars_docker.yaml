@@ -2,7 +2,7 @@ extends: vars_demo.yaml
 
 vars:
     # the visible host name
-    dbhost: db
+    dbhost: geomapfish-demo.camptocamp.net
 #    mapserver_connection: '{{getenv "DB_CONNECTION"}}'
 
 update_paths:
