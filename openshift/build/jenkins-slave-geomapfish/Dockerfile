@@ -30,6 +30,9 @@ RUN apt-get update && \
     apt-get install -y wget curl git gettext lsof ca-certificates && \
     apt-get clean
 
+# Copy the bins & entrypoint
+ADD contrib/bin/* /usr/local/bin/
+
 # Create jenkins-user
 RUN useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
             -c "Default Application User" default
@@ -53,7 +56,7 @@ RUN curl -sSLO https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION
   && mv linux-amd64/helm /usr/local/bin/helm \
   && chmod +x /usr/local/bin/helm \
   && mkdir -p $HOME/.helm/plugins \
-  && chown 1001:1001 $HOME/.helm \
+  && fix-permissions $HOME/.helm \
   && rm -rf linux-amd64 \
   && rm -f helm-$HELM_VERSION-linux-amd64.tar.gz
 
@@ -62,21 +65,14 @@ RUN helm plugin install https://github.com/technosophos/helm-template
 
 # Modify access to needed resource as this will run as user 1001
 RUN chmod 660 /etc/passwd && \
-    chown :1001 /etc/passwd && \
-    chmod -R 770 /etc/alternatives && \
-    chown -R :1001 /etc/alternatives && \
-    chmod -R 770 /var/lib/dpkg/alternatives && \
-    chown -R :1001 /var/lib/dpkg/alternatives && \
-    chmod -R 770 /usr/lib/jvm && \
-    chown -R :1001 /usr/lib/jvm && \
-    chmod 770 /usr/bin && \
-    chown :1001 /usr/bin && \
-    chmod 770 /usr/share/man/man1 && \
-    chown :1001 /usr/share/man/man1 && \
-    chown -R 1001: /usr/lib/node_modules
-
-# Copy the entrypoint
-ADD contrib/bin/* /usr/local/bin/
+    fix-permissions /etc/passwd && \
+    fix-permissions /etc/alternatives && \
+    fix-permissions /var/lib/dpkg/alternatives && \
+    fix-permissions /usr/lib/jvm && \
+    fix-permissions /usr/bin && \
+    fix-permissions /usr/local/bin && \
+    fix-permissions /usr/share/man/man1 && \
+    fix-permissions /usr/lib/node_modules
 
 # Run as 1001
 USER 1001
