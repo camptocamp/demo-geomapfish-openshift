@@ -3,19 +3,23 @@
 // // Load shared library
 // @Library('github.com/camptocamp/c2c-pipeline-library@master') import static com.camptocamp.utils.*
 
+podTemplate(label: 'geomapfish', cloud: 'kubernetes', containers: [
+    containerTemplate(
+        name: 'jnlp',
+        image: 'openshift-jenkins-slave-geomapfish:latest',
+        ttyEnabled: true,
+        command: '',
+        privileged: false,
+        alwaysPullImage: false,
+        workingDir: '/tmp',
+        args: '${computer.jnlpmac} ${computer.name}'
+    )
+  ]
+)
+
 pipeline {
   agent {
-    kubernetes {
-      label 'geomapfish'
-      containerTemplate {
-        name 'jnlp'
-        image 'geomapfish-cicd/openshift-jenkins-slave-geomapfish'
-        ttyEnabled true
-        command ''
-        args '${computer.jnlpmac} ${computer.name}'
-        workingDir '/tmp'
-      }
-    }
+    label 'geomapfish'
   }
 
   stages {
