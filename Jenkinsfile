@@ -29,7 +29,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     }
 
     stage('build-images') {
-      steps {
         parallel (
           "print" : {
             openshift.withCluster() {
@@ -81,31 +80,22 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             }
           }
         )    
-      }
     }
 
     stage('deploy-staging') {
-      steps {
         echo "TODO"
-      }
     }
 
     stage('test-staging') {
-      steps {
         echo "TODO"
-      }
     }
 
     stage('deploy-preprod') {
-      steps {
         echo "TODO"
-      }
     }
 
     stage('deploy-prod') {
-      steps {
         echo "TODO"
-      }
     }
   }
 }
