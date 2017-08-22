@@ -19,13 +19,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
   node('geomapfish'){
 
     stage('build-base') {
-      steps {
         sh returnStdout: true, script: 'pwd'
         sh 'rm -rf node_modules || true'
         sh 'ln -s /usr/lib/node_modules .'
         sh 'export DEBUG=1'
         sh returnStdout: true, script: 'make build'
-      }
     }
 
     stage('build-images') {
