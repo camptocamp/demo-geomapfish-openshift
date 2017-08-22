@@ -6,7 +6,7 @@
 podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
-        image: 'jenkins-slave-geomapfish:latest',
+        image: '	172.30.1.1:5000/geomapfish-cicd/jenkins-slave-geomapfish',
         ttyEnabled: true,
         command: '',
         privileged: false,
