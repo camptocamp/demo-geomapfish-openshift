@@ -10,7 +10,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: jenkins-slave-geomapfish:latest
+      name: jenkins-slave-geomapfish
   postCommit: {}
   resources: {}
   runPolicy: Serial
@@ -22,6 +22,7 @@ spec:
   strategy:
     dockerStrategy:
       forcePull: true
+      noCache: true
     type: Docker
   triggers:
   - github:
