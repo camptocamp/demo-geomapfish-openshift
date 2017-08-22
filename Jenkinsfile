@@ -3,7 +3,7 @@
 // // Load shared library
 // @Library('github.com/camptocamp/c2c-pipeline-library@master') import static com.camptocamp.utils.*
 
-podTemplate(label: 'geomapfish', cloud: 'kubernetes', containers: [
+podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
         image: 'openshift-jenkins-slave-geomapfish:latest',
