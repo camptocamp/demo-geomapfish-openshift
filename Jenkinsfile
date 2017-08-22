@@ -97,4 +97,4 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         echo "TODO"
     }
   }
-// }
+}
