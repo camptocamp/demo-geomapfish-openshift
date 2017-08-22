@@ -40,7 +40,7 @@ source /usr/local/bin/configure-slave
 set -e
 
 # if `docker run` has 2 or more arguments the user is passing jenkins launcher arguments
-if [[ $# -gt 1 ]]; then
+#if [[ $# -gt 1 ]]; then
   JAR="${JENKINS_HOME}/remoting.jar"
   PARAMS=""
 
@@ -113,6 +113,6 @@ if [[ $# -gt 1 ]]; then
                                  $JAVA_MAX_HEAP_PARAM $JAVA_CORE_LIMIT $JAVA_DIAGNOSTICS \
                                  $JAVA_OPTS -cp $JAR hudson.remoting.jnlp.Main \
                                  -headless $PARAMS "$@"
-fi
+#fi
 
 exec "$@"
