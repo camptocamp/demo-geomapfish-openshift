@@ -2,7 +2,7 @@ FROM camptocamp/geomapfish_build:jenkins
 
 MAINTAINER Marc Sutter <marc.sutter@camptocamp.com>
 
-ENV HOME=/home/1001 \
+ENV HOME=/home/jenkins-slave \
     JAVA_HOME=/usr/lib/jvm/java-8-oracle \
     PATH=$JAVA_HOME/bin:$PATH \
     JENKINS_SWARM_VERSION=3.4 \
