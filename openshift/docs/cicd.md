@@ -47,3 +47,14 @@ before building.
 oc create -f ./openshift/resources/jenkins
 ````
 
+# Remove
+
+```
+oc delete routes.route.openshift.io "jenkins"
+oc delete persistentvolumeclaims "jenkins"
+oc delete deploymentconfigs.apps.openshift.io "jenkins"
+oc delete serviceaccounts "jenkins"
+oc delete rolebinding.authorization.openshift.io "jenkins_edit"
+oc delete services "jenkins-jnlp"
+oc delete services "jenkins"
+```

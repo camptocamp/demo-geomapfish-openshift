@@ -5,6 +5,5 @@ metadata:
   labels:
     build: geomapfish_build
   name: geomapfish_build
-spec:
-  dockerImageRepository: "docker.io/camptocamp/geomapfish_build"
+spec: {}
 
