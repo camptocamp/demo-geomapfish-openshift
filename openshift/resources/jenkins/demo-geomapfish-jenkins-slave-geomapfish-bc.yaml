@@ -10,7 +10,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: jenkins-slave-geomapfish
+      name: jenkins-slave-geomapfish:latest
   postCommit: {}
   resources: {}
   runPolicy: Serial

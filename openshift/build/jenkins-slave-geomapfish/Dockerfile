@@ -2,7 +2,7 @@ FROM camptocamp/geomapfish_build:jenkins
 
 MAINTAINER Marc Sutter <marc.sutter@camptocamp.com>
 
-ENV HOME=/home/jenkins-slave \
+ENV HOME=/home/1001 \
     JAVA_HOME=/usr/lib/jvm/java-8-oracle \
     PATH=$JAVA_HOME/bin:$PATH \
     JENKINS_SWARM_VERSION=3.4 \
@@ -31,7 +31,8 @@ RUN apt-get update && \
     apt-get clean
 
 # Create jenkins-user
-RUN useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave
+RUN useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
+            -c "Default Application User" default
 
 # Install openshift client
 RUN curl -sSLO https://github.com/openshift/origin/releases/download/$OPENSHIFT_CLIENT_VERSION/openshift-origin-client-tools-$OPENSHIFT_CLIENT_VERSION-$OPENSHIFT_CLIENT_VERSION_TAG-linux-64bit.tar.gz \
@@ -52,33 +53,33 @@ RUN curl -sSLO https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION
   && mv linux-amd64/helm /usr/local/bin/helm \
   && chmod +x /usr/local/bin/helm \
   && mkdir -p $HOME/.helm/plugins \
-  && chown jenkins-slave:jenkins-slave $HOME/.helm \
+  && chown 1001:1001 $HOME/.helm \
   && rm -rf linux-amd64 \
   && rm -f helm-$HELM_VERSION-linux-amd64.tar.gz
 
 # Install helm template plugin
 RUN helm plugin install https://github.com/technosophos/helm-template
 
-# Modify access to needed resource as this will run as user jenkins-slave
+# Modify access to needed resource as this will run as user 1001
 RUN chmod 660 /etc/passwd && \
-    chown :jenkins-slave /etc/passwd && \
+    chown :1001 /etc/passwd && \
     chmod -R 770 /etc/alternatives && \
-    chown -R :jenkins-slave /etc/alternatives && \
+    chown -R :1001 /etc/alternatives && \
     chmod -R 770 /var/lib/dpkg/alternatives && \
-    chown -R :jenkins-slave /var/lib/dpkg/alternatives && \
+    chown -R :1001 /var/lib/dpkg/alternatives && \
     chmod -R 770 /usr/lib/jvm && \
-    chown -R :jenkins-slave /usr/lib/jvm && \
+    chown -R :1001 /usr/lib/jvm && \
     chmod 770 /usr/bin && \
-    chown :jenkins-slave /usr/bin && \
+    chown :1001 /usr/bin && \
     chmod 770 /usr/share/man/man1 && \
-    chown :jenkins-slave /usr/share/man/man1 && \
-    chown -R jenkins-slave: /usr/lib/node_modules
+    chown :1001 /usr/share/man/man1 && \
+    chown -R 1001: /usr/lib/node_modules
 
 # Copy the entrypoint
 ADD contrib/bin/* /usr/local/bin/
 
-# Run as jenkins-slave
-USER jenkins-slave
+# Run as 1001
+USER 1001
 
 # Run the Jenkins JNLP client
 ENTRYPOINT ["/usr/local/bin/run-jnlp-client"]
