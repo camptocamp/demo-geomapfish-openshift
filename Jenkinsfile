@@ -5,9 +5,17 @@
 
 pipeline {
   agent {
-    // run with the custom geomapfish slave
-    // will dynamically provision a new pod on Openshift
-    label 'geomapfish'
+    kubernetes {
+      label 'geomapfish'
+      containerTemplate {
+        name 'jnlp'
+        image 'geomapfish-cicd/openshift-jenkins-slave-geomapfish'
+        ttyEnabled true
+        command ''
+        args '${computer.jnlpmac} ${computer.name}'
+        workingDir '/tmp'
+      }
+    }
   }
 
   stages {
