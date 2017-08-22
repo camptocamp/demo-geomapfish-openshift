@@ -3,8 +3,8 @@
 First Install addons
 
 ```bash
-minishift addons install --defaults
-minishift addons enable admin-user
+
+
 ```
 
 start minishift
@@ -36,3 +36,4 @@ You have access to the following projects and can switch between them with 'oc p
 
 Using project "myproject".
 ```
+

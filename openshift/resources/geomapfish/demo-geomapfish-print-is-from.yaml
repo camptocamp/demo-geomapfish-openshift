@@ -1,11 +1,8 @@
 apiVersion: v1
 kind: ImageStream
 metadata:
-  namespace: geomapfish-dev
+  namespace: geomapfish-stage
   labels:
     build: demo-geomapfish-print-from
   name: demo-geomapfish-print-from
-spec:
-  dockerImageRepository: "docker.io/camptocamp/mapfish_print"
-  tags:
-    - name: 3.10.0
+spec: {}

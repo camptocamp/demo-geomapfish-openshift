@@ -47,6 +47,20 @@ before building.
 oc create -f ./openshift/resources/jenkins
 ````
 
+```
+oc create -f ./openshift/resources/pipeline
+````
+
+# Jenkins token
+
+```
+oc describe sa jenkins
+```
+
+```
+oc describe secret jenkins-token-w3qln
+```
+
 # Remove
 
 ```
