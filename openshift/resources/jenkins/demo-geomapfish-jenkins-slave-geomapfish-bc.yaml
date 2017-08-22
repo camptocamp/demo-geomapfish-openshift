@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: BuildConfig
 metadata:
+  namespace: geomapfish-cicd
   labels:
     build: openshift-jenkins-slave-geomapfish
   name: openshift-jenkins-slave-geomapfish
@@ -9,7 +10,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: openshift-jenkins-slave-geomapfish:latest
+      name: jenkins-slave-geomapfish:latest
   postCommit: {}
   resources: {}
   runPolicy: Serial
@@ -20,9 +21,7 @@ spec:
     type: Git
   strategy:
     dockerStrategy:
-      from:
-        kind: ImageStreamTag
-        name: geomapfish_build:jenkins
+      forcePull: true
     type: Docker
   triggers:
   - github:

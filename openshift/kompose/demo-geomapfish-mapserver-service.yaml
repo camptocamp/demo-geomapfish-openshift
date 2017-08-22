@@ -6,15 +6,11 @@ metadata:
     io.kompose.service: demo-geomapfish-mapserver
   name: demo-geomapfish-mapserver
 spec:
-  clusterIP: None
   ports:
-  - name: headless
-    port: 55555
-    protocol: TCP
-    targetPort: 55555
+  - name: "8380"
+    port: 8380
+    targetPort: 80
   selector:
     io.kompose.service: demo-geomapfish-mapserver
-  sessionAffinity: None
-  type: ClusterIP
 status:
   loadBalancer: {}

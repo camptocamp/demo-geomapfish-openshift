@@ -1,0 +1,72 @@
+apiVersion: v1
+items:
+- apiVersion: project.openshift.io/v1
+  kind: Project
+  metadata:
+    annotations:
+      openshift.io/description: Geomapfish DEV
+      openshift.io/display-name: geomapfish-dev
+    creationTimestamp: null
+    name: geomapfish-dev
+  spec: {}
+  status: {}
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:geomapfish-dev
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: system:image-pullers
+    namespace: geomapfish-dev
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:geomapfish-dev
+  userNames: null
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: system:image-builders
+    namespace: geomapfish-dev
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+  userNames:
+  - system:serviceaccount:geomapfish-dev:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: system:deployers
+    namespace: geomapfish-dev
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+  userNames:
+  - system:serviceaccount:geomapfish-dev:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: admin
+    namespace: geomapfish-dev
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: admin
+  userNames:
+  - admin
+kind: List
+metadata: {}
+resourceVersion: ""
+selfLink: ""

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ImageStream
 metadata:
+  namespace: geomapfish-cicd
   labels:
-    build: demo-geomapfish-wsgi-from
-  name: demo-geomapfish-wsgi-from
+    build: geomapfish_build
+  name: geomapfish_build
 spec:
   dockerImageRepository: "docker.io/camptocamp/geomapfish_build"
-  tags:
-    - name: jenkins
+

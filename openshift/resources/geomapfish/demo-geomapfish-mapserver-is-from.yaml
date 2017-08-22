@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ImageStream
 metadata:
+  namespace: geomapfish-dev
   labels:
     build: demo-geomapfish-mapserver-from
   name: demo-geomapfish-mapserver-from
@@ -8,3 +9,4 @@ spec:
   dockerImageRepository: "docker.io/camptocamp/mapserver"
   tags:
     - name: latest
+

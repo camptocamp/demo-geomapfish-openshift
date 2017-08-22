@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: BuildConfig
 metadata:
-  creationTimestamp: null
+  namespace: geomapfish-dev
   labels:
-    build: demo-geomapfish-wsgi
-  name: demo-geomapfish-wsgi
+    build: demo-geomapfish-print
+  name: demo-geomapfish-print
 spec:
   nodeSelector: null
   output:
     to:
       kind: ImageStreamTag
-      name: demo-geomapfish-wsgi:latest
+      name: demo-geomapfish-print:latest
   postCommit: {}
   resources: {}
   runPolicy: Serial
@@ -22,14 +22,14 @@ spec:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: geomapfish_build:jenkins
+        name: demo-geomapfish-print-from:3.10.0
     type: Docker
   triggers:
   - github:
-      secret: x9DoOG5jUoZFGhQtOzSC
+      secret: c8hOf4BSmEpOJhhd19-f
     type: GitHub
   - generic:
-      secret: EDFBv2r2raCkYty296o9
+      secret: _WdbA31psz3UWeq9Ol2p
     type: Generic
 status:
   lastVersion: 0

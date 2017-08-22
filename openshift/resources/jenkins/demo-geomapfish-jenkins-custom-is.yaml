@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ImageStream
 metadata:
+  namespace: geomapfish-cicd
   labels:
     build: jenkins-custom
   name: jenkins-custom

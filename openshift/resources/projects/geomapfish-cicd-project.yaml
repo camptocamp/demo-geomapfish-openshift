@@ -1,0 +1,72 @@
+apiVersion: v1
+items:
+- apiVersion: project.openshift.io/v1
+  kind: Project
+  metadata:
+    annotations:
+      openshift.io/description: Geomapfish CICD
+      openshift.io/display-name: geomapfish-cicd
+    creationTimestamp: null
+    name: geomapfish-cicd
+  spec: {}
+  status: {}
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:geomapfish-cicd
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: system:image-pullers
+    namespace: geomapfish-cicd
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:geomapfish-cicd
+  userNames: null
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: system:image-builders
+    namespace: geomapfish-cicd
+  roleRef:
+    name: system:image-builder
+  subjects:
+  - kind: ServiceAccount
+    name: builder
+  userNames:
+  - system:serviceaccount:geomapfish-cicd:builder
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: system:deployers
+    namespace: geomapfish-cicd
+  roleRef:
+    name: system:deployer
+  subjects:
+  - kind: ServiceAccount
+    name: deployer
+  userNames:
+  - system:serviceaccount:geomapfish-cicd:deployer
+- apiVersion: authorization.openshift.io/v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: null
+    name: admin
+    namespace: geomapfish-cicd
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: admin
+  userNames:
+  - admin
+kind: List
+metadata: {}
+resourceVersion: ""
+selfLink: ""

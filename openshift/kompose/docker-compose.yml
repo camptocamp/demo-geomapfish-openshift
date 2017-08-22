@@ -5,13 +5,13 @@ services:
     image: demo-geomapfish-print:latest
     links:
       - mapserver
-    #ports:
-    #  - 8280:8080
+    ports:
+      - 8280:8080
 
   demo-geomapfish-mapserver:
     image: demo-geomapfish-mapserver:latest
-    #ports:
-    #  - 8380:80
+    ports:
+      - 8380:80
 
   demo-geomapfish-wsgi:
     image: demo-geomapfish-wsgi:latest

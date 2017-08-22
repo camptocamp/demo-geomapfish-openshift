@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  namespace: geomapfish-dev
+  creationTimestamp: null
+  labels:
+    io.kompose.service: demo-geomapfish-mapserver
+  name: demo-geomapfish-mapserver
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: demo-geomapfish-mapserver
+  strategy:
+    resources: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: demo-geomapfish-mapserver
+    spec:
+      containers:
+      - image: ' '
+        name: demo-geomapfish-mapserver
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - demo-geomapfish-mapserver
+      from:
+        kind: ImageStreamTag
+        name: demo-geomapfish-mapserver:latest
+    type: ImageChange
+status: {}

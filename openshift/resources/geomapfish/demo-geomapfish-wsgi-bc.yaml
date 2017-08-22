@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: BuildConfig
 metadata:
+  namespace: geomapfish-dev
   labels:
-    build: demo-geomapfish-mapserver
-  name: demo-geomapfish-mapserver
+    build: demo-geomapfish-wsgi
+  name: demo-geomapfish-wsgi
 spec:
   nodeSelector: null
   output:
     to:
       kind: ImageStreamTag
-      name: demo-geomapfish-mapserver:latest
+      name: demo-geomapfish-wsgi:latest
   postCommit: {}
   resources: {}
   runPolicy: Serial
@@ -21,7 +22,7 @@ spec:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: mapserver:latest
+        name: geomapfish_build:jenkins
     type: Docker
   triggers:
   - github:
@@ -30,3 +31,5 @@ spec:
   - generic:
       secret: EDFBv2r2raCkYty296o9
     type: Generic
+status:
+  lastVersion: 0

@@ -9,11 +9,8 @@ spec:
   ports:
   - name: "8480"
     port: 8480
-    protocol: TCP
     targetPort: 80
   selector:
     io.kompose.service: demo-geomapfish-wsgi
-  sessionAffinity: None
-  type: ClusterIP
 status:
   loadBalancer: {}
