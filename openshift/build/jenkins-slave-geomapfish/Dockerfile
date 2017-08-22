@@ -56,7 +56,6 @@ RUN curl -sSLO https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION
   && mv linux-amd64/helm /usr/local/bin/helm \
   && chmod +x /usr/local/bin/helm \
   && mkdir -p $HOME/.helm/plugins \
-  && fix-permissions $HOME/.helm \
   && rm -rf linux-amd64 \
   && rm -f helm-$HELM_VERSION-linux-amd64.tar.gz
 
@@ -65,6 +64,7 @@ RUN helm plugin install https://github.com/technosophos/helm-template
 
 # Modify access to needed resource as this will run as user 1001
 RUN chmod 660 /etc/passwd && \
+    fix-permissions $HOME && \
     fix-permissions /etc/passwd && \
     fix-permissions /etc/alternatives && \
     fix-permissions /var/lib/dpkg/alternatives && \
