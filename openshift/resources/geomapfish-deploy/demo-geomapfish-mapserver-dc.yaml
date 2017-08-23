@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: demo-geomapfish-mapserver
-        image: 'geomapfish-cicd/demo-geomapfish-mapserver'
+        image: 'geomapfish-cicd/demo-geomapfish-mapserver:latest'
         ports:
         - containerPort: 80
         resources: {}

@@ -29,8 +29,8 @@
 
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
-        openshift.withProject( 'geomapfish-cicd' )
-          stage('build-images') {
+        stage('build-images') {
+          openshift.withProject( 'geomapfish-cicd' ){
             parallel (
               "print" : {
                 echo "Active project: ${openshift.project()}"
@@ -81,15 +81,18 @@
             )    
           }
         }
-        openshift.withProject( 'geomapfish-stage' )
-          stage('deploy-staging') {
-              echo "TODO"
-          }
-
-          stage('test-staging') {
-              echo "TODO"
+        stage('deploy-staging') {
+          openshift.withProject( 'geomapfish-stage' ){
+            openshiftDeploy(depCfg: 'demo-geomapfish-print')
+            openshiftDeploy(depCfg: 'demo-geomapfish-mapserver')
+            openshiftDeploy(depCfg: 'demo-geomapfish-wsgi')
           }
         }
+
+        stage('test-staging') {
+          echo "TODO"
+        }
+
         stage('deploy-preprod') {
             echo "TODO"
         }
@@ -97,6 +100,7 @@
         stage('deploy-prod') {
             echo "TODO"
         }
+
       }
     }
   }
