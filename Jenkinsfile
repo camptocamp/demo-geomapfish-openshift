@@ -31,6 +31,7 @@
         parallel (
           "print" : {
             openshift.withCluster() {
+              echo "Hello from mycluster's default project: ${openshift.project()}"
               openshift.doAs('jenkins-oc-client') {
                 echo """${
                   openshift.raw(
