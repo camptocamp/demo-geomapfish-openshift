@@ -29,64 +29,67 @@
 
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
-        stage('build-images') {
-          parallel (
-            "print" : {
-              echo "Active project: ${openshift.project()}"
+        openshift.withProject( 'geomapfish-cicd' )
+          stage('build-images') {
+            parallel (
+              "print" : {
+                echo "Active project: ${openshift.project()}"
 
-              echo """${
+                echo """${
+                    openshift.raw(
+                      'status'
+                    ).out
+                  }"""
+
+                echo """${
                   openshift.raw(
-                    'status'
+                    'start-build',
+                    'demo-geomapfish-print',
+                    '--from-dir',
+                    '-n',
+                    'geomapfish-cicd',
+                    './print',
+                    '--wait',
+                    '--follow'
                   ).out
                 }"""
-
-              echo """${
-                openshift.raw(
-                  'start-build',
-                  'demo-geomapfish-print',
-                  '--from-dir',
-                  '-n',
-                  'geomapfish-cicd',
-                  './print',
-                  '--wait',
-                  '--follow'
-                ).out
-              }"""
-            },
-            // "mapserver" : {
-            //   echo """${
-            //     openshift.raw(
-            //       'start-build',
-            //       'demo-geomapfish-mapserver',
-            //       '--from-dir',
-            //       './mapserver',
-            //       '--wait',
-            //       '--follow'
-            //     ).out
-            //   }"""
-            // },
-            // "wsgi" : {
-            //   echo """${
-            //     openshift.raw(
-            //       'start-build',
-            //       'demo-geomapfish-wsgi',
-            //       '--from-dir',
-            //       './',
-            //       '--wait',
-            //       '--follow'
-            //     ).out
-            //   }"""
-            // }
-          )    
-        }  
-        stage('deploy-staging') {
-            echo "TODO"
+              },
+              "mapserver" : {
+                echo """${
+                  openshift.raw(
+                    'start-build',
+                    'demo-geomapfish-mapserver',
+                    '--from-dir',
+                    './mapserver',
+                    '--wait',
+                    '--follow'
+                  ).out
+                }"""
+              },
+              "wsgi" : {
+                echo """${
+                  openshift.raw(
+                    'start-build',
+                    'demo-geomapfish-wsgi',
+                    '--from-dir',
+                    './',
+                    '--wait',
+                    '--follow'
+                  ).out
+                }"""
+              }
+            )    
+          }
         }
+        openshift.withProject( 'geomapfish-stage' )
+          stage('deploy-staging') {
+              echo "TODO"
+          }
 
-        stage('test-staging') {
-            echo "TODO"
+          stage('test-staging') {
+              echo "TODO"
+          }
         }
-
         stage('deploy-preprod') {
             echo "TODO"
         }
