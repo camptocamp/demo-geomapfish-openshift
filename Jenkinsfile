@@ -30,16 +30,16 @@
     stage('build-images') {
         parallel (
           "print" : {
-            openshift.withCluster('openshift') {
+            openshift.withCluster() {
               echo "Active project: ${openshift.project()}"
 
-              openshift.doAs('jenkins-oc-client') {
+              // openshift.doAs('jenkins-oc-client') {
                echo """${
                   openshift.raw(
                     'status'
                   ).out
                 }"""
-              }
+              // }
 
               openshift.doAs('jenkins-oc-client') {
                 echo """${
