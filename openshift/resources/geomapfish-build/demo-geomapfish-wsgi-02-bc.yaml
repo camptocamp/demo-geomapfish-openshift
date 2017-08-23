@@ -28,5 +28,3 @@ spec:
   - generic:
       secret: EDFBv2r2raCkYty296o9
     type: Generic
-status:
-  lastVersion: 0

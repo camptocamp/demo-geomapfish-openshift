@@ -28,5 +28,3 @@ spec:
   - generic:
       secret: _WdbA31psz3UWeq9Ol2p
     type: Generic
-status:
-  lastVersion: 0

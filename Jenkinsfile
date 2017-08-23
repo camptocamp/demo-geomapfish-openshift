@@ -38,9 +38,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     'demo-geomapfish-print',
                     '--from-dir',
                     './print',
-                    '-n',
-                    'geomapfish-stage',
-                    '--wai  t',
+                    '--wait',
                     '--follow'
                   ).out
                 }"""
@@ -57,8 +55,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     'demo-geomapfish-mapserver',
                     '--from-dir',
                     './mapserver',
-                    '-n',
-                    'geomapfish-stage',
                     '--wait',
                     '--follow'
                   ).out
@@ -75,8 +71,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     'demo-geomapfish-wsgi',
                     '--from-dir',
                     './',
-                    '-n',
-                    'geomapfish-stage',
                     '--wait',
                     '--follow'
                   ).out

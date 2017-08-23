@@ -6,8 +6,8 @@ metadata:
     openshift.io/generated-by: OpenShiftNewBuild
   creationTimestamp: null
   labels:
-    build: demo-geomapfish
-  name: demo-geomapfish
+    build: demo-geomapfish-pipeline
+  name: demo-geomapfish-pipeline
 spec:
   nodeSelector: null
   output: {}
@@ -27,4 +27,3 @@ spec:
   - generic:
       secret: IQ7g393nJfjQNpiU0hsr
     type: Generic
-  - type: ConfigChange
