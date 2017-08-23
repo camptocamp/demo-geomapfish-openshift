@@ -61,6 +61,9 @@ oc describe sa jenkins
 oc describe secret jenkins-token-w3qln
 ```
 
+```
+ oc policy add-role-to-user edit system:serviceaccount:geomapfish-cicd:jenkins -n geomapfish-cicd
+```
 # Remove
 
 ```
