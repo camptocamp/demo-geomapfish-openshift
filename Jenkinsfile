@@ -27,86 +27,73 @@
     //     sh returnStdout: true, script: 'make build'
     // }
 
-    stage('build-images') {
-        parallel (
-          "print" : {
-            openshift.withCluster() {
+    openshift.withCluster() {
+      openshift.doAs('jenkins-oc-client') {
+        stage('build-images') {
+          parallel (
+            "print" : {
               echo "Active project: ${openshift.project()}"
 
-              // openshift.doAs('jenkins-oc-client') {
-               echo """${
+              echo """${
                   openshift.raw(
                     'status'
                   ).out
                 }"""
-              // }
 
-              openshift.doAs('jenkins-oc-client') {
-                echo """${
-                  openshift.raw(
-                    'start-build',
-                    'demo-geomapfish-print',
-                    '--from-dir',
-                    '-n',
-                    'geomapfish-cicd',
-                    './print',
-                    '--wait',
-                    '--follow'
-                  ).out
-                }"""
-              }
+              echo """${
+                openshift.raw(
+                  'start-build',
+                  'demo-geomapfish-print',
+                  '--from-dir',
+                  '-n',
+                  'geomapfish-cicd',
+                  './print',
+                  '--wait',
+                  '--follow'
+                ).out
+              }"""
+            },
+            "mapserver" : {
+              echo """${
+                openshift.raw(
+                  'start-build',
+                  'demo-geomapfish-mapserver',
+                  '--from-dir',
+                  './mapserver',
+                  '--wait',
+                  '--follow'
+                ).out
+              }"""
+            },
+            "wsgi" : {
+              echo """${
+                openshift.raw(
+                  'start-build',
+                  'demo-geomapfish-wsgi',
+                  '--from-dir',
+                  './',
+                  '--wait',
+                  '--follow'
+                ).out
+              }"""
             }
-          },
-          "mapserver" : {
-            openshift.withCluster() {
-              // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
-              openshift.doAs('jenkins-oc-client') {
-                echo """${
-                  openshift.raw(
-                    'start-build',
-                    'demo-geomapfish-mapserver',
-                    '--from-dir',
-                    './mapserver',
-                    '--wait',
-                    '--follow'
-                  ).out
-                }"""
-              }
-            }
-          },
-          "wsgi" : {
-            openshift.withCluster() {
-              openshift.doAs('jenkins-oc-client') {
-                echo """${
-                  openshift.raw(
-                    'start-build',
-                    'demo-geomapfish-wsgi',
-                    '--from-dir',
-                    './',
-                    '--wait',
-                    '--follow'
-                  ).out
-                }"""
-              }
-            }
-          }
-        )    
-    }
+          )    
+        }  
+        stage('deploy-staging') {
+            echo "TODO"
+        }
 
-    stage('deploy-staging') {
-        echo "TODO"
-    }
+        stage('test-staging') {
+            echo "TODO"
+        }
 
-    stage('test-staging') {
-        echo "TODO"
-    }
+        stage('deploy-preprod') {
+            echo "TODO"
+        }
 
-    stage('deploy-preprod') {
-        echo "TODO"
-    }
-
-    stage('deploy-prod') {
-        echo "TODO"
+        stage('deploy-prod') {
+            echo "TODO"
+        }
+      }
     }
   }
-// }
