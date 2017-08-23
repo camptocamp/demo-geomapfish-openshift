@@ -30,7 +30,11 @@
     stage('build-images') {
         parallel (
           "print" : {
-            openshift.withCluster() {
+            openshiftBuild(
+              bldCfg: 'demo-geomapfish-print'
+            )
+
+            openshift.withCluster('openshift') {
               echo "Hello from mycluster's default project: ${openshift.project()}"
               openshift.doAs('jenkins-oc-client') {
                echo """${
