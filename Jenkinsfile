@@ -53,30 +53,30 @@
                 ).out
               }"""
             },
-            "mapserver" : {
-              echo """${
-                openshift.raw(
-                  'start-build',
-                  'demo-geomapfish-mapserver',
-                  '--from-dir',
-                  './mapserver',
-                  '--wait',
-                  '--follow'
-                ).out
-              }"""
-            },
-            "wsgi" : {
-              echo """${
-                openshift.raw(
-                  'start-build',
-                  'demo-geomapfish-wsgi',
-                  '--from-dir',
-                  './',
-                  '--wait',
-                  '--follow'
-                ).out
-              }"""
-            }
+            // "mapserver" : {
+            //   echo """${
+            //     openshift.raw(
+            //       'start-build',
+            //       'demo-geomapfish-mapserver',
+            //       '--from-dir',
+            //       './mapserver',
+            //       '--wait',
+            //       '--follow'
+            //     ).out
+            //   }"""
+            // },
+            // "wsgi" : {
+            //   echo """${
+            //     openshift.raw(
+            //       'start-build',
+            //       'demo-geomapfish-wsgi',
+            //       '--from-dir',
+            //       './',
+            //       '--wait',
+            //       '--follow'
+            //     ).out
+            //   }"""
+            // }
           )    
         }  
         stage('deploy-staging') {
