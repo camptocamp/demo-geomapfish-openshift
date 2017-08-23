@@ -25,14 +25,4 @@ spec:
         resources: {}
       restartPolicy: Always
   test: false
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - demo-geomapfish-wsgi
-      from:
-        kind: ImageStreamTag
-        name: demo-geomapfish-wsgi:latest
-    type: ImageChange
-status: {}
+  triggers: {}

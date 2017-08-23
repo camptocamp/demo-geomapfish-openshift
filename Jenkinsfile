@@ -46,8 +46,6 @@
                     'start-build',
                     'demo-geomapfish-print',
                     '--from-dir',
-                    '-n',
-                    'geomapfish-cicd',
                     './print',
                     '--wait',
                     '--follow'

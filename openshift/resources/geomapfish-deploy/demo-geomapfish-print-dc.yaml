@@ -18,21 +18,11 @@ spec:
         io.kompose.service: demo-geomapfish-print
     spec:
       containers:
-      - name: demo-geomapfish-mapserver
+      - name: demo-geomapfish-print
         image: 'geomapfish-cicd/demo-geomapfish-print:latest'
         ports:
         - containerPort: 8080
         resources: {}
       restartPolicy: Always
   test: false
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - demo-geomapfish-print
-      from:
-        kind: ImageStreamTag
-        name: demo-geomapfish-print:latest
-    type: ImageChange
-status: {}
+  triggers: {}
