@@ -40,7 +40,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     './print',
                     '-n',
                     'geomapfish-stage',
-                    '--wait',
+                    '--wai  t',
                     '--follow'
                   ).out
                 }"""
