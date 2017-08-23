@@ -19,8 +19,7 @@ spec:
         io.kompose.service: demo-geomapfish-mapserver
     spec:
       containers:
-      - image: ' '
-        name: demo-geomapfish-mapserver
+      - image: 'geomapfish-cicd/demo-geomapfish-mapserver'
         ports:
         - containerPort: 80
         resources: {}

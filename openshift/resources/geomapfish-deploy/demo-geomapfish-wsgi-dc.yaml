@@ -18,8 +18,7 @@ spec:
         io.kompose.service: demo-geomapfish-wsgi
     spec:
       containers:
-      - image: ' '
-        name: demo-geomapfish-wsgi
+      - image: 'geomapfish-cicd/demo-geomapfish-wsgi'
         ports:
         - containerPort: 80
         resources: {}

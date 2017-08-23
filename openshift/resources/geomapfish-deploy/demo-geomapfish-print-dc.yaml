@@ -18,8 +18,7 @@ spec:
         io.kompose.service: demo-geomapfish-print
     spec:
       containers:
-      - image: ' '
-        name: demo-geomapfish-print
+      - image: 'geomapfish-cicd/demo-geomapfish-print'
         ports:
         - containerPort: 8080
         resources: {}
