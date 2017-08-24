@@ -97,8 +97,8 @@
         }
 
         stage('test-staging') {
-          sh 'curl https://demo-geomapfish-wsgi.geomapfish-stage.svc:8480/wsgi/check_collector?'
-          sh 'curl https://demo-geomapfish-wsgi.geomapfish-stage.svc:8480/wsgi/check_collector?type=all'
+          sh 'curl http://demo-geomapfish-wsgi.geomapfish-stage.svc:8480/check_collector?'
+          sh 'curl http://demo-geomapfish-wsgi.geomapfish-stage.svc:8480/check_collector?type=all'
         }
 
         stage('deploy-preprod') {
