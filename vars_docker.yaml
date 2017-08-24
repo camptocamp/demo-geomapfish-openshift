@@ -17,4 +17,4 @@ runtime_environment:
 - servers.mapserver
 - print_url
 - dbsessions.osm.url
-- sqlalchemy.url
+- sqlalchemy\.url
