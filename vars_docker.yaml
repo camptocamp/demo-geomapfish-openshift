@@ -5,5 +5,16 @@ vars:
     dbhost: geomapfish-demo.camptocamp.net
 #    mapserver_connection: '{{getenv "DB_CONNECTION"}}'
 
+    servers:
+        mapserver: MAPSERVER_URL
+    print_url: PRINT_URL_PRINT_DEMO
+    sqlalchemy.url: PG_DEMO_CONN_STRING
+
 update_paths:
 - mapserverproxy
+
+runtime_environment:
+- server.mapserver
+- print_url
+- dbsessions.osm.url
+- sqlalchemy\.url
