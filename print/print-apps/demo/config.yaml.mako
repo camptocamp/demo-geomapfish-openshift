@@ -75,8 +75,8 @@ templates:
         - !prepareLegend
             template: legend.jrxml
         - !createNorthArrow {}
-        - !createScalebar {}
         - !createMap {}
+        - !createScalebar {}
         - !createDataSource
             processors:
             - !prepareTable
