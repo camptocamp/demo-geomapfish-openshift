@@ -261,11 +261,6 @@ vars:
         code_source: /var/www/vhosts/gmfusrgrp_version2-geomapfishtest/private/{instanceid}/demo_geomapfish
         code_destination: /var/www/vhosts/geomapfish-demo/private/{instanceid}
 
-    servers:
-        mapserver: MAPSERVER_URL
-    print_url: PRINT_URL_PRINT_DEMO
-    sqlalchemy.url: PG_DEMO_CONN_STRING
-
 update_paths:
 - shortener
 - authtkt
@@ -273,9 +268,3 @@ update_paths:
 - checker.defaults
 - admin_interface.available_functionalities
 - functionalities.available_in_templates
-
-runtime_environment:
-- server.mapserver
-- print_url
-- dbsessions.osm.url
-- sqlalchemy\.url
