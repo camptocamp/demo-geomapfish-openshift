@@ -430,7 +430,7 @@ vars:
               display: PhantomJS generic test
         hosts:
         - display: demo
-          url: '{web_protocol}://{host}/{instanceid}/wsgi'
+          url: 'http://demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/'
           type: main
 
     # What web page is authorized to use the API
