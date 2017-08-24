@@ -14,7 +14,7 @@ update_paths:
 - mapserverproxy
 
 runtime_environment:
-- server.mapserver
+- servers.mapserver
 - print_url
 - dbsessions.osm.url
 - sqlalchemy\.url
