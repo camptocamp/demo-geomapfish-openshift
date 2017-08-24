@@ -86,7 +86,7 @@ vars:
 
     dbsessions:
         osm:
-            url: {PG_OSM_CONN_STRING}
+            url: PG_OSM_CONN_STRING
 
     layers:
         geometry_validation: True

@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: demo-geomapfish-wsgi
-        image:  172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest
+        image: 'geomapfish-cicd/demo-geomapfish-wsgi:latest'
         ports:
         - containerPort: 80
         resources: {}
