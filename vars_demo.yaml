@@ -2,7 +2,7 @@ extends: CONST_vars.yaml
 
 vars:
     # database name
-    db: demo_geomapfish_2_2
+    db: demo_openshift_2_2
     # database schema
     schema: main
 
@@ -36,7 +36,7 @@ vars:
         timeout: 86400
 
     tiles_url:
-    - '{web_protocol}://{host}/{instanceid}/tiles'
+    - 'https://geomapfish-demo.camptocamp.net/2.2/tiles'
 
     admin_interface:
         # Default values for the admin interface's maps.
@@ -86,7 +86,7 @@ vars:
 
     dbsessions:
         osm:
-            url: postgresql://{dbuser}:{dbpassword}@{dbhost}:{dbport}/osm
+            url: PG_OSM_CONN_STRING
 
     layers:
         geometry_validation: True
@@ -261,6 +261,11 @@ vars:
         code_source: /var/www/vhosts/gmfusrgrp_version2-geomapfishtest/private/{instanceid}/demo_geomapfish
         code_destination: /var/www/vhosts/geomapfish-demo/private/{instanceid}
 
+    servers:
+        mapserver: MAPSERVER_URL
+    print_url: PRINT_URL_PRINT_DEMO
+    sqlalchemy.url: PG_DEMO_CONN_STRING
+
 update_paths:
 - shortener
 - authtkt
@@ -268,3 +273,9 @@ update_paths:
 - checker.defaults
 - admin_interface.available_functionalities
 - functionalities.available_in_templates
+
+runtime_environment:
+- server.mapserver
+- print_url
+- dbsessions.osm.url
+- sqlalchemy\.url
