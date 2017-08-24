@@ -1,5 +1,13 @@
 # Create the cicd resources
 
+# Environment variables
+
+Put registry ip in a env var to be used from the yaml definition files
+
+```
+export REGISTRY_CLUSTER_IP=$(oc get service docker-registry -n default --template='{{ .spec.clusterIP }}')
+```
+
 First we had to generate an RSA key that is going to be uploaded to OpenShift.
 This step is already done and you can find the keys in pass with:
 

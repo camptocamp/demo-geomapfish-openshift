@@ -19,8 +19,7 @@ spec:
         io.kompose.service: demo-geomapfish-mapserver
     spec:
       containers:
-      - image: geomapfish-cicd/demo-geomapfish-mapserver:latest
-        imagePullPolicy: Always
+      - image:  172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-mapserver:latest
         name: demo-geomapfish-mapserver
         ports:
         - containerPort: 80
