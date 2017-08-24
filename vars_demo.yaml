@@ -240,6 +240,7 @@ vars:
     checker:
         defaults:
             fulltextsearch: pau
+            phantomjs_routes: []
             print_spec:
                 layout: "1 A4 portrait"
                 outputFormat: "pdf"
@@ -256,6 +257,8 @@ vars:
                         longitudeFirst: true
                         layers: []
                     legend: {}
+        all:
+            phantomjs_routes: []
 
     deploy:
         code_source: /var/www/vhosts/gmfusrgrp_version2-geomapfishtest/private/{instanceid}/demo_geomapfish
@@ -266,5 +269,6 @@ update_paths:
 - authtkt
 - fulltextsearch
 - checker.defaults
+- checker.all
 - admin_interface.available_functionalities
 - functionalities.available_in_templates
