@@ -8,7 +8,8 @@ vars:
     servers:
         mapserver: MAPSERVER_URL
     print_url: PRINT_URL_PRINT_DEMO
-    sqlalchemy.url: PG_DEMO_CONN_STRING
+    sqlalchemy:
+        url: PG_DEMO_CONN_STRING
 
 update_paths:
 - mapserverproxy
