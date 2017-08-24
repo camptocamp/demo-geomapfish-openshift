@@ -81,9 +81,18 @@
         }
         stage('deploy-staging') {
           openshift.withProject( 'geomapfish-stage' ){
-            openshiftDeploy(depCfg: 'demo-geomapfish-print')
-            openshiftDeploy(depCfg: 'demo-geomapfish-mapserver')
-            openshiftDeploy(depCfg: 'demo-geomapfish-wsgi')
+            openshiftDeploy(
+              depCfg: 'demo-geomapfish-print',
+              namespace: 'geomapfish-stage'
+            )
+            openshiftDeploy(
+              depCfg: 'demo-geomapfish-mapserver',
+              namespace: 'geomapfish-stage'
+            )
+            openshiftDeploy(
+              depCfg: 'demo-geomapfish-wsgi',
+              namespace: 'geomapfish-stage'
+            )
           }
         }
 
