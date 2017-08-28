@@ -97,8 +97,8 @@
         }
 
         stage('test-staging') {
-          sh 'curl http://demo-geomapfish-wsgi.geomapfish-stage.svc:8480/check_collector?'
-          sh 'curl http://demo-geomapfish-wsgi.geomapfish-stage.svc:8480/check_collector?type=all'
+          sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?'
+          sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
         }
 
         stage('deploy-preprod') {
