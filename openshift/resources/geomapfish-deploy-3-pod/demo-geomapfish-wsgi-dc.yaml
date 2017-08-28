@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: demo-geomapfish-wsgi
-        image: 'docker-registry.default.svc:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest'
+        image: 'docker-registry.default.svc.cluster.local:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest'
         ports:
         - containerPort: 80
         resources: {}
