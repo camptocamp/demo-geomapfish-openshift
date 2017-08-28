@@ -22,6 +22,18 @@ spec:
         image: '172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest'
         ports:
         - containerPort: 80
+        env:
+        - name: PG_OSM_CONN_STRING
+          value: >-
+            postgresql://www-data:www-data@geomapfish-demo.camptocamp.net:5432/osm
+        - name: PG_DEMO_CONN_STRING
+          value: >-
+            postgresql://www-data:www-data@geomapfish-demo.camptocamp.net:5432/demo_openshift_2_2
+        - name: MAPSERVER_URL
+          value: >-
+            http://demo-geomapfish-mapserver.geomapfish-stage.svc:8380
+        - name: PRINT_URL_PRINT_DEMO
+          value: 'http://demo-geomapfish-print.geomapfish-stage.svc:8280/print/demo'
         resources: {}
       restartPolicy: Always
   test: false
