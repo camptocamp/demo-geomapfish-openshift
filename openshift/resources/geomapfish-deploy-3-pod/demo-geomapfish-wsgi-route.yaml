@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Route
+metadata:
+  namespace: geomapfish-stage
+  annotations:
+    openshift.io/host.generated: "true"
+  creationTimestamp: null
+  name: demo-geomapfish-wsgi
+spec:
+  port:
+    targetPort: "8480"
+  to:
+    kind: Service
+    name: demo-geomapfish-wsgi
+    weight: 100
+  wildcardPolicy: None

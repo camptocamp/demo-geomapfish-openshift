@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: demo-geomapfish-wsgi
+  name: demo-geomapfish
+spec:
+  replicas: 1
+  strategy:
+    resources: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: demo-geomapfish-wsgi
+    spec:
+      containers:
+      - name: wsgi
+        image: 'https://docker-registry-default.cloudapp.openshift-poc.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest'
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /desktop
+            port: 80
+            scheme: HTTP        
+        resources: {}
+
+      - name: print
+        image: 'https://docker-registry-default.cloudapp.openshift-poc.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-print:latest'
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            port: 8080
+            scheme: HTTP        
+        resources: {}
+
+      - name: mapserver
+        image: https://docker-registry-default.cloudapp.openshift-poc.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-mapserver:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            port: 80
+            scheme: HTTP        
+        resources: {}
+
+      restartPolicy: Always
+
+  test: false
+  triggers: {}
