@@ -406,8 +406,6 @@ vars:
             all:
             - name: checker_routes
               display: Check pages
-            - name: checker_theme_errors
-              display: Errors in the themes
             - name: checker_lang_files
               display: Language files
             - name: checker_pdf
