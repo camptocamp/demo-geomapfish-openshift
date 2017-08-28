@@ -19,7 +19,7 @@ spec:
         io.kompose.service: demo-geomapfish-mapserver
     spec:
       containers:
-      - image: docker-registry.default.svc.cluster.local:5000/geomapfish-cicd/demo-geomapfish-mapserver:latest
+      - image: 172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-mapserver:latest
         imagePullPolicy: Always
         name: demo-geomapfish-mapserver
         ports:
