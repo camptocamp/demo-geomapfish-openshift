@@ -1,7 +1,7 @@
 #!/usr/bin/groovy
 
 // // Load shared library
-@Library('github.com/camptocamp/jenkins-pipeline@helm') import static com.camptocamp.utils.*
+@Library('github.com/camptocamp/c2c-pipeline-library@helm') import static com.camptocamp.utils.*
 def helm = new com.camptocamp.helm()
 
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
