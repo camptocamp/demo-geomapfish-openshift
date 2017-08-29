@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Route
 metadata:
-  namespace: geomapfish-stage
+  namespace: geomapfish-testing
   annotations:
     openshift.io/host.generated: "true"
   creationTimestamp: null

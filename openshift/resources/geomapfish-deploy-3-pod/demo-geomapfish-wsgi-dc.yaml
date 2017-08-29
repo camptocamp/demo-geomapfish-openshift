@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  namespace: geomapfish-stage
+  namespace: geomapfish-testing
   labels:
     io.kompose.service: demo-geomapfish-wsgi
   name: demo-geomapfish-wsgi
@@ -31,9 +31,9 @@ spec:
             postgresql://www-data:www-data@geomapfish-demo.camptocamp.net:5432/demo_openshift_2_2
         - name: MAPSERVER_URL
           value: >-
-            http://demo-geomapfish-mapserver.geomapfish-stage.svc:8380
+            http://demo-geomapfish-mapserver.geomapfish-testing.svc:8380
         - name: PRINT_URL_PRINT_DEMO
-          value: 'http://demo-geomapfish-print.geomapfish-stage.svc:8280/print/demo'
+          value: 'http://demo-geomapfish-print.geomapfish-testing.svc:8280/print/demo'
         resources: {}
       restartPolicy: Always
   test: false

@@ -135,5 +135,5 @@ oc describe secret <jenkins-token>
 ### Permissions
 
 ```
-oc policy add-role-to-user edit system:serviceaccount:geomapfish-dev:jenkins -n geomapfish-stage
+oc policy add-role-to-user edit system:serviceaccount:geomapfish-dev:jenkins -n geomapfish-testing
 ```

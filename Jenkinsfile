@@ -18,13 +18,13 @@
 // ){
   node('geomapfish'){
 
-    stage('build-base') {
+    stage('build-source-code') {
         checkout scm
         sh returnStdout: true, script: 'pwd'
         sh 'rm -rf node_modules || true'
         sh 'ln -s /usr/lib/node_modules .'
         sh 'export DEBUG=1'
-        sh returnStdout: true, script: 'make build'
+        sh returnStdout: true, script: 'set -x; make build'
     }
 
     openshift.withCluster() {
@@ -79,41 +79,41 @@
             )    
           }
         }
-        stage('deploy-staging') {
-          openshift.withProject( 'geomapfish-stage' ){
+        stage('deploy-testing-env') {
+          openshift.withProject( 'geomapfish-testing' ){
             parallel (
               "print" : {
                 openshiftDeploy(
                   depCfg: 'demo-geomapfish-print',
-                  namespace: 'geomapfish-stage'
+                  namespace: 'geomapfish-testing'
                 )
               },
               "mapserver" : {
                 openshiftDeploy(
                   depCfg: 'demo-geomapfish-mapserver',
-                  namespace: 'geomapfish-stage'
+                  namespace: 'geomapfish-testing'
                 )
               },
               "wsgi" : {
                 openshiftDeploy(
                   depCfg: 'demo-geomapfish-wsgi',
-                  namespace: 'geomapfish-stage'
+                  namespace: 'geomapfish-testing'
                 )
               }
             )              
           }
         }
 
-        stage('test-staging') {
+        stage('tests-on-testing-env') {
           sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?'
           sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
         }
 
-        stage('deploy-preprod') {
+        stage('deploy-staging-env') {
             echo "TODO"
         }
 
-        stage('deploy-prod') {
+        stage('deploy-prd-env') {
             echo "TODO"
         }
 

@@ -4,25 +4,25 @@ items:
   kind: Project
   metadata:
     annotations:
-      openshift.io/description: Geomapfish STAGE
-      openshift.io/display-name: geomapfish-stage
+      openshift.io/description: Geomapfish DEV
+      openshift.io/display-name: geomapfish-staging
     creationTimestamp: null
-    name: geomapfish-stage
+    name: geomapfish-staging
   spec: {}
   status: {}
 - apiVersion: v1
   groupNames:
-  - system:serviceaccounts:geomapfish-stage
+  - system:serviceaccounts:geomapfish-staging
   kind: RoleBinding
   metadata:
     creationTimestamp: null
     name: system:image-pullers
-    namespace: geomapfish-stage
+    namespace: geomapfish-staging
   roleRef:
     name: system:image-puller
   subjects:
   - kind: SystemGroup
-    name: system:serviceaccounts:geomapfish-stage
+    name: system:serviceaccounts:geomapfish-staging
   userNames: null
 - apiVersion: v1
   groupNames: null
@@ -30,35 +30,35 @@ items:
   metadata:
     creationTimestamp: null
     name: system:image-builders
-    namespace: geomapfish-stage
+    namespace: geomapfish-staging
   roleRef:
     name: system:image-builder
   subjects:
   - kind: ServiceAccount
     name: builder
   userNames:
-  - system:serviceaccount:geomapfish-stage:builder
+  - system:serviceaccount:geomapfish-staging:builder
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
   metadata:
     creationTimestamp: null
     name: system:deployers
-    namespace: geomapfish-stage
+    namespace: geomapfish-staging
   roleRef:
     name: system:deployer
   subjects:
   - kind: ServiceAccount
     name: deployer
   userNames:
-  - system:serviceaccount:geomapfish-stage:deployer
+  - system:serviceaccount:geomapfish-staging:deployer
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
   metadata:
     creationTimestamp: null
     name: admin
-    namespace: geomapfish-stage
+    namespace: geomapfish-staging
   roleRef:
     name: admin
   subjects:

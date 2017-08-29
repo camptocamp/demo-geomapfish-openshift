@@ -12,12 +12,12 @@ This secret will be used in following projects:
 
 * geomapfish-cicd for cloning the source to get the Jenkinsfile
 * geomapfish-dev for cloning the source to build
-* geomapfish-stage for cloning the source to get the tests
+* geomapfish-testing for cloning the source to get the tests
 
 ```
 oc secrets new-sshauth ssh-github-c2c-ci-secret --ssh-privatekey=$HOME/.ssh/id_rsa_github_c2c_admin_ci -n geomapfish-cicd
 oc secrets new-sshauth ssh-github-c2c-ci-secret --ssh-privatekey=$HOME/.ssh/id_rsa_github_c2c_admin_ci -n geomapfish-dev
-oc secrets new-sshauth ssh-github-c2c-ci-secret --ssh-privatekey=$HOME/.ssh/id_rsa_github_c2c_admin_ci -n geomapfish-stage
+oc secrets new-sshauth ssh-github-c2c-ci-secret --ssh-privatekey=$HOME/.ssh/id_rsa_github_c2c_admin_ci -n geomapfish-testing
 ```
 
 You can check and see the 3 secrets in each namespace:
@@ -26,7 +26,7 @@ You can check and see the 3 secrets in each namespace:
 oc get secrets --all-namespaces | grep ssh-github-c2c-ci-secret
 geomapfish-cicd    ssh-github-c2c-ci-secret                                  kubernetes.io/ssh-auth                1         43s
 geomapfish-dev     ssh-github-c2c-ci-secret                                  kubernetes.io/ssh-auth                1         42s
-geomapfish-stage   ssh-github-c2c-ci-secret                                  kubernetes.io/ssh-auth                1         2m
+geomapfish-testing   ssh-github-c2c-ci-secret                                  kubernetes.io/ssh-auth                1         2m
 ```
 
 You have to provide this key to the builder service accounts in all 3 namespaces:
@@ -34,7 +34,7 @@ You have to provide this key to the builder service accounts in all 3 namespaces
 ```
 oc secrets link builder ssh-github-c2c-ci-secret -n geomapfish-cicd
 oc secrets link builder ssh-github-c2c-ci-secret -n geomapfish-dev
-oc secrets link builder ssh-github-c2c-ci-secret -n geomapfish-stage
+oc secrets link builder ssh-github-c2c-ci-secret -n geomapfish-testing
 ```
 
 We can now build and deploy our custom jenkins.
