@@ -7,7 +7,7 @@ library identifier: 'custom-lib@master', retriever: modernSCM(
   [$class: 'GitSCMSource',
    remote: 'git@github.com:camptocamp/c2c-pipeline-library.git'])
 
-def helm = new com.camptocamp.helm()
+// def helm = new com.camptocamp.Helm()
 
 
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
