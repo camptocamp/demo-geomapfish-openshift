@@ -1,21 +1,22 @@
 #!/usr/bin/groovy
 
 // // Load shared library
-// @Library('github.com/camptocamp/c2c-pipeline-library@master') import static com.camptocamp.utils.*
+@Library('github.com/camptocamp/jenkins-pipeline@helm') import static com.camptocamp.utils.*
+def helm = new com.camptocamp.helm()
 
-// podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
-//     containerTemplate(
-//         name: 'jnlp',
-//         image: '172.30.1.1:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
-//         ttyEnabled: true,
-//         command: '',
-//         privileged: false,
-//         alwaysPullImage: false,
-//         workingDir: '/tmp',
-//         args: '${computer.jnlpmac} ${computer.name}'
-//     )
-//   ]
-// ){
+podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
+    containerTemplate(
+        name: 'jnlp',
+        image: '172.30.1.1:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
+        ttyEnabled: true,
+        command: '',
+        privileged: false,
+        alwaysPullImage: false,
+        workingDir: '/tmp',
+        args: '${computer.jnlpmac} ${computer.name}'
+    )
+  ]
+){
   node('geomapfish'){
 
     stage('build-source-code') {
@@ -120,3 +121,4 @@
       }
     }
   }
+}
