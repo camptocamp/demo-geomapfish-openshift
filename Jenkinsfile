@@ -1,7 +1,11 @@
 #!/usr/bin/groovy
 
 // // Load shared library
-@Library('git@github.com:camptocamp/c2c-pipeline-library.git@helm') import static com.camptocamp.utils.*
+// @Library('git@github.com:camptocamp/c2c-pipeline-library.git@helm') import static com.camptocamp.utils.*
+
+library identifier: 'custom-lib@master', retriever: modernSCM(
+  [$class: 'GitSCMSource',
+   remote: 'git@github.com:camptocamp/c2c-pipeline-library.git'])
 
 def helm = new com.camptocamp.helm()
 
