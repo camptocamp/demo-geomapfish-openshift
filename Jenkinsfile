@@ -23,6 +23,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
+    sh 'env > env.txt'
+    for (String i : readFile('env.txt').split("\r?\n")) {
+      println i
+    }
 
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
