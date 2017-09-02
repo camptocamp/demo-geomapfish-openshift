@@ -153,9 +153,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
 
         stage('deploy-prd-env') {
+          def promote = false
           try {
             timeout(time: 7, unit: 'DAYS') {
-              def promote = input message: 'Deploy to Production',
+              promote = input message: 'Deploy to Production',
               parameters: [
                 [ $class: 'BooleanParameterDefinition',
                   defaultValue: false,
@@ -165,7 +166,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               ]
             }
           } catch (err) {
-            // don't promote => version == null, no error
+            // don't promote => version == false, no error
           }
           if (promote) {
             openshift.withProject( 'geomapfish-testing' ){
