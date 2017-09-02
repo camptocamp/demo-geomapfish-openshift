@@ -34,9 +34,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         sh returnStdout: true, script: 'make build'
     }
 
-    stage('build-images') {
-      openshift.withCluster() {
-        openshift.doAs('openshift-token') {
+      
+    openshift.withCluster() {
+      openshift.doAs('openshift-token') {
+        stage('build-images') {
           openshift.withProject( 'geomapfish-cicd' ){
             parallel (
               "print" : {
@@ -152,10 +153,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
 
         stage('deploy-prd-env') {
-          def version = null
           try {
             timeout(time: 7, unit: 'DAYS') {
-              input message: 'Deploy to Production',
+              def promote = input message: 'Deploy to Production',
               parameters: [
                 [ $class: 'BooleanParameterDefinition',
                   defaultValue: false,
@@ -167,8 +167,35 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           } catch (err) {
             // don't promote => version == null, no error
           }
-          if (version != null) {
-            echo "TODO"
+          if (promote) {
+            openshift.withProject( 'geomapfish-testing' ){
+              // tag the latest image as staging
+              openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
+              openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: 'staging')
+              openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
+            }
+            openshift.withProject( 'geomapfish-staging' ){
+              parallel (
+                "print" : {
+                  openshiftDeploy(
+                    depCfg: 'demo-geomapfish-print',
+                    namespace: 'geomapfish-staging'
+                  )
+                },
+                "mapserver" : {
+                  openshiftDeploy(
+                    depCfg: 'demo-geomapfish-mapserver',
+                    namespace: 'geomapfish-staging'
+                  )
+                },
+                "wsgi" : {
+                  openshiftDeploy(
+                    depCfg: 'demo-geomapfish-wsgi',
+                    namespace: 'geomapfish-staging'
+                  )
+                }
+              )              
+            }
           }
         }
       }
