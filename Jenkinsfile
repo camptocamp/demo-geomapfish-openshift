@@ -27,8 +27,13 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
         stage('test-helm') {
-            helm.ocTest()
-            helm.helmConfig()
+          echo """${
+            openshift.raw(
+              'status'
+            ).out
+          }"""
+          helm.ocTest()
+          helm.helmConfig()
         }
       }
     }
