@@ -38,8 +38,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             ).out
           }"""
           echo os_url
-          // sh "oc login --token ${os_token} ${os_url}"
-          sh """${'oc login --insecure-skip-tls-verify ' + os_url + ' --token ' + os_token}"""
+          sh(script: "oc login --token ${os_token} ${os_url}", returnStdout: true).trim()
           sh "oc status"
           helm.helmConfig()
         }
