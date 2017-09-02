@@ -32,9 +32,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
         stage('test-helm') {
           sh "oc login --insecure-skip-tls-verify --token $PASSWORD https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
-          sh "oc status"
-          // sh "export HELM_HOST=tiller.kube-system.svc:44134"
           helm.helmConfig()
+          sh "oc status"
         }
       }
     }
