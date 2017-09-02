@@ -38,7 +38,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                       'whoami'
                     ).out
                   }"""
-            echo openshift
+            env.HELM_HOST = 'tiller.kube-system.svc:44134'
             helm.helmConfig()
           }
         }
