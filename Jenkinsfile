@@ -32,7 +32,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               'whoami -t'
             ).out
           }"""
-          def server = = """${
+          def server = """${
             openshift.raw(
               'whoami --show-server'
             ).out
