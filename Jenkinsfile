@@ -5,7 +5,6 @@
 @Library('github.com/camptocamp/jenkins-lib-helm')
 def helm = new com.camptocamp.Helm()
 
-
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
@@ -24,21 +23,15 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
 
+    // read in required jenkins workflow config values
+    def inputFile = readFile('Jenkinsfile.json')
+    def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
+    println "pipeline config ==> ${config}"
+
     sh 'env > env.txt'
     for (String i : readFile('env.txt').split("\r?\n")) {
       println i
     }
-
-    stage('tests-on-helm') {
-      withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-        stage('test-helm') {
-          helm.login()
-          helm.helmConfig()
-          helm.logout()
-        }
-      }
-    }
-
 
     stage('build-source-code') {
         checkout scm
@@ -48,9 +41,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         sh returnStdout: true, script: 'make build'
     }
 
-    openshift.withCluster() {
-      openshift.doAs('openshift-token') {
-        stage('build-images') {
+    stage('build-images') {
+      openshift.withCluster() {
+        openshift.doAs('openshift-token') {
           openshift.withProject( 'geomapfish-cicd' ){
             parallel (
               "print" : {
@@ -102,27 +95,55 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
 
         stage('deploy-testing-env') {
-          openshift.withProject( 'geomapfish-testing' ){
-            parallel (
-              "print" : {
-                openshiftDeploy(
-                  depCfg: 'demo-geomapfish-print',
-                  namespace: 'geomapfish-testing'
-                )
-              },
-              "mapserver" : {
-                openshiftDeploy(
-                  depCfg: 'demo-geomapfish-mapserver',
-                  namespace: 'geomapfish-testing'
-                )
-              },
-              "wsgi" : {
-                openshiftDeploy(
-                  depCfg: 'demo-geomapfish-wsgi',
-                  namespace: 'geomapfish-testing'
-                )
-              }
-            )              
+          // openshift.withProject( 'geomapfish-testing' ){
+          //   parallel (
+          //     "print" : {
+          //       openshiftDeploy(
+          //         depCfg: 'demo-geomapfish-print',
+          //         namespace: 'geomapfish-testing'
+          //       )
+          //     },
+          //     "mapserver" : {
+          //       openshiftDeploy(
+          //         depCfg: 'demo-geomapfish-mapserver',
+          //         namespace: 'geomapfish-testing'
+          //       )
+          //     },
+          //     "wsgi" : {
+          //       openshiftDeploy(
+          //         depCfg: 'demo-geomapfish-wsgi',
+          //         namespace: 'geomapfish-testing'
+          //       )
+          //     }
+          //   )              
+          // }
+          withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
+            helm.login()
+
+            // init helm
+            helm.helmConfig()
+
+            // set additional git envvars for image tagging
+            helm.gitEnvVars()
+
+            // tag image with version, and branch-commit_id
+            def image_tags_map = helm.getContainerTags()
+
+            // compile tag list
+            def image_tags_list = helm.getMapValues(image_tags_map)
+
+            helm.helmLint(chart_dir)
+
+            // run dry-run helm chart installation
+            helm.helmDeploy(
+              dry_run       : true,
+              name          : config.app.name,
+              namespace     : "geomapfish-testing",
+              version_tag   : image_tags_list.get(0),
+              chart_dir     : chart_dir,
+            )
+
+            helm.logout()
           }
         }
 

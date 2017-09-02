@@ -1,0 +1,13 @@
+{
+  "app": {
+    "name": "demo-geomapfish",
+    "replicas": "1"
+  },
+  "pipeline": {
+      "enabled": true,
+      "debug": false,
+      "library": {
+        "branch": "master"
+      }
+  }
+}
