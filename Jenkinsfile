@@ -98,27 +98,29 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         stage('deploy-testing-env') {
           openshift.withProject( 'geomapfish-testing' ){
-            // helm.helmConfig()
-            parallel (
-              "print" : {
-                openshiftDeploy(
-                  depCfg: 'demo-geomapfish-print',
-                  namespace: 'geomapfish-testing'
-                )
-              },
-              "mapserver" : {
-                openshiftDeploy(
-                  depCfg: 'demo-geomapfish-mapserver',
-                  namespace: 'geomapfish-testing'
-                )
-              },
-              "wsgi" : {
-                openshiftDeploy(
-                  depCfg: 'demo-geomapfish-wsgi',
-                  namespace: 'geomapfish-testing'
-                )
-              }
-            )              
+            openshift.doAs('openshift-token') {
+              helm.helmConfig()
+              parallel (
+                "print" : {
+                  openshiftDeploy(
+                    depCfg: 'demo-geomapfish-print',
+                    namespace: 'geomapfish-testing'
+                  )
+                },
+                "mapserver" : {
+                  openshiftDeploy(
+                    depCfg: 'demo-geomapfish-mapserver',
+                    namespace: 'geomapfish-testing'
+                  )
+                },
+                "wsgi" : {
+                  openshiftDeploy(
+                    depCfg: 'demo-geomapfish-wsgi',
+                    namespace: 'geomapfish-testing'
+                  )
+                }
+              )              
+            }
           }
         }
 
