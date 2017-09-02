@@ -24,26 +24,19 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
 
-    withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-      sh 'env > env.txt'
-      for (String i : readFile('env.txt').split("\r?\n")) {
-        println i
-      }
-      // stage('test-helm') {
-      //   sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
-      //   sh "oc status -n kube-system"
-      //   sh "oc logout"
-      // }
+    sh 'env > env.txt'
+    for (String i : readFile('env.txt').split("\r?\n")) {
+      println i
     }
 
-    // stage('build-source-code') {
-    //     checkout scm
-    //     sh returnStdout: true, script: 'pwd'
-    //     sh 'rm -rf node_modules || true'
-    //     sh 'ln -s /usr/lib/node_modules .'
-    //     sh 'export DEBUG=1'
-    //     sh returnStdout: true, script: 'set -x; make build'
-    // }
+    stage('build-source-code') {
+        checkout scm
+        sh returnStdout: true, script: 'pwd'
+        sh 'rm -rf node_modules || true'
+        sh 'ln -s /usr/lib/node_modules .'
+        sh 'export DEBUG=1'
+        sh returnStdout: true, script: 'set -x; make build'
+    }
 
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
@@ -52,7 +45,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             parallel (
               "print" : {
                 echo "Active project: ${openshift.project()}"
-
                 echo """${
                     openshift.raw(
                       'whoami'
@@ -64,8 +56,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                       'status'
                     ).out
                   }"""
-
-                helm.helmConfig()
 
                 echo """${
                   openshift.raw(
@@ -108,6 +98,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         stage('deploy-testing-env') {
           openshift.withProject( 'geomapfish-testing' ){
+            helm.helmConfig()
             parallel (
               "print" : {
                 openshiftDeploy(
