@@ -55,6 +55,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
                 echo """${
                     openshift.raw(
+                      'whoami'
+                    ).out
+                  }"""
+
+                echo """${
+                    openshift.raw(
                       'status'
                     ).out
                   }"""
