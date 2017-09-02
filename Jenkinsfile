@@ -98,7 +98,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         stage('deploy-testing-env') {
           openshift.withProject( 'geomapfish-testing' ){
-            helm.helmConfig()
+            // helm.helmConfig()
             parallel (
               "print" : {
                 openshiftDeploy(
