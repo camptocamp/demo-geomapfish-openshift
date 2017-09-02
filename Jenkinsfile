@@ -58,7 +58,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     '--follow'
                   ).out
                 }"""
-                openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: 'latest', destStream: 'demo-geomapfish-print', destTag: env.GIT_COMMIT_ID)
+                openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: 'latest', destStream: 'demo-geomapfish-print', destTag: env.GIT_SHA)
               },
               "mapserver" : {
                 echo """${
@@ -71,7 +71,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     '--follow'
                   ).out
                 }"""
-                openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: 'latest', destStream: 'demo-geomapfish-mapserver', destTag: env.GIT_COMMIT_ID)
+                openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: 'latest', destStream: 'demo-geomapfish-mapserver', destTag: env.GIT_SHA)
               },
               "wsgi" : {
                 echo """${
@@ -84,7 +84,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     '--follow'
                   ).out
                 }"""
-                openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: 'latest', destStream: 'demo-geomapfish-wsgi', destTag: env.GIT_COMMIT_ID)
+                openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: 'latest', destStream: 'demo-geomapfish-wsgi', destTag: env.GIT_SHA)
               }
             )    
           }
@@ -123,9 +123,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         stage('deploy-staging-env') {
           openshift.withProject( 'geomapfish-testing' ){
             // tag the latest image as staging
-            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_COMMIT_ID, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
-            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_COMMIT_ID, destStream: 'demo-geomapfish-print', destTag: 'staging')
-            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_COMMIT_ID, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
           }
           openshift.withProject( 'geomapfish-staging' ){
             parallel (
