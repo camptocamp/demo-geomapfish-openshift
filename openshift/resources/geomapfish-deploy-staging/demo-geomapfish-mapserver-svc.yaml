@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: geomapfish-staging
+  labels:
+    io.kompose.service: demo-geomapfish-mapserver
+  name: demo-geomapfish-mapserver
+spec:
+  ports:
+  - name: "8380"
+    port: 8380
+    targetPort: 80
+  selector:
+    io.kompose.service: demo-geomapfish-mapserver
+status:
+  loadBalancer: {}

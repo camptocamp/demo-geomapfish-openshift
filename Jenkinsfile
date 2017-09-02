@@ -1,10 +1,5 @@
 #!/usr/bin/groovy
 
-// Load helm shared library
-
-@Library('github.com/camptocamp/jenkins-lib-helm')
-def helm = new com.camptocamp.Helm()
-
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
@@ -19,9 +14,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
   ]
 ){
   node('geomapfish'){
-
-    def pwd = pwd()
-    def chart_dir = "${pwd}/charts/demo-geomapfish"
+    // get commit id
+    sh 'git rev-parse HEAD > git_commit_id.txt'
+    env.GIT_COMMIT_ID = readFile('git_commit_id.txt').trim()
+    env.GIT_SHA = env.GIT_COMMIT_ID.substring(0, 7)
 
     sh 'env > env.txt'
     for (String i : readFile('env.txt').split("\r?\n")) {
@@ -60,6 +56,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     '--follow'
                   ).out
                 }"""
+                openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: 'latest', destStream: 'demo-geomapfish-print', destTag: env.GIT_COMMIT_ID)
               },
               "mapserver" : {
                 echo """${
@@ -72,6 +69,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     '--follow'
                   ).out
                 }"""
+                openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: 'latest', destStream: 'demo-geomapfish-mapserver', destTag: env.GIT_COMMIT_ID)
               },
               "wsgi" : {
                 echo """${
@@ -84,62 +82,35 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     '--follow'
                   ).out
                 }"""
+                openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: 'latest', destStream: 'demo-geomapfish-wsgi', destTag: env.GIT_COMMIT_ID)
               }
             )    
           }
         }
 
         stage('deploy-testing-env') {
-          // openshift.withProject( 'geomapfish-testing' ){
-          //   parallel (
-          //     "print" : {
-          //       openshiftDeploy(
-          //         depCfg: 'demo-geomapfish-print',
-          //         namespace: 'geomapfish-testing'
-          //       )
-          //     },
-          //     "mapserver" : {
-          //       openshiftDeploy(
-          //         depCfg: 'demo-geomapfish-mapserver',
-          //         namespace: 'geomapfish-testing'
-          //       )
-          //     },
-          //     "wsgi" : {
-          //       openshiftDeploy(
-          //         depCfg: 'demo-geomapfish-wsgi',
-          //         namespace: 'geomapfish-testing'
-          //       )
-          //     }
-          //   )              
-          // }
-              // read in required jenkins workflow config values
-
-          withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-            helm.login()
-
-            // set additional git envvars for image tagging
-            helm.gitEnvVars()
-
-            // tag image with version, and branch-commit_id
-            def image_tags_map = helm.getContainerTags()
-
-            // compile tag list
-            def image_tags_list = helm.getMapValues(image_tags_map)
-
-            helm.helmLint(chart_dir)
-
-            // run dry-run helm chart installation
-            helm.helmDeploy(
-              dry_run       : true,
-              name          : "demo-geomapfish",
-              namespace     : "geomapfish-testing",
-              version_tag   : image_tags_list.get(0),
-              chart_dir     : chart_dir,
-            )
-
-            helm.logout()
+          openshift.withProject( 'geomapfish-testing' ){
+            parallel (
+              "print" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-print',
+                  namespace: 'geomapfish-testing'
+                )
+              },
+              "mapserver" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-mapserver',
+                  namespace: 'geomapfish-testing'
+                )
+              },
+              "wsgi" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-wsgi',
+                  namespace: 'geomapfish-testing'
+                )
+              }
+            )              
           }
-        }
 
         stage('tests-on-testing-env') {
           sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?'
@@ -147,13 +118,51 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
 
         stage('deploy-staging-env') {
-            echo "TODO"
+          openshift.withProject( 'geomapfish-testing' ){
+            // tag the latest image as staging
+            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_COMMIT_ID, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_COMMIT_ID, destStream: 'demo-geomapfish-print', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_COMMIT_ID, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
+          }
+          openshift.withProject( 'geomapfish-staging' ){
+            parallel (
+              "print" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-print',
+                  namespace: 'geomapfish-staging'
+                )
+              },
+              "mapserver" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-mapserver',
+                  namespace: 'geomapfish-staging'
+                )
+              },
+              "wsgi" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-wsgi',
+                  namespace: 'geomapfish-staging'
+                )
+              }
+            )              
+          }
         }
 
         stage('deploy-prd-env') {
+          def version = null
+          try {
+            timeout(time: 7, unit: 'DAYS') {
+              version = input(
+                      id: 'userInput', message: 'Do you want to deploy to production?', parameters: [
+                      [$class: 'TextParameterDefinition', defaultValue: '', description: 'Version', name: 'version']
+              ])
+            }
+          } catch (err) {
+            // don't promote => version == null, no error
+          }
+          if (version != null) {
             echo "TODO"
-        }
-
+          }
       }
     }
   }

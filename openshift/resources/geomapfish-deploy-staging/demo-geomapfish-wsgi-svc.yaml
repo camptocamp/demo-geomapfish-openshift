@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: geomapfish-staging
+  labels:
+    io.kompose.service: demo-geomapfish-wsgi
+  name: demo-geomapfish-wsgi
+spec:
+  ports:
+  - name: "8480"
+    port: 8480
+    targetPort: 80
+  selector:
+    io.kompose.service: demo-geomapfish-wsgi
+status:
+  loadBalancer: {}

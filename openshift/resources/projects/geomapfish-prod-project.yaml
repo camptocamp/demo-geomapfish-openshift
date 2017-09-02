@@ -5,24 +5,24 @@ items:
   metadata:
     annotations:
       openshift.io/description: Geomapfish PRD
-      openshift.io/display-name: geomapfish-prd
+      openshift.io/display-name: geomapfish-prod
     creationTimestamp: null
-    name: geomapfish-prd
+    name: geomapfish-prod
   spec: {}
   status: {}
 - apiVersion: v1
   groupNames:
-  - system:serviceaccounts:geomapfish-prd
+  - system:serviceaccounts:geomapfish-prod
   kind: RoleBinding
   metadata:
     creationTimestamp: null
     name: system:image-pullers
-    namespace: geomapfish-prd
+    namespace: geomapfish-prod
   roleRef:
     name: system:image-puller
   subjects:
   - kind: SystemGroup
-    name: system:serviceaccounts:geomapfish-prd
+    name: system:serviceaccounts:geomapfish-prod
   userNames: null
 - apiVersion: v1
   groupNames: null
@@ -30,35 +30,35 @@ items:
   metadata:
     creationTimestamp: null
     name: system:image-builders
-    namespace: geomapfish-prd
+    namespace: geomapfish-prod
   roleRef:
     name: system:image-builder
   subjects:
   - kind: ServiceAccount
     name: builder
   userNames:
-  - system:serviceaccount:geomapfish-prd:builder
+  - system:serviceaccount:geomapfish-prod:builder
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
   metadata:
     creationTimestamp: null
     name: system:deployers
-    namespace: geomapfish-prd
+    namespace: geomapfish-prod
   roleRef:
     name: system:deployer
   subjects:
   - kind: ServiceAccount
     name: deployer
   userNames:
-  - system:serviceaccount:geomapfish-prd:deployer
+  - system:serviceaccount:geomapfish-prod:deployer
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
   metadata:
     creationTimestamp: null
     name: admin
-    namespace: geomapfish-prd
+    namespace: geomapfish-prod
   roleRef:
     name: admin
   subjects:
