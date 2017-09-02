@@ -155,10 +155,14 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           def version = null
           try {
             timeout(time: 7, unit: 'DAYS') {
-              version = input(
-                      id: 'userInput', message: 'Do you want to deploy to production?', parameters: [
-                      [$class: 'TextParameterDefinition', defaultValue: '', description: 'Version', name: 'version']
-              ])
+              input message: 'Deploy to Production',
+              parameters: [
+                [ $class: 'BooleanParameterDefinition',
+                  defaultValue: false,
+                  description: 'Deploy to Production',
+                  name: 'Deploy to Production'
+                ]
+              ]
             }
           } catch (err) {
             // don't promote => version == null, no error
