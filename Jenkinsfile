@@ -20,12 +20,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 ){
   node('geomapfish'){
 
-    // read in required jenkins workflow config values
-    checkout scm
-    def inputFile = readFile('Jenkinsfile.json')
-    def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
-    println "pipeline config ==> ${config}"
-
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
 
@@ -140,7 +134,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             // run dry-run helm chart installation
             helm.helmDeploy(
               dry_run       : true,
-              name          : config.app.name,
+              name          : "demo-geomapfish",
               namespace     : "geomapfish-testing",
               version_tag   : image_tags_list.get(0),
               chart_dir     : chart_dir,
