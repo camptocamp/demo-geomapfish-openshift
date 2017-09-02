@@ -29,20 +29,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     }
 
     openshift.withCluster() {
-      openshift.doAs('openshift-token') {
+      withCredentials([usernamePassword(credentialsId: 'openshift-token', variable: 'OS_TOKEN')]) {
         stage('test-helm') {
-          def os_token = """${
-            openshift.raw(
-              'whoami -t'
-            ).out
-          }"""
-          def os_url = """${
-            openshift.raw(
-              'whoami --show-server'
-            ).out
-          }"""
-          echo os_url
-          sh(script: "oc login --token ${os_token} ${os_url}", returnStdout: false)
+          sh(script: "oc login --token $OS_TOKEN ${env.KUBERNETES_SERVICE_HOST}", returnStdout: false)
           sh "oc status"
           helm.helmConfig()
         }
