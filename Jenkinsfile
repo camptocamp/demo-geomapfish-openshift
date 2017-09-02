@@ -23,16 +23,15 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
-    sh 'env > env.txt'
-    for (String i : readFile('env.txt').split("\r?\n")) {
-      println i
-    }
 
     openshift.withCluster() {
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        sh 'env > env.txt'
+        for (String i : readFile('env.txt').split("\r?\n")) {
+          println i
+        }
         stage('test-helm') {
-
-          sh "oc login --token $PASSWORD https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+          sh "oc login --insecure-skip-tls-verify --token $PASSWORD https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
           sh "oc status"
           helm.helmConfig()
         }
