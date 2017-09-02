@@ -47,7 +47,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
-        helm.helmConfig()
         stage('build-images') {
           openshift.withProject( 'geomapfish-cicd' ){
             parallel (
@@ -59,6 +58,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                       'status'
                     ).out
                   }"""
+
+                helm.helmConfig()
 
                 echo """${
                   openshift.raw(
