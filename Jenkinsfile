@@ -38,7 +38,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             ).out
           }"""
           echo os_url
-          sh "oc login --token ${os_token} ${os_url}"
+          // sh "oc login --token ${os_token} ${os_url}"
+          sh "oc login ${os_url}"
           sh "oc status"
           helm.helmConfig()
         }
