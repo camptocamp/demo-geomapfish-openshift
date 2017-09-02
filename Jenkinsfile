@@ -35,7 +35,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
             stage('test-helm') {
               sh "sleep 300"
-              sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+              // sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+              sh "oc login --token $TOKEN"
               sh "oc status -n kube-system"
               helm.helmConfig()
               sh "oc logout"
