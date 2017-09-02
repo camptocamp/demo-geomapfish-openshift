@@ -23,11 +23,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
 
-    // read in required jenkins workflow config values
-    def inputFile = readFile('Jenkinsfile.json')
-    def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
-    println "pipeline config ==> ${config}"
-
     sh 'env > env.txt'
     for (String i : readFile('env.txt').split("\r?\n")) {
       println i
@@ -117,6 +112,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           //     }
           //   )              
           // }
+              // read in required jenkins workflow config values
+          def inputFile = readFile('Jenkinsfile.json')
+          def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
+          println "pipeline config ==> ${config}"
+
           withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
             helm.login()
 
