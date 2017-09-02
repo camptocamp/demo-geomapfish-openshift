@@ -34,11 +34,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         openshift.doAs('openshift-token') {
           echo """${
             openshift.raw(
-              'config current-context'
-            ).out
-          }"""
-          echo """${
-            openshift.raw(
               'config view'
             ).out
           }"""
@@ -47,7 +42,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             stage('test-helm') {
               sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
               sh "oc status -n kube-system"
-              sh "oc config current-context"
               sh "oc config view"
               helm.helmConfig()
               sh "oc logout"
