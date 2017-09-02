@@ -32,7 +32,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     stage('tests-on-helm') {
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
         stage('test-helm') {
+          helm.login()
           helm.helmConfig()
+          helm.logout()
         }
       }
     }
