@@ -99,6 +99,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         stage('deploy-testing-env') {
           openshift.withProject( 'geomapfish-testing' ){
             openshift.doAs('openshift-token') {
+              echo """${
+                    openshift.raw(
+                      'status'
+                    ).out
+                  }"""
               helm.helmConfig()
               parallel (
                 "print" : {
