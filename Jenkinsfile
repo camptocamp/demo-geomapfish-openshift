@@ -30,17 +30,22 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     }
 
     stage('tests-on-helm') {
-      withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-        stage('test-helm') {
-          sh "sleep 300"
-          sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
-          sh "oc status -n kube-system"
-          helm.helmConfig()
-          sh "oc logout"
-          sh "rm -rf ~/.kube"
+      openshift.withCluster() {
+        openshift.doAs('openshift-token') {
+          withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+            stage('test-helm') {
+              sh "sleep 300"
+              sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+              sh "oc status -n kube-system"
+              helm.helmConfig()
+              sh "oc logout"
+              sh "rm -rf ~/.kube"
+            }
+          }
         }
       }
     }
+    
 
     stage('build-source-code') {
         checkout scm
