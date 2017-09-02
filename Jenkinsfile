@@ -23,13 +23,15 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
+    sh 'env > env.txt'
+    for (String i : readFile('env.txt').split("\r?\n")) {
+      println i
+    }
 
     openshift.withCluster() {
+      withCredentials([openshiftToken(credentialsId: 'openshift-token', token: 'OS_TOKEN')]) {
+    // available as an env variable, but will be masked if you try to print it out any which way
       openshift.doAs('openshift-token') {
-        sh 'env > env.txt'
-        for (String i : readFile('env.txt').split("\r?\n")) {
-          println i
-        }
         stage('test-helm') {
           sh(script: "oc login --token $OS_TOKEN ${env.KUBERNETES_SERVICE_HOST}", returnStdout: false)
           sh "oc status"
