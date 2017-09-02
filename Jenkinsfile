@@ -27,17 +27,17 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
         stage('test-helm') {
-          def token = """${
+          def os_token = """${
             openshift.raw(
               'whoami -t'
             ).out
           }"""
-          def server = """${
+          def os_url = """${
             openshift.raw(
               'whoami --show-server'
             ).out
           }"""
-          sh "oc login --token ${token} ${server}"
+          sh "oc login --token ${os_token} ${os_url}"
           sh "oc status"
           helm.helmConfig()
         }
