@@ -29,9 +29,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       println i
     }
 
-    stage('tests-on-testing-env') {
+    stage('tests-on-helm') {
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
         stage('test-helm') {
+          sh "sleep 300"
           sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
           sh "oc status -n kube-system"
           helm.helmConfig()
@@ -46,8 +47,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         sh returnStdout: true, script: 'pwd'
         sh 'rm -rf node_modules || true'
         sh 'ln -s /usr/lib/node_modules .'
-        sh 'export DEBUG=1'
-        sh returnStdout: true, script: 'set -x; make build'
+        sh returnStdout: true, script: 'make build'
     }
 
     openshift.withCluster() {
