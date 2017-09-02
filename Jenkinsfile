@@ -14,6 +14,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
   ]
 ){
   node('geomapfish'){
+
+    checkout scm
     // get commit id
     sh 'git rev-parse HEAD > git_commit_id.txt'
     env.GIT_COMMIT_ID = readFile('git_commit_id.txt').trim()
