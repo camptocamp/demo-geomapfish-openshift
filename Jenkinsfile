@@ -30,12 +30,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
     openshift.withCluster() {
       withCredentials([openshiftToken(credentialsId: 'openshift-token', token: 'OS_TOKEN')]) {
-    // available as an env variable, but will be masked if you try to print it out any which way
-      openshift.doAs('openshift-token') {
-        stage('test-helm') {
-          sh(script: "oc login --token $OS_TOKEN ${env.KUBERNETES_SERVICE_HOST}", returnStdout: false)
-          sh "oc status"
-          helm.helmConfig()
+        openshift.doAs('openshift-token') {
+          stage('test-helm') {
+            sh(script: "oc login --token $OS_TOKEN ${env.KUBERNETES_SERVICE_HOST}", returnStdout: false)
+            sh "oc status"
+            helm.helmConfig()
+          }
         }
       }
     }
