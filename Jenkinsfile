@@ -21,6 +21,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 ){
   node('geomapfish'){
 
+    def pwd = pwd()
+    def chart_dir = "${pwd}/charts/demo-geomapfish"
+
     stage('build-source-code') {
         checkout scm
         sh returnStdout: true, script: 'pwd'
@@ -82,6 +85,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             )    
           }
         }
+
+        stage('build-chart') {
+            helm.helmConfig()
+        }
+
         stage('deploy-testing-env') {
           openshift.withProject( 'geomapfish-testing' ){
             parallel (
