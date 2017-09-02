@@ -29,7 +29,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         stage('test-helm') {
           def token = echo """${
             openshift.raw(
-              'oc whoami -t'
+              'whoami -t'
             ).out
           }"""
           sh "oc login --token ${token}"
