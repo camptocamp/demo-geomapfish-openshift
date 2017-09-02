@@ -38,6 +38,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                       'whoami'
                     ).out
                   }"""
+            echo openshift
             helm.helmConfig()
           }
         }
