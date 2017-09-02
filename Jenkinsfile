@@ -163,6 +163,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           if (version != null) {
             echo "TODO"
           }
+        }
       }
     }
   }
