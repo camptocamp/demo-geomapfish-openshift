@@ -29,12 +29,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       for (String i : readFile('env.txt').split("\r?\n")) {
         println i
       }
-      stage('test-helm') {
-        sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
-        helm.helmConfig()
-        sh "oc status -n kube-system"
-        sh "oc logout"
-      }
+      // stage('test-helm') {
+      //   sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+      //   sh "oc status -n kube-system"
+      //   sh "oc logout"
+      // }
     }
 
     stage('build-source-code') {
@@ -48,6 +47,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
     openshift.withCluster() {
       openshift.doAs('openshift-token') {
+        helm.helmConfig()
         stage('build-images') {
           openshift.withProject( 'geomapfish-cicd' ){
             parallel (
