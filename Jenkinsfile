@@ -29,6 +29,29 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       println i
     }
 
+    stage('tests-on-testing-env') {
+      openshift.withCluster() {
+        openshift.doAs('openshift-token') {
+          openshift.withProject( 'geomapfish-cicd' ){
+            echo """${
+                    openshift.raw(
+                      'whoami'
+                    ).out
+                  }"""
+            helm.helmConfig()
+          }
+        }
+      }
+      // withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+      //   stage('test-helm') {
+      //     sh "oc login --insecure-skip-tls-verify --token $TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+      //     sh "oc status -n kube-system"
+      //     helm.helmConfig()
+      //     sh "oc logout"
+      //   }
+      // }
+    }
+
     stage('build-source-code') {
         checkout scm
         sh returnStdout: true, script: 'pwd'
@@ -45,11 +68,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             parallel (
               "print" : {
                 echo "Active project: ${openshift.project()}"
-                echo """${
-                    openshift.raw(
-                      'whoami'
-                    ).out
-                  }"""
 
                 echo """${
                     openshift.raw(
@@ -98,34 +116,26 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         stage('deploy-testing-env') {
           openshift.withProject( 'geomapfish-testing' ){
-            openshift.doAs('openshift-token') {
-              echo """${
-                    openshift.raw(
-                      'status'
-                    ).out
-                  }"""
-              helm.helmConfig()
-              parallel (
-                "print" : {
-                  openshiftDeploy(
-                    depCfg: 'demo-geomapfish-print',
-                    namespace: 'geomapfish-testing'
-                  )
-                },
-                "mapserver" : {
-                  openshiftDeploy(
-                    depCfg: 'demo-geomapfish-mapserver',
-                    namespace: 'geomapfish-testing'
-                  )
-                },
-                "wsgi" : {
-                  openshiftDeploy(
-                    depCfg: 'demo-geomapfish-wsgi',
-                    namespace: 'geomapfish-testing'
-                  )
-                }
-              )              
-            }
+            parallel (
+              "print" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-print',
+                  namespace: 'geomapfish-testing'
+                )
+              },
+              "mapserver" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-mapserver',
+                  namespace: 'geomapfish-testing'
+                )
+              },
+              "wsgi" : {
+                openshiftDeploy(
+                  depCfg: 'demo-geomapfish-wsgi',
+                  namespace: 'geomapfish-testing'
+                )
+              }
+            )              
           }
         }
 
