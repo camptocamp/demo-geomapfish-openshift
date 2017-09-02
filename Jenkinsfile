@@ -30,7 +30,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
     openshift.withCluster() {
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-       openshift.doAs('openshift-token') {
         stage('test-helm') {
 
           sh "oc login --token $PASSWORD https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
