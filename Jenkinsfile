@@ -104,6 +104,15 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // compile tag list
         def image_tags_list = helm.getMapValues(image_tags_map)
 
+        openshift.withCluster() {
+          openshift.withProject( 'geomapfish-testing' ){
+            // tag the latest image commit sha
+            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: 'latest', destStream: 'demo-geomapfish-mapserver', destTag: image_tags_list.get(0))
+            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: 'latest', destStream: 'demo-geomapfish-print', destTag: image_tags_list.get(0))
+            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: 'latest', destStream: 'demo-geomapfish-wsgi', destTag: image_tags_list.get(0))
+          }
+        }
+
         helm.helmLint(chart_dir)
 
         // run dry-run helm chart installation
