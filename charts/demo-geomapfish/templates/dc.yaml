@@ -11,8 +11,6 @@ items:
       {{- include "geomapfish.release_labels" $root | indent 6 }}
   spec:
     replicas: {{ $value.replicas }}
-    selector:
-      {{- include "geomapfish.release_labels" $root | indent 6 }}
     strategy:
       resources: {}
     template:
