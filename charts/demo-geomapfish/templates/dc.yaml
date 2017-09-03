@@ -1,9 +1,9 @@
 {{- if eq .Values.clusterType "openshift" -}}
-  {{ $root := . }}
-apiVersion: {{ template "geomapfish.api_version" . }}
+{{ $root := . }}
+apiVersion: v1
 items:
   {{- range $key, $value := .Values.apps }}
-- apiVersion: v1
+- apiVersion: {{ template "geomapfish.api_version" $root }}
   kind: DeploymentConfig
   metadata:
     name: {{ template "geomapfish.fullname" $root }}-{{ $key }}
