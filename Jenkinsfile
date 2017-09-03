@@ -105,8 +105,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         def image_tags_list = helm.getMapValues(image_tags_map)
 
         echo "-----------------------"
-        echo image_tags_list
-        echo "-----------------------"
         echo image_tags_list.get(0)
         echo "-----------------------"
         helm.helmLint(chart_dir)
