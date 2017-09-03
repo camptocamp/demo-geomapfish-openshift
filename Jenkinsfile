@@ -135,6 +135,17 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
     }
 
+    stage('cleanup-testing-env') {
+      checkout scm
+      withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
+        helm.login()
+        helm.helmDelete(
+          name: "testing"
+        )
+        helm.logout()
+      }
+    }
+
     stage('deploy-staging-env') {
         echo "TODO"
     }

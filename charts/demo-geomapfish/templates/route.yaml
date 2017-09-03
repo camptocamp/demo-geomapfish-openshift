@@ -10,7 +10,7 @@ spec:
     targetPort: {{ .Values.apps.wsgi.port }}
   to:
     kind: Service
-    name: {{ template "geomapfish.name" . }}-wsgi
+    name: {{ template "geomapfish.fullname" . }}-wsgi
     weight: 100
   wildcardPolicy: None
 {{- end }}
