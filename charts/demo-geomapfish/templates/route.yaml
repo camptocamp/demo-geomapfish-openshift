@@ -6,6 +6,8 @@ metadata:
   labels:
     {{- include "geomapfish.release_labels" . | indent 4 }}
 spec:
+  port:
+    targetPort: "{{ .Values.apps.wsgi.port }}"
   to:
     kind: Service
     name: {{ template "geomapfish.fullname" . }}-wsgi
