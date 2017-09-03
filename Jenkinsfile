@@ -23,11 +23,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
 
-    sh 'env > env.txt'
-    for (String i : readFile('env.txt').split("\r?\n")) {
-      println i
-    }
-
     stage('build-source-code') {
         checkout scm
         sh returnStdout: true, script: 'pwd'
@@ -120,6 +115,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             // set additional git envvars for image tagging
             helm.gitEnvVars()
 
+            sh 'env > env.txt'
+            for (String i : readFile('env.txt').split("\r?\n")) {
+              println i
+            }
+
             // tag image with version, and branch-commit_id
             def image_tags_map = helm.getContainerTags()
 
@@ -142,8 +142,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
 
         stage('tests-on-testing-env') {
-          sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?'
-          sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
+          sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?'
+          sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
         }
 
         stage('deploy-staging-env') {
