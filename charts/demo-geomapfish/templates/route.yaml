@@ -1,0 +1,16 @@
+{{- if eq .Values.clusterType "openshift" -}}
+apiVersion: {{ template "geomapfish.api_version" . }}
+kind: Route
+metadata:
+  name: {{ template "geomapfish.fullname" . }}
+  labels:
+    {{- include "geomapfish.release_labels" . | indent 4 }}
+spec:
+  port:
+    targetPort: {{ .Values.apps.wsgi.port }}
+  to:
+    kind: Service
+    name: {{ template "geomapfish.name" . }}-wsgi
+    weight: 100
+  wildcardPolicy: None
+{{- end }}
