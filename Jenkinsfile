@@ -83,59 +83,58 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     //         )    
     //       }
     //     }
+    //   }
+    // }
+    stage('deploy-testing-env') {
+      withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
+        helm.login()
 
-        stage('deploy-testing-env') {
-          withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-            helm.login()
+        // set additional git envvars for image tagging
+        helm.gitEnvVars()
 
-            // set additional git envvars for image tagging
-            helm.gitEnvVars()
-
-            sh 'env > env.txt'
-            for (String i : readFile('env.txt').split("\r?\n")) {
-              println i
-            }
-
-            // tag image with version, and branch-commit_id
-            def image_tags_map = helm.getContainerTags()
-
-            // compile tag list
-            def image_tags_list = helm.getMapValues(image_tags_map)
-
-            echo "-----------------------"
-            echo image_tags_list
-            echo "-----------------------"
-            echo image_tags_list.get(0)
-            echo "-----------------------"
-            helm.helmLint(chart_dir)
-
-            // run dry-run helm chart installation
-            helm.helmDeploy(
-              dry_run       : true,
-              name          : "demo-geomapfish",
-              namespace     : "geomapfish-testing",
-              version_tag   : image_tags_list.get(0),
-              chart_dir     : chart_dir,
-            )
-
-            helm.logout()
-          }
+        sh 'env > env.txt'
+        for (String i : readFile('env.txt').split("\r?\n")) {
+          println i
         }
 
-        stage('tests-on-testing-env') {
-          sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?'
-          sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
-        }
+        // tag image with version, and branch-commit_id
+        def image_tags_map = helm.getContainerTags()
 
-        stage('deploy-staging-env') {
-            echo "TODO"
-        }
+        // compile tag list
+        def image_tags_list = helm.getMapValues(image_tags_map)
 
-        stage('deploy-prd-env') {
-            echo "TODO"
-        }
+        echo "-----------------------"
+        echo image_tags_list
+        echo "-----------------------"
+        echo image_tags_list.get(0)
+        echo "-----------------------"
+        helm.helmLint(chart_dir)
 
+        // run dry-run helm chart installation
+        helm.helmDeploy(
+          dry_run       : true,
+          name          : "demo-geomapfish",
+          namespace     : "geomapfish-testing",
+          version_tag   : image_tags_list.get(0),
+          chart_dir     : chart_dir,
+        )
+
+        helm.logout()
       }
     }
+
+    stage('tests-on-testing-env') {
+      sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?'
+      sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
+    }
+
+    stage('deploy-staging-env') {
+        echo "TODO"
+    }
+
+    stage('deploy-prd-env') {
+        echo "TODO"
+    }
+
   }
 }
