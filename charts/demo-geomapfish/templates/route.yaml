@@ -2,7 +2,7 @@
 apiVersion: {{ template "geomapfish.api_version" . }}
 kind: Route
 metadata:
-  name: {{ template "geomapfish.fullname" . }}
+  name: {{ template "geomapfish.fullname" . }}-wsgi
   labels:
     {{- include "geomapfish.release_labels" . | indent 4 }}
 spec:

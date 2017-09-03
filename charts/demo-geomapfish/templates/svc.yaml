@@ -10,7 +10,7 @@ items:
       {{- include "geomapfish.release_labels" $root | indent 6 }}
   spec:
     ports:
-    - name: {{ $value.port }}
+    - name: "{{ $value.port }}"
       port: {{ $value.port }}
       protocol: {{ $value.protocol }}
       targetPort: {{ $value.targetPort }}
