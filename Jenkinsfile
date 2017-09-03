@@ -117,8 +117,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
 
         stage('tests-on-testing-env') {
-          sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?'
-          sh 'curl demo-geomapfish-wsgi-geomapfish-stage.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
+          sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?'
+          sh 'curl demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all'
         }
 
         stage('deploy-staging-env') {
