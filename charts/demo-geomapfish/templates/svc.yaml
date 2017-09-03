@@ -14,5 +14,7 @@ items:
       port: {{ $value.port }}
       protocol: {{ $value.protocol }}
       targetPort: {{ $value.targetPort }}
+    selector:
+      deploymentconfig: {{ template "geomapfish.fullname" $root }}-{{ $key }}
 {{- end }}
 kind: List
