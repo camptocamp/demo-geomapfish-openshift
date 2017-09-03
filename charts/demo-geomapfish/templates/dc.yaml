@@ -31,7 +31,8 @@ items:
           resources: {}
         restartPolicy: Always
     test: false
-    triggers: {}
+    triggers:
+    - type: ConfigChange
   {{- end }}
 kind: List
 {{- end }}
