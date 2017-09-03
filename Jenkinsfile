@@ -86,6 +86,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     //   }
     // }
     stage('deploy-testing-env') {
+      checkout scm
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
         helm.login()
 
