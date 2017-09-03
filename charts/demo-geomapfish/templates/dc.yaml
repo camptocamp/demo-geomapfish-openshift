@@ -8,6 +8,7 @@ items:
   metadata:
     name: {{ template "geomapfish.fullname" $root }}-{{ $key }}
     labels:
+      name: {{ template "geomapfish.fullname" $root }}-{{ $key }}
       {{- include "geomapfish.release_labels" $root | indent 6 }}
   spec:
     replicas: {{ $value.replicas }}
@@ -16,6 +17,7 @@ items:
     template:
       metadata:
         labels:
+          name: {{ template "geomapfish.fullname" $root }}-{{ $key }}
           {{- include "geomapfish.release_labels" $root | indent 10 }}
       spec:
         containers:
