@@ -1,7 +1,8 @@
-{{ $root := . }}
-apiVersion: v1
+{{- if eq .Values.clusterType "openshift" -}}
+  {{ $root := . }}
+apiVersion: {{ template "geomapfish.api_version" . }}
 items:
-{{- range $key, $value := .Values.apps }}
+  {{- range $key, $value := .Values.apps }}
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -24,12 +25,13 @@ items:
           image: {{ $root.Values.registry.host }}:{{ $root.Values.registry.port }}/{{ $root.Values.registry.namespace }}/{{ template "geomapfish.name" $root }}-print:{{ $root.Values.imageTag }}
           ports:
           - containerPort: {{ $value.port }}
-  {{- if $value.dbEnvs }}          
-    {{- include "geomapfish.db_envs" $root | indent 10 }}
-  {{- end }}
+    {{- if $value.dbEnvs }}
+      {{- include "geomapfish.db_envs" $root | indent 10 }}
+    {{- end }}
           resources: {}
         restartPolicy: Always
     test: false
     triggers: {}
-{{- end }}
+  {{- end }}
 kind: List
+{{- end }}
