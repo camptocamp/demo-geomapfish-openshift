@@ -126,9 +126,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
             helm.logout()
 
-            openshiftVerifyDeployment(bldCfg: 'testing-demo-geomapfish-mapserver')
-            openshiftVerifyDeployment(bldCfg: 'testing-demo-geomapfish-print')
-            openshiftVerifyDeployment(bldCfg: 'testing-demo-geomapfish-wsgi')
+            openshiftVerifyDeployment(depCfg: 'testing-demo-geomapfish-mapserver')
+            openshiftVerifyDeployment(depCfg: 'testing-demo-geomapfish-print')
+            openshiftVerifyDeployment(depCfg: 'testing-demo-geomapfish-wsgi')
           }
         }
       }
