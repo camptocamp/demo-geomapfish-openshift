@@ -38,13 +38,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             parallel (
               "print" : {
                 echo "Active project: ${openshift.project()}"
-
-                echo """${
-                    openshift.raw(
-                      'status'
-                    ).out
-                  }"""
-
                 echo """${
                   openshift.raw(
                     'start-build',
