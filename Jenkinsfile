@@ -104,15 +104,20 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // compile tag list
         def image_tags_list = helm.getMapValues(image_tags_map)
 
-        echo "-----------------------"
-        echo image_tags_list.get(0)
-        echo "-----------------------"
         helm.helmLint(chart_dir)
 
         // run dry-run helm chart installation
         helm.helmDeploy(
           dry_run       : true,
-          name          : "demo-geomapfish",
+          name          : "testing",
+          namespace     : "geomapfish-testing",
+          version_tag   : image_tags_list.get(0),
+          chart_dir     : chart_dir,
+        )
+
+        // run helm chart installation
+        helm.helmDeploy(
+          name          : "testing",
           namespace     : "geomapfish-testing",
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,

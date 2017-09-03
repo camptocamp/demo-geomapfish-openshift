@@ -43,4 +43,3 @@ apps:
     protocol: TCP
     targetPort: 80
     replicas: 1
-testvar: "{{ .Release.Namespace }}"
