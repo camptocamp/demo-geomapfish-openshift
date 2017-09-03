@@ -104,29 +104,33 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: 'latest', destStream: 'demo-geomapfish-mapserver', destTag: image_tags_list.get(0))
             openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: 'latest', destStream: 'demo-geomapfish-print', destTag: image_tags_list.get(0))
             openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: 'latest', destStream: 'demo-geomapfish-wsgi', destTag: image_tags_list.get(0))
+
+            helm.helmLint(chart_dir)
+
+            // run dry-run helm chart installation
+            helm.helmDeploy(
+              dry_run       : true,
+              name          : "testing",
+              namespace     : "geomapfish-testing",
+              version_tag   : image_tags_list.get(0),
+              chart_dir     : chart_dir,
+            )
+
+            // run helm chart installation
+            helm.helmDeploy(
+              name          : "testing",
+              namespace     : "geomapfish-testing",
+              version_tag   : image_tags_list.get(0),
+              chart_dir     : chart_dir,
+            )
+
+            helm.logout()
+
+            openshiftVerifyDeployment(bldCfg: 'testing-demo-geomapfish-mapsercer')
+            openshiftVerifyDeployment(bldCfg: 'testing-demo-geomapfish-print')
+            openshiftVerifyDeployment(bldCfg: 'testing-demo-geomapfish-wsgi')
           }
         }
-
-        helm.helmLint(chart_dir)
-
-        // run dry-run helm chart installation
-        helm.helmDeploy(
-          dry_run       : true,
-          name          : "testing",
-          namespace     : "geomapfish-testing",
-          version_tag   : image_tags_list.get(0),
-          chart_dir     : chart_dir,
-        )
-
-        // run helm chart installation
-        helm.helmDeploy(
-          name          : "testing",
-          namespace     : "geomapfish-testing",
-          version_tag   : image_tags_list.get(0),
-          chart_dir     : chart_dir,
-        )
-
-        helm.logout()
       }
     }
 
