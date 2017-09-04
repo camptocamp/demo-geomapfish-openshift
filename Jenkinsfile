@@ -204,7 +204,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           dry_run       : true,
           name          : helm_release_staging,
           namespace     : namespace_staging,
-          version_tag   : image_tags_list.get(0),
+          version_tag   : "staging",
           chart_dir     : chart_dir,
           replicas      : 2
         )
@@ -213,7 +213,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.helmDeploy(
           name          : helm_release_staging,
           namespace     : namespace_staging,
-          version_tag   : image_tags_list.get(0),
+          version_tag   : "staging",
           chart_dir     : chart_dir,
           replicas      : 2
           
@@ -251,7 +251,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             dry_run       : true,
             name          : helm_release_prod,
             namespace     : namespace_prod,
-            version_tag   : image_tags_list.get(0),
+            version_tag   : "prod",
             chart_dir     : chart_dir,
             replicas      : 4
           )
@@ -260,7 +260,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.helmDeploy(
             name          : helm_release_prod,
             namespace     : namespace_prod,
-            version_tag   : image_tags_list.get(0),
+            version_tag   : "prod",
             chart_dir     : chart_dir,
             replicas      : 4
           )
