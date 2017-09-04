@@ -131,7 +131,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.helmDeploy(
           dry_run       : true,
           name          : helm_release_testing,
-          namespace     : namespace,
+          namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
         )
@@ -139,7 +139,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // run helm chart installation
         helm.helmDeploy(
           name          : helm_release_testing,
-          namespace     : namespace,
+          namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
         )
@@ -147,23 +147,23 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.logout()
 
         openshiftVerifyDeployment(
-          namespace: namespace,
+          namespace: namespace_testing,
           depCfg: "$helm_release_testing-$helm_chart-mapserver"
         )
         openshiftVerifyDeployment(
-          namespace: namespace,
+          namespace: namespace_testing,
           depCfg: "$helm_release_testing-$helm_chart-print"
         )
         openshiftVerifyDeployment(
-          namespace: namespace,
+          namespace: namespace_testing,
           depCfg: "$helm_release_testing-$helm_chart-wsgi"
         )
       }
     }
 
     stage('tests-on-testing-env') {
-      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?"
-      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?type=all"
+      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?"
+      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?type=all"
     }
 
     stage('cleanup-testing-env') {
