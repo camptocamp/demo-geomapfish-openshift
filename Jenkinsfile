@@ -181,15 +181,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         return
       }
 
-      stage('cleanup-testing') {
-        echo "cleanup"
-        helm.login()
-        helm.helmDelete(
-          name: helm_release_testing
-        )
-        helm.logout()
-      }
-
       stage('deploy-on-staging') {
         openshift.withProject( 'geomapfish-prod' ){
           // tag the latest image as staging
@@ -199,6 +190,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
 
         helm.login()
+
+        // cleanup testing env
+        helm.helmDelete(
+          name: helm_release_testing
+        )
+
         // run dry-run helm chart installation
         helm.helmDeploy(
           dry_run       : true,
@@ -242,6 +239,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'prod')
           }
           helm.login()
+
+          // cleanup staging env
+          helm.helmDelete(
+            name: helm_release_staging
+          )
+
           // run dry-run helm chart installation
           helm.helmDeploy(
             dry_run       : true,
