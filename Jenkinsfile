@@ -41,7 +41,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_release_testing = "ref-${image_tags_list.get(0)}"
 
       def namespace_staging = "geomapfish-staging"
-      def helm_release_staging = "ref-${image_tags_list.get(0)}"
+      def helm_release_staging = "stage"
 
       def namespace_prod = "geomapfish-staging"
       def helm_release_prod = "prod"
@@ -144,6 +144,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
+          replicas      : 1
         )
 
         // run helm chart installation
@@ -152,6 +153,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
+          replicas      : 1
         )
 
         helm.logout()
@@ -203,6 +205,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_staging,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
+          replicas      : 2
         )
 
         // run helm chart installation
@@ -211,6 +214,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_staging,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
+          replicas      : 2
+          
         )
         helm.logout()
       }
@@ -252,6 +257,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             namespace     : namespace_prod,
             version_tag   : image_tags_list.get(0),
             chart_dir     : chart_dir,
+            replicas      : 4
           )
 
           // run helm chart installation
@@ -260,6 +266,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             namespace     : namespace_prod,
             version_tag   : image_tags_list.get(0),
             chart_dir     : chart_dir,
+            replicas      : 4
           )
           helm.logout()
         }
