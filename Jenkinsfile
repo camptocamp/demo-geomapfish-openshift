@@ -37,8 +37,14 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_chart = "demo-geomapfish"
       def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
 
-      def helm_release_testing = "ref-${image_tags_list.get(0)}"
       def namespace_testing = "geomapfish-testing"
+      def helm_release_testing = "ref-${image_tags_list.get(0)}"
+
+      def namespace_staging = "geomapfish-staging"
+      def helm_release_staging = "ref-${image_tags_list.get(0)}"
+
+      def namespace_prod = "geomapfish-staging"
+      def helm_release_prod = "prod"
 
       def debug = true
 
@@ -97,7 +103,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
       }
     
-      stage('deploy-on-testing-env') {
+      stage('deploy-on-testing') {
 
         checkout scm
         helm.login()
@@ -164,28 +170,96 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         )
       }
 
-      stage('tests-on-testing-env') {
+      stage('integration-test') {
         sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?"
         sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?type=all"
       }
 
-      stage('cleanup-testing-env') {
+      // debug hook for testing env
+      if (debug) {
+        currentBuild.result = 'SUCCESS'
+        return
+      }
+
+      stage('cleanup-testing') {
         echo "cleanup"
-        if (!debug) {
+        helm.login()
+        helm.helmDelete(
+          name: helm_release_testing
+        )
+        helm.logout()
+      }
+
+      stage('deploy-on-staging') {
+        openshift.withProject( 'geomapfish-prod' ){
+          // tag the latest image as staging
+          openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
+          openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: 'staging')
+          openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
+        }
+
+        helm.login()
+        // run dry-run helm chart installation
+        helm.helmDeploy(
+          dry_run       : true,
+          name          : helm_release_staging,
+          namespace     : namespace_staging,
+          version_tag   : image_tags_list.get(0),
+          chart_dir     : chart_dir,
+        )
+
+        // run helm chart installation
+        helm.helmDeploy(
+          name          : helm_release_staging,
+          namespace     : namespace_staging,
+          version_tag   : image_tags_list.get(0),
+          chart_dir     : chart_dir,
+        )
+        helm.logout()
+      }
+
+      stage('deploy-on-prod') {
+        def promote = false
+        try {
+          timeout(time: 7, unit: 'DAYS') {
+            promote = input message: 'Deploy to Production',
+            parameters: [
+              [ $class: 'BooleanParameterDefinition',
+                defaultValue: false,
+                description: 'Deploy to Production',
+                name: 'Deploy to Production'
+              ]
+            ]
+          }
+        } catch (err) {
+          // don't promote => no error
+        }
+        if (promote) {
+          openshift.withProject( 'geomapfish-prod' ){
+            // tag the latest image as staging
+            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: 'prod')
+            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: 'prod')
+            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'prod')
+          }
           helm.login()
-          helm.helmDelete(
-            name: helm_release_testing
+          // run dry-run helm chart installation
+          helm.helmDeploy(
+            dry_run       : true,
+            name          : helm_release_prod,
+            namespace     : namespace_prod,
+            version_tag   : image_tags_list.get(0),
+            chart_dir     : chart_dir,
+          )
+
+          // run helm chart installation
+          helm.helmDeploy(
+            name          : helm_release_prod,
+            namespace     : namespace_prod,
+            version_tag   : image_tags_list.get(0),
+            chart_dir     : chart_dir,
           )
           helm.logout()
         }
-      }
-
-      stage('deploy-on-staging-env') {
-          echo "TODO"
-      }
-
-      stage('deploy-on-prod-env') {
-          echo "TODO"
       }
     }
   }
