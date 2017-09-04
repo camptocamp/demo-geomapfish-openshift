@@ -134,7 +134,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // run dry-run helm chart installation
         helm.helmDeploy(
           dry_run       : true,
-          name          : image_tags_list.get(0),
+          name          : "${image_tags_list.get(0)}",
           namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
@@ -142,7 +142,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         // run helm chart installation
         helm.helmDeploy(
-          name          : image_tags_list.get(0),
+          name          : "${image_tags_list.get(0)}",
           namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
