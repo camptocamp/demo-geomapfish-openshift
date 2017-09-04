@@ -84,6 +84,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_chart = "demo-geomapfish"
       def helm_release = "gmf-test"
       def namespace = "geomapfish-testing"
+      def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
 
       checkout scm
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
@@ -160,15 +161,15 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     }
 
     stage('tests-on-testing-env') {
-      sh "curl ${helm_release}-${helm_chart}-wsgi-${namespace}.cloudapp.openshift-poc.camptocamp.com/check_collector?"
-      sh "curl ${helm_release}-${helm_chart}-wsgi-${namespace}.cloudapp.openshift-poc.camptocamp.com/check_collector?type=all"
+      sh "curl ${helm_release}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?"
+      sh "curl ${helm_release}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?type=all"
     }
 
     stage('cleanup-testing-env') {
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
         helm.login()
         helm.helmDelete(
-          name: "testing"
+          name: helm_release
         )
         helm.logout()
       }
