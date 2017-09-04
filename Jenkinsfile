@@ -29,7 +29,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     def helm_release_testing = "gmf-test"
     def namespace_testing = "geomapfish-testing"
 
-    def debug = false
+    def debug = true
 
     stage('build-source-code') {
         checkout scm
