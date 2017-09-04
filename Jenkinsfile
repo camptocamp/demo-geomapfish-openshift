@@ -23,6 +23,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/demo-geomapfish"
 
+    def helm_chart = "demo-geomapfish"
+    def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
+
+    def helm_release_testing = "gmf-test"
+    def namespace_testing = "geomapfish-testing"
+
     stage('build-source-code') {
         checkout scm
         sh returnStdout: true, script: 'pwd'
@@ -81,11 +87,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
   
     stage('deploy-testing-env') {
 
-      def helm_chart = "demo-geomapfish"
-      def helm_release = "gmf-test"
-      def namespace = "geomapfish-testing"
-      def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
-
       checkout scm
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
         helm.login()
@@ -129,7 +130,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // run dry-run helm chart installation
         helm.helmDeploy(
           dry_run       : true,
-          name          : helm_release,
+          name          : helm_release_testing,
           namespace     : namespace,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
@@ -137,7 +138,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         // run helm chart installation
         helm.helmDeploy(
-          name          : helm_release,
+          name          : helm_release_testing,
           namespace     : namespace,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
@@ -147,29 +148,29 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         openshiftVerifyDeployment(
           namespace: namespace,
-          depCfg: "$helm_release-$helm_chart-mapserver"
+          depCfg: "$helm_release_testing-$helm_chart-mapserver"
         )
         openshiftVerifyDeployment(
           namespace: namespace,
-          depCfg: "$helm_release-$helm_chart-print"
+          depCfg: "$helm_release_testing-$helm_chart-print"
         )
         openshiftVerifyDeployment(
           namespace: namespace,
-          depCfg: "$helm_release-$helm_chart-wsgi"
+          depCfg: "$helm_release_testing-$helm_chart-wsgi"
         )
       }
     }
 
     stage('tests-on-testing-env') {
-      sh "curl ${helm_release}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?"
-      sh "curl ${helm_release}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?type=all"
+      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?"
+      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace}.${openshift_subdomain}/check_collector?type=all"
     }
 
     stage('cleanup-testing-env') {
       withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
         helm.login()
         helm.helmDelete(
-          name: helm_release
+          name: helm_release_testing
         )
         helm.logout()
       }
