@@ -39,9 +39,9 @@ env:
     {{ .Values.db.type }}://{{ .Values.db.user }}:{{ .Values.db.pass }}@{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.gmf_db }}
 - name: MAPSERVER_URL
   value: >-
-    http://{{ template "geomapfish.name" . }}-wsgi.{{ .Release.Namespace }}.svc:{{ .Values.apps.mapserver.port}}
+    http://{{ template "geomapfish.fullname" . }}-wsgi.{{ .Release.Namespace }}.svc:{{ .Values.apps.mapserver.port}}
 - name: PRINT_URL_PRINT_DEMO
   value: >-
-    http://http://{{ template "geomapfish.name" . }}-print.{{ .Release.Namespace }}.svc:{{ .Values.apps.print.port}}/print/demo
+    http://{{ template "geomapfish.fullname" . }}-print.{{ .Release.Namespace }}.svc:{{ .Values.apps.print.port}}/print/demo
 {{- end }}
 
