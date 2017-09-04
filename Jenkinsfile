@@ -170,6 +170,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       }
 
       stage('cleanup-testing-env') {
+        echo "cleanup"
         if (!debug) {
           helm.login()
           helm.helmDelete(
