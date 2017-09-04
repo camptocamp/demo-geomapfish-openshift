@@ -29,6 +29,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     def helm_release_testing = "gmf-test"
     def namespace_testing = "geomapfish-testing"
 
+    def debug = false
+
     stage('build-source-code') {
         checkout scm
         sh returnStdout: true, script: 'pwd'
@@ -94,11 +96,13 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // set additional git envvars for image tagging
         helm.gitEnvVars()
 
-        sh 'env > env.txt'
-        for (String i : readFile('env.txt').split("\r?\n")) {
-          println i
+        if debug {
+          sh 'env > env.txt'
+          for (String i : readFile('env.txt').split("\r?\n")) {
+            println i
+          }
         }
-
+  
         // tag image with version, and branch-commit_id
         def image_tags_map = helm.getContainerTags()
 
@@ -167,13 +171,15 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     }
 
     stage('cleanup-testing-env') {
-      // withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-      //   helm.login()
-      //   helm.helmDelete(
-      //     name: helm_release_testing
-      //   )
-      //   helm.logout()
-      // }
+        if !debug {
+        withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
+          helm.login()
+          helm.helmDelete(
+            name: helm_release_testing
+          )
+          helm.logout()
+        }
+      }
     }
 
     stage('deploy-staging-env') {
