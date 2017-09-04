@@ -96,7 +96,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // set additional git envvars for image tagging
         helm.gitEnvVars()
 
-        if debug {
+        if (debug) {
           sh 'env > env.txt'
           for (String i : readFile('env.txt').split("\r?\n")) {
             println i
@@ -171,7 +171,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     }
 
     stage('cleanup-testing-env') {
-        if !debug {
+        if (!debug) {
         withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
           helm.login()
           helm.helmDelete(
