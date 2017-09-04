@@ -37,11 +37,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_chart = "demo-geomapfish"
       def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
 
+      // define release and namespaces (Caution: release must be unique over namespaces)
       def namespace_testing = "geomapfish-testing"
       def helm_release_testing = "ref-${image_tags_list.get(0)}"
 
       def namespace_staging = "geomapfish-staging"
-      def helm_release_staging = "stage"
+      def helm_release_staging = "stage-${image_tags_list.get(0)}"
 
       def namespace_prod = "geomapfish-staging"
       def helm_release_prod = "prod"
@@ -224,11 +225,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         def promote = false
         try {
           timeout(time: 7, unit: 'DAYS') {
-            promote = input message: 'Deploy to Production',
+            promote = input message: 'Input Required',
             parameters: [
               [ $class: 'BooleanParameterDefinition',
                 defaultValue: false,
-                description: 'Deploy to Production',
+                description: 'Check the box for a Production deployment',
                 name: 'Deploy to Production'
               ]
             ]
@@ -244,11 +245,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'prod')
           }
           helm.login()
-
-          // cleanup staging env
-          helm.helmDelete(
-            name: helm_release_staging
-          )
 
           // run dry-run helm chart installation
           helm.helmDeploy(

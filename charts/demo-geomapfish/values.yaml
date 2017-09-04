@@ -12,6 +12,9 @@ clusterType: openshift
 
 imageTag: latest
 
+# this replica is valid for the wsgi service/pod
+replicas: 1
+
 registry:
   host: 172.30.26.108
   port: 5000
