@@ -24,10 +24,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def pwd = pwd()
       def chart_dir = "${pwd}/charts/demo-geomapfish"
 
-      def helm_chart = "demo-geomapfish"
+      def helm_chart = "gmpt"
       def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
 
-      def helm_release_testing = "gmf-test"
+      def helm_release_testing = "gt"
       def namespace_testing = "geomapfish-testing"
 
       def debug = true
