@@ -32,7 +32,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       def debug = true
 
-      stage('build-source-code') {
+      stage('build-applications') {
           checkout scm
           sh returnStdout: true, script: 'pwd'
           sh 'rm -rf node_modules || true'
@@ -88,7 +88,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
       }
     
-      stage('deploy-testing-env') {
+      stage('deploy-on-testing-env') {
 
         checkout scm
         helm.login()
@@ -179,11 +179,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         }
       }
 
-      stage('deploy-staging-env') {
+      stage('deploy-on-staging-env') {
           echo "TODO"
       }
 
-      stage('deploy-prd-env') {
+      stage('deploy-on-prod-env') {
           echo "TODO"
       }
     }
