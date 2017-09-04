@@ -20,6 +20,13 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 ){
   node('geomapfish'){
     withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
+      // set additional git envvars for image tagging
+      helm.gitEnvVars()
+      // tag image with version, and branch-commit_id
+      def image_tags_map = helm.getContainerTags()
+
+      // compile tag list
+      def image_tags_list = helm.getMapValues(image_tags_map)
 
       def pwd = pwd()
       def chart_dir = "${pwd}/charts/demo-geomapfish"
@@ -27,7 +34,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_chart = "demo-geomapfish"
       def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
 
-      def helm_release_testing = "gt"
+      def helm_release_testing = image_tags_list.get(0)
       def namespace_testing = "geomapfish-testing"
 
       def debug = true
@@ -93,21 +100,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         checkout scm
         helm.login()
 
-        // set additional git envvars for image tagging
-        helm.gitEnvVars()
-
         if (debug) {
           sh 'env > env.txt'
           for (String i : readFile('env.txt').split("\r?\n")) {
             println i
           }
         }
-
-        // tag image with version, and branch-commit_id
-        def image_tags_map = helm.getContainerTags()
-
-        // compile tag list
-        def image_tags_list = helm.getMapValues(image_tags_map)
 
         // tag the latest image commit sha
         openshiftTag(
@@ -134,7 +132,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // run dry-run helm chart installation
         helm.helmDeploy(
           dry_run       : true,
-          name          : "${image_tags_list.get(0)}",
+          name          : helm_release_testing,
           namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
@@ -142,7 +140,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
         // run helm chart installation
         helm.helmDeploy(
-          name          : "${image_tags_list.get(0)}",
+          name          : helm_release_testing,
           namespace     : namespace_testing,
           version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
