@@ -19,78 +19,78 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
   ]
 ){
   node('geomapfish'){
+    withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
 
-    def pwd = pwd()
-    def chart_dir = "${pwd}/charts/demo-geomapfish"
+      def pwd = pwd()
+      def chart_dir = "${pwd}/charts/demo-geomapfish"
 
-    def helm_chart = "demo-geomapfish"
-    def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
+      def helm_chart = "demo-geomapfish"
+      def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
 
-    def helm_release_testing = "gmf-test"
-    def namespace_testing = "geomapfish-testing"
+      def helm_release_testing = "gmf-test"
+      def namespace_testing = "geomapfish-testing"
 
-    def debug = true
+      def debug = true
 
-    stage('build-source-code') {
-        checkout scm
-        sh returnStdout: true, script: 'pwd'
-        sh 'rm -rf node_modules || true'
-        sh 'ln -s /usr/lib/node_modules .'
-        sh returnStdout: true, script: 'make build'
-    }
+      stage('build-source-code') {
+          checkout scm
+          sh returnStdout: true, script: 'pwd'
+          sh 'rm -rf node_modules || true'
+          sh 'ln -s /usr/lib/node_modules .'
+          sh returnStdout: true, script: 'make build'
+      }
 
-    stage('build-images') {
-      openshift.withCluster() {
-        openshift.doAs('openshift-token') {
-          openshift.withProject( 'geomapfish-cicd' ){
-            parallel (
-              "print" : {
-                echo "Active project: ${openshift.project()}"
-                echo """${
-                  openshift.raw(
-                    'start-build',
-                    'demo-geomapfish-print',
-                    '--from-dir',
-                    './print',
-                    '--wait',
-                    '--follow'
-                  ).out
-                }"""
-              },
-              "mapserver" : {
-                echo """${
-                  openshift.raw(
-                    'start-build',
-                    'demo-geomapfish-mapserver',
-                    '--from-dir',
-                    './mapserver',
-                    '--wait',
-                    '--follow'
-                  ).out
-                }"""
-              },
-              "wsgi" : {
-                echo """${
-                  openshift.raw(
-                    'start-build',
-                    'demo-geomapfish-wsgi',
-                    '--from-dir',
-                    './',
-                    '--wait',
-                    '--follow'
-                  ).out
-                }"""
-              }
-            )    
+      stage('build-images') {
+        openshift.withCluster() {
+          openshift.doAs('openshift-token') {
+            openshift.withProject( 'geomapfish-cicd' ){
+              parallel (
+                "print" : {
+                  echo "Active project: ${openshift.project()}"
+                  echo """${
+                    openshift.raw(
+                      'start-build',
+                      'demo-geomapfish-print',
+                      '--from-dir',
+                      './print',
+                      '--wait',
+                      '--follow'
+                    ).out
+                  }"""
+                },
+                "mapserver" : {
+                  echo """${
+                    openshift.raw(
+                      'start-build',
+                      'demo-geomapfish-mapserver',
+                      '--from-dir',
+                      './mapserver',
+                      '--wait',
+                      '--follow'
+                    ).out
+                  }"""
+                },
+                "wsgi" : {
+                  echo """${
+                    openshift.raw(
+                      'start-build',
+                      'demo-geomapfish-wsgi',
+                      '--from-dir',
+                      './',
+                      '--wait',
+                      '--follow'
+                    ).out
+                  }"""
+                }
+              )    
+            }
           }
         }
       }
-    }
-  
-    stage('deploy-testing-env') {
+    
+      stage('deploy-testing-env') {
 
-      checkout scm
-      withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
+        checkout scm
         helm.login()
 
         // set additional git envvars for image tagging
@@ -102,7 +102,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             println i
           }
         }
-  
+
         // tag image with version, and branch-commit_id
         def image_tags_map = helm.getContainerTags()
 
@@ -163,16 +163,14 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           depCfg: "$helm_release_testing-$helm_chart-wsgi"
         )
       }
-    }
 
-    stage('tests-on-testing-env') {
-      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?"
-      sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?type=all"
-    }
+      stage('tests-on-testing-env') {
+        sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?"
+        sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?type=all"
+      }
 
-    stage('cleanup-testing-env') {
+      stage('cleanup-testing-env') {
         if (!debug) {
-        withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
           helm.login()
           helm.helmDelete(
             name: helm_release_testing
@@ -180,15 +178,14 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.logout()
         }
       }
-    }
 
-    stage('deploy-staging-env') {
-        echo "TODO"
-    }
+      stage('deploy-staging-env') {
+          echo "TODO"
+      }
 
-    stage('deploy-prd-env') {
-        echo "TODO"
+      stage('deploy-prd-env') {
+          echo "TODO"
+      }
     }
-
   }
 }
