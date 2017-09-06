@@ -105,7 +105,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // }
     
       stage('deploy-on-testing') {
-
         checkout scm
         helm.login()
 
