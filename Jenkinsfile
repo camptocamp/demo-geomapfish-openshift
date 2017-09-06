@@ -1,7 +1,6 @@
 #!/usr/bin/groovy
 
 // Load helm shared library
-
 @Library('github.com/camptocamp/jenkins-lib-helm')
 def helm = new com.camptocamp.Helm()
 
