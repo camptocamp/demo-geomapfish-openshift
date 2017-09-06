@@ -219,6 +219,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.logout()
       }
 
+
       stage('deploy-on-prod') {
         def promote = false
         try {
