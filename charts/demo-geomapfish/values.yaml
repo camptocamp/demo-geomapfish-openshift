@@ -10,8 +10,8 @@ author: "marc.sutterATcamptocamp.com"
 # More infos on this: https://github.com/megalord/openshift-api-group
 clusterType: openshift
 
+# Image tag to use
 imageTag: latest
-ref: N/A
 
 # this replica is valid for the wsgi service/pod
 replicas: 1
