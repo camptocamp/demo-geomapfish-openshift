@@ -11,6 +11,7 @@ author: "marc.sutterATcamptocamp.com"
 clusterType: openshift
 
 imageTag: latest
+ref: N/A
 
 # this replica is valid for the wsgi service/pod
 replicas: 1
