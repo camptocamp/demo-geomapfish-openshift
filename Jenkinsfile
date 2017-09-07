@@ -141,18 +141,22 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           dry_run       : true,
           name          : helm_release_testing,
           namespace     : namespace_testing,
-          version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
-          replicas      : 1
+          values : [
+            image_tag   : image_tags_list.get(0),
+            apps.wsgi.replicas      : 1
+          ]
         )
 
         // run helm chart installation
         helm.helmDeploy(
           name          : helm_release_testing,
           namespace     : namespace_testing,
-          version_tag   : image_tags_list.get(0),
           chart_dir     : chart_dir,
-          replicas      : 1
+          values : [
+            image_tag   : image_tags_list.get(0),
+            apps.wsgi.replicas      : 1
+          ]
         )
 
         helm.logout()
@@ -172,6 +176,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       }
 
       stage('integration-test') {
+        echo  'Wait 10 seconds for app to be ready'
+        sleep 10
         sh "curl -f ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?"
         sh "curl -f ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?type=all"
       }
@@ -202,19 +208,22 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           dry_run       : true,
           name          : helm_release_staging,
           namespace     : namespace_staging,
-          version_tag   : "staging",
           chart_dir     : chart_dir,
-          replicas      : 2
+          values : [
+            image_tag   : "staging",
+            replicas      : 2
+          ] 
         )
 
         // run helm chart installation
         helm.helmDeploy(
           name          : helm_release_staging,
           namespace     : namespace_staging,
-          version_tag   : "staging",
           chart_dir     : chart_dir,
-          replicas      : 2
-          
+          values : [
+            image_tag   : "staging",
+            replicas      : 2
+          ] 
         )
         helm.logout()
       }
@@ -250,18 +259,25 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             dry_run       : true,
             name          : helm_release_prod,
             namespace     : namespace_prod,
-            version_tag   : "prod",
             chart_dir     : chart_dir,
-            replicas      : 4
+            values : [
+              image_tag   : "prod",
+              replicas      : 4
+            ] 
           )
 
           // run helm chart installation
           helm.helmDeploy(
             name          : helm_release_prod,
             namespace     : namespace_prod,
-            version_tag   : "prod",
             chart_dir     : chart_dir,
-            replicas      : 4
+            name          : helm_release_prod,
+            namespace     : namespace_prod,
+            chart_dir     : chart_dir,
+            values : [
+              image_tag   : "prod",
+              replicas      : 4
+            ] 
           )
           helm.logout()
         }
