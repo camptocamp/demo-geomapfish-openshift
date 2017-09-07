@@ -143,8 +143,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
           values : [
-            image_tag   : image_tags_list.get(0),
-            apps.wsgi.replicas      : 1
+            "image_tag"           : image_tags_list.get(0),
+            "apps.wsgi.replicas"  : 1
           ]
         )
 
@@ -154,8 +154,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
           values : [
-            image_tag   : image_tags_list.get(0),
-            apps.wsgi.replicas      : 1
+            "image_tag"           : image_tags_list.get(0),
+            "apps.wsgi.replicas"  : 1
           ]
         )
 
@@ -210,8 +210,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_staging,
           chart_dir     : chart_dir,
           values : [
-            image_tag   : "staging",
-            replicas      : 2
+            "image_tag"   : "staging",
+            "apps.wsgi.replicas"  : 2
           ] 
         )
 
@@ -221,8 +221,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           namespace     : namespace_staging,
           chart_dir     : chart_dir,
           values : [
-            image_tag   : "staging",
-            replicas      : 2
+            "image_tag"   : "staging",
+            "apps.wsgi.replicas"  : 2
           ] 
         )
         helm.logout()
@@ -261,8 +261,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             namespace     : namespace_prod,
             chart_dir     : chart_dir,
             values : [
-              image_tag   : "prod",
-              replicas      : 4
+              "image_tag"           : "prod",
+              "apps.wsgi.replicas"  : 4
             ] 
           )
 
@@ -275,8 +275,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             namespace     : namespace_prod,
             chart_dir     : chart_dir,
             values : [
-              image_tag   : "prod",
-              replicas      : 4
+              "image_tag"           : "prod",
+              "apps.wsgi.replicas"  : 4
             ] 
           )
           helm.logout()
