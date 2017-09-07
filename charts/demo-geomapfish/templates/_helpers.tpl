@@ -44,4 +44,3 @@ env:
   value: >-
     http://{{ template "geomapfish.fullname" . }}-print.{{ .Release.Namespace }}.svc:{{ .Values.apps.print.port}}/print/demo
 {{- end }}
-

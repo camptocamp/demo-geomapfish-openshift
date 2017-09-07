@@ -38,70 +38,70 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       // define release and namespaces (Caution: release must be unique over namespaces)
       def namespace_testing = "geomapfish-testing"
-      def helm_release_testing = "ref-${image_tags_list.get(0)}"
+      def helm_release_testing = "testing"
 
       def namespace_staging = "geomapfish-staging"
-      def helm_release_staging = "stage-${image_tags_list.get(0)}"
+      def helm_release_staging = "staging"
 
       def namespace_prod = "geomapfish-staging"
       def helm_release_prod = "prod"
 
       def debug = false
 
-      // stage('build-applications') {
-      //     sh returnStdout: true, script: 'pwd'
-      //     sh 'rm -rf node_modules || true'
-      //     sh 'ln -s /usr/lib/node_modules .'
-      //     sh returnStdout: true, script: 'make build'
-      // }
+      stage('build-applications') {
+          sh returnStdout: true, script: 'pwd'
+          sh 'rm -rf node_modules || true'
+          sh 'ln -s /usr/lib/node_modules .'
+          sh returnStdout: true, script: 'make build'
+      }
 
-      // stage('build-images') {
-      //   openshift.withCluster() {
-      //     openshift.doAs('openshift-token') {
-      //       openshift.withProject( 'geomapfish-cicd' ){
-      //         parallel (
-      //           "print" : {
-      //             echo "Active project: ${openshift.project()}"
-      //             echo """${
-      //               openshift.raw(
-      //                 'start-build',
-      //                 'demo-geomapfish-print',
-      //                 '--from-dir',
-      //                 './print',
-      //                 '--wait',
-      //                 '--follow'
-      //               ).out
-      //             }"""
-      //           },
-      //           "mapserver" : {
-      //             echo """${
-      //               openshift.raw(
-      //                 'start-build',
-      //                 'demo-geomapfish-mapserver',
-      //                 '--from-dir',
-      //                 './mapserver',
-      //                 '--wait',
-      //                 '--follow'
-      //               ).out
-      //             }"""
-      //           },
-      //           "wsgi" : {
-      //             echo """${
-      //               openshift.raw(
-      //                 'start-build',
-      //                 'demo-geomapfish-wsgi',
-      //                 '--from-dir',
-      //                 './',
-      //                 '--wait',
-      //                 '--follow'
-      //               ).out
-      //             }"""
-      //           }
-      //         )    
-      //       }
-      //     }
-      //   }
-      // }
+      stage('build-images') {
+        openshift.withCluster() {
+          openshift.doAs('openshift-token') {
+            openshift.withProject( 'geomapfish-cicd' ){
+              parallel (
+                "print" : {
+                  echo "Active project: ${openshift.project()}"
+                  echo """${
+                    openshift.raw(
+                      'start-build',
+                      'demo-geomapfish-print',
+                      '--from-dir',
+                      './print',
+                      '--wait',
+                      '--follow'
+                    ).out
+                  }"""
+                },
+                "mapserver" : {
+                  echo """${
+                    openshift.raw(
+                      'start-build',
+                      'demo-geomapfish-mapserver',
+                      '--from-dir',
+                      './mapserver',
+                      '--wait',
+                      '--follow'
+                    ).out
+                  }"""
+                },
+                "wsgi" : {
+                  echo """${
+                    openshift.raw(
+                      'start-build',
+                      'demo-geomapfish-wsgi',
+                      '--from-dir',
+                      './',
+                      '--wait',
+                      '--follow'
+                    ).out
+                  }"""
+                }
+              )    
+            }
+          }
+        }
+      }
     
       stage('deploy-on-testing') {
         checkout scm
