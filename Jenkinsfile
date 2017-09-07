@@ -46,7 +46,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def namespace_prod = "geomapfish-staging"
       def helm_release_prod = "prod"
 
-      def debug = false
+      def debug = true
 
       stage('build-applications') {
           sh returnStdout: true, script: 'pwd'
@@ -172,8 +172,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       }
 
       stage('integration-test') {
-        sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?"
-        sh "curl ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?type=all"
+        sh "curl -f ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?"
+        sh "curl -f ${helm_release_testing}-${helm_chart}-wsgi-${namespace_testing}.${openshift_subdomain}/check_collector?type=all"
       }
 
       // debug hook for testing env
