@@ -46,7 +46,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def namespace_prod = "geomapfish-staging"
       def helm_release_prod = "prod"
 
-      def debug = true
+      def debug = false
 
       stage('build-applications') {
           sh returnStdout: true, script: 'pwd'
