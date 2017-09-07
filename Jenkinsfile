@@ -43,7 +43,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def namespace_staging = "geomapfish-staging"
       def helm_release_staging = "staging"
 
-      def namespace_prod = "geomapfish-staging"
+      def namespace_prod = "geomapfish-prod"
       def helm_release_prod = "prod"
 
       def debug = false
