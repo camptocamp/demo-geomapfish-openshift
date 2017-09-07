@@ -271,9 +271,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             name          : helm_release_prod,
             namespace     : namespace_prod,
             chart_dir     : chart_dir,
-            name          : helm_release_prod,
-            namespace     : namespace_prod,
-            chart_dir     : chart_dir,
             values : [
               "image_tag"           : "prod",
               "apps.wsgi.replicas"  : 4
