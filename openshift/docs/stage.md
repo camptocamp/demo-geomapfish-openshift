@@ -9,11 +9,3 @@ Then provide image-puller access, so that geomapfish-testing project can pull an
 ```
 oc policy add-role-to-group system:image-puller system:serviceaccounts:geomapfish-testing -n geomapfish-cicd
 ```
-
-Extend router timeout for integration tests
-
-```
-oc annotate route demo-geomapfish-wsgi --overwrite haproxy.router.openshift.io/timeout=120s
-oc annotate route demo-geomapfish-mapserver --overwrite haproxy.router.openshift.io/timeout=120s
-oc annotate route demo-geomapfish-print --overwrite haproxy.router.openshift.io/timeout=120s
-```

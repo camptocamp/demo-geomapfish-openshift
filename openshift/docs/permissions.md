@@ -4,6 +4,7 @@ provide image-puller access, so that geomapfish-xxx projects can pull an image f
 oc policy add-role-to-group system:image-puller system:serviceaccounts:geomapfish-testing -n geomapfish-cicd
 oc policy add-role-to-group system:image-puller system:serviceaccounts:geomapfish-staging -n geomapfish-cicd
 oc policy add-role-to-group system:image-puller system:serviceaccounts:geomapfish-prod -n geomapfish-cicd
+oc policy add-role-to-group system:image-puller system:serviceaccounts:geomapfish-dev -n geomapfish-cicd
 ```
 
 Provide edit access to the tiller service account from the kube-system project in the geomapfish-xxx project.
