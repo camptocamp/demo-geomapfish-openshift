@@ -18,7 +18,6 @@ items:
       metadata:
         labels:
           name: {{ template "geomapfish.fullname" $root }}-{{ $key }}
-          {{- include "geomapfish.release_labels" $root | indent 10 }}
       spec:
         containers:
         - name: {{ template "geomapfish.fullname" $root }}-{{ $key }}
