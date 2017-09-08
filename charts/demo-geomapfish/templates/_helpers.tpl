@@ -25,9 +25,9 @@ Sets the apiVersion string for openshift api group proxy usage
 {{- define "geomapfish.release_labels" }}
 app: {{ template "geomapfish.name" . }}
 chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-release: {{ .Release.Name }}
+release: "{{ .Release.Name }}"
 heritage: {{ .Release.Service }}
-tag: {{ .Values.imageTag }}
+tag: "{{ .Values.imageTag }}"
 {{- end }}
 
 {{- define "geomapfish.db_envs" }}
