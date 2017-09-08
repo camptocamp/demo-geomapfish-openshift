@@ -48,7 +48,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       def debug = true
       def skip_build = true
-      def skip_deploy = false
+      def skip_deploy = true
       
       if (skip_build) {
         stage('build-applications') {
@@ -106,9 +106,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           }
         }
       }
-          
+
       stage('deploy-on-testing') {
-        checkout scm
         helm.login()
 
         if (debug) {
