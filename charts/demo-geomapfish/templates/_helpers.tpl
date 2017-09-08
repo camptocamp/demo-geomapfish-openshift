@@ -27,6 +27,7 @@ app: {{ template "geomapfish.name" . }}
 chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 release: {{ .Release.Name }}
 heritage: {{ .Release.Service }}
+tag: {{ .Values.imageTag }}
 {{- end }}
 
 {{- define "geomapfish.db_envs" }}
