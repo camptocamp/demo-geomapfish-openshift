@@ -228,55 +228,57 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.logout()
       }
 
-
-      stage('deploy-on-prod') {
-        def promote = false
-        try {
-          timeout(time: 7, unit: 'DAYS') {
-            promote = input message: 'Input Required',
-            parameters: [
-              [ $class: 'BooleanParameterDefinition',
-                defaultValue: false,
-                description: 'Check the box for a Production deployment',
-                name: 'Deploy to Production'
+      // deploy only the master branch
+      if (env.BRANCH_NAME == 'master') {
+        stage('deploy-on-prod') {
+          def promote = false
+          try {
+            timeout(time: 7, unit: 'DAYS') {
+              promote = input message: 'Input Required',
+              parameters: [
+                [ $class: 'BooleanParameterDefinition',
+                  defaultValue: false,
+                  description: 'Check the box for a Production deployment',
+                  name: 'Deploy to Production'
+                ]
               ]
-            ]
+            }
+          } catch (err) {
+            // don't promote => no error
           }
-        } catch (err) {
-          // don't promote => no error
-        }
-        if (promote) {
-          openshift.withProject( 'geomapfish-prod' ){
-            // tag the latest image as staging
-            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: 'prod')
-            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: 'prod')
-            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'prod')
+          if (promote) {
+            openshift.withProject( 'geomapfish-prod' ){
+              // tag the latest image as staging
+              openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: 'prod')
+              openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: 'prod')
+              openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: 'prod')
+            }
+            helm.login()
+
+            // run dry-run helm chart installation
+            helm.helmDeploy(
+              dry_run       : true,
+              name          : helm_release_prod,
+              namespace     : namespace_prod,
+              chart_dir     : chart_dir,
+              values : [
+                "imageTag"            : image_tags_list.get(0),
+                "apps.wsgi.replicas"  : 4
+              ] 
+            )
+
+            // run helm chart installation
+            helm.helmDeploy(
+              name          : helm_release_prod,
+              namespace     : namespace_prod,
+              chart_dir     : chart_dir,
+              values : [
+                "imageTag"            : image_tags_list.get(0),
+                "apps.wsgi.replicas"  : 4
+              ] 
+            )
+            helm.logout()
           }
-          helm.login()
-
-          // run dry-run helm chart installation
-          helm.helmDeploy(
-            dry_run       : true,
-            name          : helm_release_prod,
-            namespace     : namespace_prod,
-            chart_dir     : chart_dir,
-            values : [
-              "imageTag"            : image_tags_list.get(0),
-              "apps.wsgi.replicas"  : 4
-            ] 
-          )
-
-          // run helm chart installation
-          helm.helmDeploy(
-            name          : helm_release_prod,
-            namespace     : namespace_prod,
-            chart_dir     : chart_dir,
-            values : [
-              "imageTag"            : image_tags_list.get(0),
-              "apps.wsgi.replicas"  : 4
-            ] 
-          )
-          helm.logout()
         }
       }
     }
