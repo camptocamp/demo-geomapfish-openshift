@@ -19,8 +19,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 ){
   node('geomapfish'){
     withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-      checkout scm
-
+      def scmVars = checkout scm
 
       // set additional git envvars for image tagging
       helm.gitEnvVars()
@@ -112,10 +111,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.login()
 
         if (debug) {
-          branch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-          echo "--------------- branch ---------------------"
-          echo branch
-          echo "--------------------------------------------"
+          echo "---------------- scm vars ----------------------------"
+          for (var in scmVars) {
+            println var
+          }
+          echo "---------------- env vars ----------------------------"
           sh 'env > env.txt'
           for (String i : readFile('env.txt').split("\r?\n")) {
             println i
