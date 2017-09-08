@@ -19,7 +19,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 ){
   node('geomapfish'){
     withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-      checkout scm
 
       // set additional git envvars for image tagging
       helm.gitEnvVars()
@@ -50,7 +49,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def skip_build = true
       def skip_deploy = true
       
-      if (skip_build) {
+      if (!skip_build) {
         stage('build-applications') {
             sh returnStdout: true, script: 'pwd'
             sh 'rm -rf node_modules || true'
