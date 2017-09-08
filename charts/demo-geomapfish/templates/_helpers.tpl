@@ -46,5 +46,5 @@ env:
     http://{{ template "geomapfish.fullname" . }}-print.{{ .Release.Namespace }}.svc:{{ .Values.apps.print.port}}/print/demo
 - name: WSGI_TEST_URL
   value: >-
-    http://{{ template "geomapfish.fullname" . }}-wsgi.{{ .Release.Namespace }}.cloudapp.openshift-poc.camptocamp.com
+    http://{{ template "geomapfish.fullname" . }}-wsgi.{{ .Release.Namespace }}.{{ .Values.domain }}
 {{- end }}
