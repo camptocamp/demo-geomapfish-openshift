@@ -137,3 +137,14 @@ oc describe secret <jenkins-token>
 ```
 oc policy add-role-to-user edit system:serviceaccount:geomapfish-dev:jenkins -n geomapfish-testing
 ```
+
+### demo change
+
+demo/static-ngeo/less/desktop.less b/demo/static-ngeo/less/desktop.less
+
+```
+...
++// @brand-primary: #9FB6CC;
++// @brand-secondary: #D3DBE3;
+...
+```
