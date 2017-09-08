@@ -19,7 +19,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 ){
   node('geomapfish'){
     withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-
+      checkout scm
+      
       // set additional git envvars for image tagging
       helm.gitEnvVars()
 
