@@ -30,7 +30,7 @@ heritage: {{ .Release.Service }}
 tag: "{{ .Values.imageTag }}"
 {{- end }}
 
-{{- define "geomapfish.db_envs" }}
+{{- define "geomapfish.pod_envs" }}
 env:
 - name: PG_OSM_CONN_STRING
   value: >-
@@ -44,4 +44,7 @@ env:
 - name: PRINT_URL_PRINT_DEMO
   value: >-
     http://{{ template "geomapfish.fullname" . }}-print.{{ .Release.Namespace }}.svc:{{ .Values.apps.print.port}}/print/demo
+- name: WSGI_TEST_URL
+  value: >-
+    http://{{ template "geomapfish.fullname" . }}-wsgi.{{ .Release.Namespace }}.cloudapp.openshift-poc.camptocamp.com
 {{- end }}
