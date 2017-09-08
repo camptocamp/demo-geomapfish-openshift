@@ -6,16 +6,22 @@ vars:
 #    mapserver_connection: '{{getenv "DB_CONNECTION"}}'
 
     servers:
-        mapserver: MAPSERVER_URL
-    print_url: PRINT_URL_PRINT_DEMO
+        mapserver: '{{MAPSERVER_URL}}'
+    print_url: '{{PRINT_URL_PRINT_DEMO}}'
     sqlalchemy:
-        url: PG_DEMO_CONN_STRING
-
+        url: '{{PG_DEMO_CONN_STRING}}'
+    check_collector:
+        hosts:
+        - display: demo
+          url: '{{WSGI_TEST_URL}}'
+          type: main
 update_paths:
 - mapserverproxy
+- check_collector
 
 runtime_environment:
 - servers.mapserver
 - print_url
 - dbsessions.osm.url
 - sqlalchemy\.url
+- check_collector.hosts.[].url
