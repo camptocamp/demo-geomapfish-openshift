@@ -47,63 +47,66 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_release_prod = "prod"
 
       def debug = true
+      def skip_build = true
       def skip_deploy = false
+      
+      if (skip_build) {
+        stage('build-applications') {
+            sh returnStdout: true, script: 'pwd'
+            sh 'rm -rf node_modules || true'
+            sh 'ln -s /usr/lib/node_modules .'
+            sh returnStdout: true, script: 'make build'
+        }
 
-      stage('build-applications') {
-          sh returnStdout: true, script: 'pwd'
-          sh 'rm -rf node_modules || true'
-          sh 'ln -s /usr/lib/node_modules .'
-          sh returnStdout: true, script: 'make build'
-      }
-
-      stage('build-images') {
-        openshift.withCluster() {
-          openshift.doAs('openshift-token') {
-            openshift.withProject( 'geomapfish-cicd' ){
-              parallel (
-                "print" : {
-                  echo "Active project: ${openshift.project()}"
-                  echo """${
-                    openshift.raw(
-                      'start-build',
-                      'demo-geomapfish-print',
-                      '--from-dir',
-                      './print',
-                      '--wait',
-                      '--follow'
-                    ).out
-                  }"""
-                },
-                "mapserver" : {
-                  echo """${
-                    openshift.raw(
-                      'start-build',
-                      'demo-geomapfish-mapserver',
-                      '--from-dir',
-                      './mapserver',
-                      '--wait',
-                      '--follow'
-                    ).out
-                  }"""
-                },
-                "wsgi" : {
-                  echo """${
-                    openshift.raw(
-                      'start-build',
-                      'demo-geomapfish-wsgi',
-                      '--from-dir',
-                      './',
-                      '--wait',
-                      '--follow'
-                    ).out
-                  }"""
-                }
-              )    
+        stage('build-images') {
+          openshift.withCluster() {
+            openshift.doAs('openshift-token') {
+              openshift.withProject( 'geomapfish-cicd' ){
+                parallel (
+                  "print" : {
+                    echo "Active project: ${openshift.project()}"
+                    echo """${
+                      openshift.raw(
+                        'start-build',
+                        'demo-geomapfish-print',
+                        '--from-dir',
+                        './print',
+                        '--wait',
+                        '--follow'
+                      ).out
+                    }"""
+                  },
+                  "mapserver" : {
+                    echo """${
+                      openshift.raw(
+                        'start-build',
+                        'demo-geomapfish-mapserver',
+                        '--from-dir',
+                        './mapserver',
+                        '--wait',
+                        '--follow'
+                      ).out
+                    }"""
+                  },
+                  "wsgi" : {
+                    echo """${
+                      openshift.raw(
+                        'start-build',
+                        'demo-geomapfish-wsgi',
+                        '--from-dir',
+                        './',
+                        '--wait',
+                        '--follow'
+                      ).out
+                    }"""
+                  }
+                )    
+              }
             }
           }
         }
       }
-    
+          
       stage('deploy-on-testing') {
         checkout scm
         helm.login()
