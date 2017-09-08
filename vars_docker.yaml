@@ -13,7 +13,8 @@ vars:
     check_collector:
         hosts:
         - display: demo
-          url: '{{WSGI_TEST_URL}}'
+#          url: '{{WSGI_TEST_URL}}'
+          url: http://testing-demo-geomapfish-wsgi-geomapfish-testing.cloudapp.openshift-poc.camptocamp.com/
           type: main
 update_paths:
 - mapserverproxy
