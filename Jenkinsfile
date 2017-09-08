@@ -41,7 +41,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_release_testing = "testing"
 
       def namespace_dev = "geomapfish-dev"
-      def helm_release_testing = "dev-${image_tags_list.get(0)}"
+      def helm_release_dev = "dev-${image_tags_list.get(0)}"
 
       def namespace_staging = "geomapfish-staging"
       def helm_release_staging = "staging"
@@ -52,7 +52,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def debug = false
       def skip_build = false
       def skip_deploy = false
-      
+      def cleanup_dev_release = false
+
       if (!skip_build) {
         stage('build-applications') {
             sh returnStdout: true, script: 'pwd'
@@ -227,22 +228,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           )
           helm.logout()
         }
-        def cleanup = false
-        try {
-          timeout(time: 1, unit: 'HOURS') {
-            cleanup = input message: 'Input Required',
-            parameters: [
-              [ $class: 'BooleanParameterDefinition',
-                defaultValue: false,
-                description: 'Check the box to cleanup this deployment',
-                name: 'Cleanup Deploy'
-              ]
-            ]
-          }
-        } catch (err) {
-          // don't promote => no error
-        }
-        if (cleanup) {
+        if (cleanup_dev_release) {
           helm.login()
 
           // cleanup testing env
