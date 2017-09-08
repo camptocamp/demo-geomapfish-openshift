@@ -230,7 +230,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       }
 
       // deploy only the master branch
-      if (env.BRANCH_NAME == 'master') {
+      if (env.GIT_BRANCH == 'master') {
         stage('deploy-on-prod') {
           def promote = false
           try {
