@@ -46,9 +46,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def namespace_prod = "geomapfish-prod"
       def helm_release_prod = "prod"
 
-      def debug = true
-      def skip_build = true
-      def skip_deploy = true
+      def debug = false
+      def skip_build = false
+      def skip_deploy = false
       
       if (!skip_build) {
         stage('build-applications') {
