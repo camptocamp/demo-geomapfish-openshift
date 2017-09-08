@@ -13,6 +13,12 @@ Provide edit access to the tiller service account from the kube-system project i
 oc policy add-role-to-user edit system:serviceaccount:kube-system:tiller -n geomapfish-testing
 oc policy add-role-to-user edit system:serviceaccount:kube-system:tiller -n geomapfish-staging
 oc policy add-role-to-user edit system:serviceaccount:kube-system:tiller -n geomapfish-prod
+oc policy add-role-to-user edit system:serviceaccount:kube-system:tiller -n geomapfish-dev
+```
+
+also edit the anyuid scc to add the namespaces for root execution
+```
+oc edit scc anyuid
 ```
 
 
