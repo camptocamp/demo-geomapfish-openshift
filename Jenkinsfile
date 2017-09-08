@@ -46,7 +46,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def namespace_prod = "geomapfish-prod"
       def helm_release_prod = "prod"
 
-      def debug = false
+      def debug = true
+      def skip_deploy = false
 
       stage('build-applications') {
           sh returnStdout: true, script: 'pwd'
@@ -183,7 +184,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       }
 
       // debug hook for testing env
-      if (debug) {
+      if (skip_deploy) {
         currentBuild.result = 'SUCCESS'
         return
       }
