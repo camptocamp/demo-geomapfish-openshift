@@ -10,9 +10,7 @@
       "debug": false,
       "skip_build": false,
       "skip_deploy": false,
-      "cleanup_dev_release": true,
-      "library": {
-        "branch": "master"
+      "cleanup_dev_release": true
       }
   }
 }

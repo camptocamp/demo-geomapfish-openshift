@@ -1,10 +1,8 @@
 #!/usr/bin/groovy
-def params = readJSON file: 'Jenkinsfile.json'
 
 // Load helm shared library
 @Library("github.com/camptocamp/jenkins-lib-helm")
 def helm = new com.camptocamp.Helm()
-
 
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
@@ -20,6 +18,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
   ]
 ){
   node('geomapfish'){
+    def params = readJSON file: 'Jenkinsfile.json'
     withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
       def scmVars = checkout scm
 
