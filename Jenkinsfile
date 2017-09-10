@@ -7,7 +7,7 @@ def helm = new com.camptocamp.Helm()
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
-        image: '172.30.1.1:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
+        image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
         ttyEnabled: true,
         command: '',
         privileged: false,
