@@ -2,7 +2,7 @@
 def params = readJSON file: 'Jenkinsfile.json'
 
 // Load helm shared library
-@Library("github.com/camptocamp/jenkins-lib-helm@${params.pipeline.library.branch}")
+@Library("github.com/camptocamp/jenkins-lib-helm")
 def helm = new com.camptocamp.Helm()
 
 
