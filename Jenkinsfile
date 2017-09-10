@@ -38,20 +38,25 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def openshift_subdomain = params.openshift.domain
 
       // define release and namespaces (Caution: release must be unique over namespaces)
+      // for testing
       def namespace_testing = params.openshift.namespace_testing
       def helm_release_testing = params.helm.release_testing
 
+      // for dev
       def tiller_namespace_dev = params.openshift.tiller_namespace_dev
       def namespace_dev = params.openshift.namespace_dev
       def helm_release_dev = "${params.helm.release_dev_prefix}-${image_tags_list.get(0)}"
       def helm_release_last_dev = params.helm.release_last_dev
 
+      // for staging
       def namespace_staging = params.openshift.namespace_staging
       def helm_release_staging = params.helm.release_staging
 
+      // for prod
       def namespace_prod = params.openshift.namespace_prod
       def helm_release_prod = params.helm.release_prod
 
+      // pipeline execution flags
       def debug = params.pipeline.debug
       def skip_build = params.pipeline.skip_build
       def skip_deploy = params.pipeline.skip_deploy
