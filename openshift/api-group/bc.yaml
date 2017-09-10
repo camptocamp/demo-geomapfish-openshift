@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: null
+  name: openshift-api-group
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: openshift-api-group:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: v0.1.0
+      uri: https://github.com/megalord/openshift-api-group.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: golang:1.8.1
+    type: Docker
+  triggers:
+  - type: ConfigChange
+status:
+  lastVersion: 0

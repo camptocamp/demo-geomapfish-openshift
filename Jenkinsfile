@@ -52,7 +52,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def debug = false
       def skip_build = false
       def skip_deploy = false
-      def cleanup_dev_release = false
+      def cleanup_dev_release = true
 
       if (!skip_build) {
         stage('build-applications') {
@@ -206,10 +206,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
           // run dry-run helm chart installation
           helm.helmDeploy(
-            dry_run       : true,
-            name          : helm_release_dev,
-            namespace     : namespace_dev,
-            chart_dir     : chart_dir,
+            dry_run           : true,
+            name              : helm_release_dev,
+            tiller-namespace  : namespace_dev,
+            namespace         : namespace_dev,
+            chart_dir         : chart_dir,
             values : [
               "imageTag"            : image_tags_list.get(0),
               "apps.wsgi.replicas"  : 1
@@ -218,9 +219,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
           // run helm chart installation
           helm.helmDeploy(
-            name          : helm_release_dev,
-            namespace     : namespace_dev,
-            chart_dir     : chart_dir,
+            name              : helm_release_dev,
+            tiller-namespace  : namespace_dev,
+            namespace         : namespace_dev,
+            chart_dir         : chart_dir,
             values : [
               "imageTag"            : image_tags_list.get(0),
               "apps.wsgi.replicas"  : 1
@@ -233,7 +235,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
           // cleanup testing env
           helm.helmDelete(
-            name: helm_release_testing
+            tiller-namespace  : namespace_dev,
+            name:               helm_release_testing
           )
           helm.logout()
         }
