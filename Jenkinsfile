@@ -208,7 +208,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.helmDeploy(
             dry_run           : true,
             name              : helm_release_dev,
-            tiller-namespace  : namespace_dev,
+            tiller_namespace  : namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
             values : [
@@ -220,7 +220,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           // run helm chart installation
           helm.helmDeploy(
             name              : helm_release_dev,
-            tiller-namespace  : namespace_dev,
+            tiller_namespace  : namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
             values : [
@@ -235,7 +235,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
           // cleanup testing env
           helm.helmDelete(
-            tiller-namespace  : namespace_dev,
+            tiller_namespace  : namespace_dev,
             name:               helm_release_testing
           )
           helm.logout()
