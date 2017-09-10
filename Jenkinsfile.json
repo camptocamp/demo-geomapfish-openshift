@@ -1,15 +1,28 @@
 {
-  "openshift": {
-    "domain": "cloudapp.openshift-poc.camptocamp.com"
-  },
   "app": {
     "name": "demo-geomapfish",
     "chart_dir": "charts/demo-geomapfish"
+  },
+  "openshift": {
+    "domain": "cloudapp.openshift-poc.camptocamp.com",
+    "namespace_testing": "geomapfish-testing",
+    "namespace_dev": "geomapfish-dev",
+    "tiller_namespace_dev": "geomapfish-dev",
+    "namespace_staging": "geomapfish-staging",
+    "namespace_prod": "geomapfish-prod"
+  },
+  "helm": {
+    "release_testing": "testing",
+    "release_dev_prefix": "ref",
+    "release_last_dev": "dev",
+    "release_staging": "staging",
+    "release_prod": "prod"
   },
   "pipeline": {
       "debug": false,
       "skip_build": false,
       "skip_deploy": false,
-      "cleanup_dev_release": true
-  }
+      "cleanup_ref_release": true,
+      "deploy_last_dev_release": true
+    }
 }

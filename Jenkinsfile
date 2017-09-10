@@ -38,25 +38,25 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def openshift_subdomain = params.openshift.domain
 
       // define release and namespaces (Caution: release must be unique over namespaces)
-      def namespace_testing = "geomapfish-testing"
-      def helm_release_testing = "testing"
+      def namespace_testing = params.openshift.namespace_testing
+      def helm_release_testing = params.helm.release_testing
 
-      def tiller_namespace_dev = "geomapfish-dev"
-      def namespace_dev = "geomapfish-dev"
-      def helm_release_dev = "ref-${image_tags_list.get(0)}"
-      def helm_release_last_dev = "dev"
+      def tiller_namespace_dev = params.openshift.tiller_namespace_dev
+      def namespace_dev = params.openshift.namespace_dev
+      def helm_release_dev = "${params.helm.release_dev_prefix}-${image_tags_list.get(0)}"
+      def helm_release_last_dev = params.helm.release_last_dev
 
-      def namespace_staging = "geomapfish-staging"
-      def helm_release_staging = "staging"
+      def namespace_staging = params.openshift.namespace_staging
+      def helm_release_staging = params.helm.release_staging
 
-      def namespace_prod = "geomapfish-prod"
-      def helm_release_prod = "prod"
+      def namespace_prod = params.openshift.namespace_prod
+      def helm_release_prod = params.helm.release_prod
 
-      def debug = false
-      def skip_build = false
-      def skip_deploy = false
-      def cleanup_ref_release = true
-      def deploy_last_dev_release = true
+      def debug = params.pipeline.debug
+      def skip_build = params.pipeline.skip_build
+      def skip_deploy = params.pipeline.skip_deploy
+      def cleanup_ref_release = params.pipeline.cleanup_ref_release
+      def deploy_last_dev_release = params.pipeline.deploy_last_dev_release
 
       if (!skip_build) {
         stage('build-applications') {
@@ -212,7 +212,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.helmDeploy(
             dry_run           : true,
             name              : helm_release_dev,
-            tiller_namespace  : namespace_dev,
+            tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
             values : [
@@ -224,7 +224,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           // run helm chart installation
           helm.helmDeploy(
             name              : helm_release_dev,
-            tiller_namespace  : namespace_dev,
+            tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
             values : [
@@ -235,7 +235,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           if (cleanup_ref_release) {
           // cleanup testing env
             helm.helmDelete(
-              tiller_namespace  : namespace_dev,
+              tiller_namespace  : tiller_namespace_dev,
               name:               helm_release_dev
             )
           }
@@ -243,7 +243,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             // run helm chart installation of latest commit 
             helm.helmDeploy(
               name              : helm_release_last_dev,
-              tiller_namespace  : namespace_dev,
+              tiller_namespace  : tiller_namespace_dev,
               namespace         : namespace_dev,
               chart_dir         : chart_dir,
               values : [
