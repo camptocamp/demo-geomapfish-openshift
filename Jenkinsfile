@@ -204,7 +204,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       }
 
       // deploy only the master branch
-      if (scmVars.GIT_BRANCH == 'origin/dev') {
+      if (env.BRANCH == 'dev') {
         stage('deploy-on-dev') {
           helm.login()
 
@@ -270,7 +270,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
 
       // deploy only the master branch
-      if (scmVars.GIT_BRANCH == 'origin/master') {
+      if (env.BRANCH == 'master') {
         stage('deploy-on-staging') {
           openshift.withProject( 'geomapfish-prod' ){
             // tag the latest image as staging
