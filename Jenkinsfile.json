@@ -1,11 +1,16 @@
 {
+  "openshift": {
+    "domain": "cloudapp.openshift-poc.camptocamp.com"
+  },
   "app": {
     "name": "demo-geomapfish",
-    "replicas": "1"
+    "chart_dir": "charts/demo-geomapfish"
   },
   "pipeline": {
-      "enabled": true,
       "debug": false,
+      "skip_build": false,
+      "skip_deploy": false,
+      "cleanup_dev_release": true,
       "library": {
         "branch": "master"
       }

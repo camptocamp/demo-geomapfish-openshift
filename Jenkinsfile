@@ -1,8 +1,10 @@
 #!/usr/bin/groovy
+def params = readJSON file: 'Jenkinsfile.json'
 
 // Load helm shared library
-@Library('github.com/camptocamp/jenkins-lib-helm')
+@Library("github.com/camptocamp/jenkins-lib-helm@${params.pipeline.library.branch}")
 def helm = new com.camptocamp.Helm()
+
 
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
@@ -31,10 +33,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def image_tags_list = helm.getMapValues(image_tags_map)
 
       def pwd = pwd()
-      def chart_dir = "${pwd}/charts/demo-geomapfish"
+      def chart_dir = "${pwd}/${params.app.chart_dir}"
 
-      def helm_chart = "demo-geomapfish"
-      def openshift_subdomain = "cloudapp.openshift-poc.camptocamp.com"
+      def helm_chart = params.app.name
+      def openshift_subdomain = params.openshift.domain
 
       // define release and namespaces (Caution: release must be unique over namespaces)
       def namespace_testing = "geomapfish-testing"
