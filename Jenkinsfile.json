@@ -11,6 +11,5 @@
       "skip_build": false,
       "skip_deploy": false,
       "cleanup_dev_release": true
-      }
   }
 }
