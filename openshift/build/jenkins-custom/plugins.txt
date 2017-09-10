@@ -1,1 +1,3 @@
 blueocean
+openshift-client
+pipeline-utility-steps
