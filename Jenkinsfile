@@ -55,7 +55,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def debug = false
       def skip_build = false
       def skip_deploy = false
-      def cleanup_dev_release = true
+      def cleanup_ref_release = true
+      def deploy_last_dev_release = true
 
       if (!skip_build) {
         stage('build-applications') {
@@ -200,7 +201,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // deploy only the master branch
       if (scmVars.GIT_BRANCH == 'origin/dev') {
         stage('deploy-on-dev') {
-
           helm.login()
 
           // cleanup testing env
@@ -232,29 +232,26 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               "apps.wsgi.replicas"  : 1
             ] 
           )
-          helm.logout()
-        }
-        if (cleanup_dev_release) {
-          helm.login()
-
+          if (cleanup_ref_release) {
           // cleanup testing env
-          helm.helmDelete(
-            tiller_namespace  : namespace_dev,
-            name:               helm_release_dev
-          )
-
-          // run helm chart installation of latest commit 
-          helm.helmDeploy(
-            name              : helm_release_last_dev,
-            tiller_namespace  : namespace_dev,
-            namespace         : namespace_dev,
-            chart_dir         : chart_dir,
-            values : [
-              "imageTag"            : image_tags_list.get(0),
-              "apps.wsgi.replicas"  : 1
-            ] 
-          )
-
+            helm.helmDelete(
+              tiller_namespace  : namespace_dev,
+              name:               helm_release_dev
+            )
+          }
+          if (deploy_last_dev_release) {
+            // run helm chart installation of latest commit 
+            helm.helmDeploy(
+              name              : helm_release_last_dev,
+              tiller_namespace  : namespace_dev,
+              namespace         : namespace_dev,
+              chart_dir         : chart_dir,
+              values : [
+                "imageTag"            : image_tags_list.get(0),
+                "apps.wsgi.replicas"  : 1
+              ] 
+            )
+          }
           helm.logout()
         }
 
