@@ -41,7 +41,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_release_testing = "testing"
 
       def namespace_dev = "geomapfish-dev"
-      def helm_release_dev = "dev-${image_tags_list.get(0)}"
+      def helm_release_dev = "ref-${image_tags_list.get(0)}"
 
       def namespace_staging = "geomapfish-staging"
       def helm_release_staging = "staging"
@@ -236,7 +236,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           // cleanup testing env
           helm.helmDelete(
             tiller_namespace  : namespace_dev,
-            name:               helm_release_testing
+            name:               helm_release_dev
           )
           helm.logout()
         }
