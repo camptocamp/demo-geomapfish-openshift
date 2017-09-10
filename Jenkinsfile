@@ -41,8 +41,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def namespace_testing = "geomapfish-testing"
       def helm_release_testing = "testing"
 
+      def tiller_namespace_dev = "geomapfish-dev"
       def namespace_dev = "geomapfish-dev"
       def helm_release_dev = "ref-${image_tags_list.get(0)}"
+      def helm_release_last_dev = "dev"
 
       def namespace_staging = "geomapfish-staging"
       def helm_release_staging = "staging"
@@ -198,6 +200,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // deploy only the master branch
       if (scmVars.GIT_BRANCH == 'origin/dev') {
         stage('deploy-on-dev') {
+
           helm.login()
 
           // cleanup testing env
@@ -239,6 +242,19 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             tiller_namespace  : namespace_dev,
             name:               helm_release_dev
           )
+
+          // run helm chart installation of latest commit 
+          helm.helmDeploy(
+            name              : helm_release_last_dev,
+            tiller_namespace  : namespace_dev,
+            namespace         : namespace_dev,
+            chart_dir         : chart_dir,
+            values : [
+              "imageTag"            : image_tags_list.get(0),
+              "apps.wsgi.replicas"  : 1
+            ] 
+          )
+
           helm.logout()
         }
 
