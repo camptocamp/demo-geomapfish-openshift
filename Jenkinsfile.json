@@ -19,7 +19,7 @@
     "release_prod": "prod"
   },
   "pipeline": {
-    "debug": false,
+    "debug": true,
     "skip_build": false,
     "skip_deploy": false,
     "cleanup_ref_release": true,

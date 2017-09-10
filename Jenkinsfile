@@ -262,7 +262,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       }
 
-      // debug hook for testing env
+      // skip_deploy for testing env
       if (skip_deploy) {
         currentBuild.result = 'SUCCESS'
         return
