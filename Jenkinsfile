@@ -19,7 +19,13 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 ){
   node('geomapfish'){
     withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
-      def scmVars = checkout scm
+      // def scmVars = checkout scm
+      def scmVars = checkout(
+        [
+          $class: 'GitSCM', 
+          branches: [[name: '*/master']],
+        ]
+      ) 
       def params = readJSON file: 'Jenkinsfile.json'
 
       // set additional git envvars for image tagging
