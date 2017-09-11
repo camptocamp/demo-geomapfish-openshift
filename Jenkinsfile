@@ -87,12 +87,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               '''
             }
           }
-        
-          git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
-          sh '''
-            cd charts && \
-            ls -al
-          '''
+          withDir('charts') {
+            git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
+            sh '''
+              helm inspect hello-world
+            '''
+          }
         }
       }
       
