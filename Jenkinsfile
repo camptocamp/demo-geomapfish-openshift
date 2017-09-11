@@ -4,7 +4,7 @@
 @Library("github.com/camptocamp/jenkins-lib-helm")
 def helm = new com.camptocamp.Helm()
 
-podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
+podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
         image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
