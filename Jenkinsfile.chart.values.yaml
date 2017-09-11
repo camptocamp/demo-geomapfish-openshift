@@ -20,16 +20,16 @@ imageTag: latest
 replicas: 1
 
 registry:
-  host: docker.io
-  port: 443
-  namespace: camptocamp
+  host: 172.30.26.108
+  port: 5000
+  namespace: geomapfish-cicd
 
 db:
   type: postgresql
   port: 5432
-  user: mydbuser
-  pass: mydbsecret
-  host: mydbhost
+  user: www-data
+  pass: www-data
+  host: geomapfish-demo.camptocamp.net
   osm_db: osm
   gmf_db: demo_openshift_2_2
 

@@ -39,6 +39,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       def pwd = pwd()
       def chart_dir = "${pwd}/${params.app.chart_dir}"
+      def values_file = "Jenkinsfile.chart.values.yaml"
 
       def helm_chart = params.app.name
       def openshift_subdomain = params.openshift.domain
@@ -170,6 +171,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           name          : helm_release_testing,
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
+          values_file  : values_file,
           values : [
             "imageTag"            : dev_image_tag,
             "apps.wsgi.replicas"  : 1
@@ -181,6 +183,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           name          : helm_release_testing,
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
+          values_file  : values_file,
           values : [
             "imageTag"            : dev_image_tag,
             "apps.wsgi.replicas"  : 1
@@ -227,6 +230,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
+            values_file      : values_file,
             values : [
               "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 1
@@ -239,6 +243,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
+            values_file      : values_file,
             values : [
               "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 1
@@ -258,6 +263,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               tiller_namespace  : tiller_namespace_dev,
               namespace         : namespace_dev,
               chart_dir         : chart_dir,
+              values_file      : values_file,
               values : [
                 "imageTag"            : dev_image_tag,
                 "apps.wsgi.replicas"  : 1
@@ -298,6 +304,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             name          : helm_release_staging,
             namespace     : namespace_staging,
             chart_dir     : chart_dir,
+            values_file  : values_file,
             values : [
               "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 2
@@ -309,6 +316,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             name          : helm_release_staging,
             namespace     : namespace_staging,
             chart_dir     : chart_dir,
+            values_file  : values_file,
             values : [
               "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 2
@@ -334,12 +342,55 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             ){
               withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
                 node('skopeo'){
+                  // mapserver
+                  sh """skopeo copy \
+                    --src-tls-verify=false \
+                    --src-creds $HELM_USER:$HELM_TOKEN \
+                    --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-mapserver:${prod_image_tag} \
+                    docker://docker.io/camptocamp/demo-geomapfish-mapserver:${prod_image_tag}
+                  """
+                  // print
+                  sh """skopeo copy \
+                    --src-tls-verify=false \
+                    --src-creds $HELM_USER:$HELM_TOKEN \
+                    --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-print:${prod_image_tag} \
+                    docker://docker.io/camptocamp/demo-geomapfish-print:${prod_image_tag}
+                  """
+                  // wsgi
                   sh """skopeo copy \
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
                     docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
                     docker://docker.io/camptocamp/demo-geomapfish-wsgi:${prod_image_tag}
+                  """
+
+                  // also push latest tag on this images
+                  // mapserver
+                  sh """skopeo copy \
+                    --src-tls-verify=false \
+                    --src-creds $HELM_USER:$HELM_TOKEN \
+                    --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-mapserver:${prod_image_tag} \
+                    docker://docker.io/camptocamp/demo-geomapfish-mapserver:latest
+                  """
+                  // print
+                  sh """skopeo copy \
+                    --src-tls-verify=false \
+                    --src-creds $HELM_USER:$HELM_TOKEN \
+                    --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-print:${prod_image_tag} \
+                    docker://docker.io/camptocamp/demo-geomapfish-print:latest
+                  """
+                  // wsgi
+                  sh """skopeo copy \
+                    --src-tls-verify=false \
+                    --src-creds $HELM_USER:$HELM_TOKEN \
+                    --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
+                    docker://docker.io/camptocamp/demo-geomapfish-wsgi:latest
                   """
                 }
               }
@@ -393,6 +444,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               name          : helm_release_prod,
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
+              values_file  : values_file,
               values : [
                 "imageTag"            : prod_image_tag,
                 "apps.wsgi.replicas"  : 4
@@ -404,6 +456,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               name          : helm_release_prod,
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
+              values_file  : values_file,
               values : [
                 "imageTag"            : prod_image_tag,
                 "apps.wsgi.replicas"  : 4
