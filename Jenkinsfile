@@ -76,23 +76,24 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             )
           ]
         ){
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
-            node('skopeo'){
-              sh '''skopeo copy \
-                --src-tls-verify=false \
-                --src-creds $HELM_USER:$HELM_TOKEN \
-                --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:6983f1e \
-                docker://docker.io/camptocamp/demo-geomapfish-wsgi:latest
-              '''
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
+              node('skopeo'){
+                sh '''skopeo copy \
+                  --src-tls-verify=false \
+                  --src-creds $HELM_USER:$HELM_TOKEN \
+                  --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                  docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:6983f1e \
+                  docker://docker.io/camptocamp/demo-geomapfish-wsgi:latest
+                '''
+              }
             }
           }
+          git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
+          sh '''
+            cd charts && \
+            ls -al
+          '''
         }
-        git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
-        sh '''
-          cd charts && \
-          ls -al
-        '''
       }
 
       if (!skip_build) {
