@@ -78,7 +78,13 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       ){
       withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
           node('skopeo'){
-            sh 'skopeo copy --src-tls-verify=false --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest docker://docker.io/camptocamp/demo-geomapfish-wsgi:latest'
+            sh '''skopeo copy \
+              --src-tls-verify=false \
+              --src-creds $HELM_USER:$HELM_TOKEN \
+              --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+              docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest \
+              docker://docker.io/camptocamp/demo-geomapfish-wsgi:latest
+            '''
           }
         }
       }
