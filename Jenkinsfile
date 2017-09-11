@@ -349,8 +349,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                   sh """
                     helm package ../charts/${params.app.name} -d docs
                     helm repo index docs --url https://camptocamp.github.io/charts
-                    git config --global user.email "jenkins@${params.openshift.domain}"
-                    git config --global user.name "Jenkins"
+                    git config --local user.email "jenkins@${params.openshift.domain}"
+                    git config --local user.name "Jenkins"
                     git add .
                     git commit -m "update chart ${params.app.name} to version ${prod_image_tag}"
                     git push origin master
@@ -394,7 +394,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
               values : [
-                "imageTag"            : package_params.version,
+                "imageTag"            : prod_image_tag,
                 "apps.wsgi.replicas"  : 4
               ] 
             )
@@ -405,7 +405,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
               values : [
-                "imageTag"            : package_params.version,
+                "imageTag"            : prod_image_tag,
                 "apps.wsgi.replicas"  : 4
               ] 
             )
