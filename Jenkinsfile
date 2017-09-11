@@ -14,6 +14,16 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         alwaysPullImage: false,
         workingDir: '/tmp',
         args: '${computer.jnlpmac} ${computer.name}'
+    ),
+    containerTemplate(
+        name: 'skopeo',
+        image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
+        ttyEnabled: true,
+        command: '',
+        privileged: false,
+        alwaysPullImage: false,
+        workingDir: '/tmp',
+        args: '${computer.jnlpmac} ${computer.name}'
     )
   ]
 ){
@@ -206,6 +216,10 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // deploy only the master branch
       if (env.BRANCH == 'dev') {
         stage('deploy-on-dev') {
+          container('skopeo'){
+            sh 'skopeo --help'            
+          }
+
           helm.login()
 
           // cleanup testing env
@@ -359,6 +373,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               ] 
             )
             helm.logout()
+          }
+        }
+        stage('publish') {
+          container('skopeo'){
+            sh 'skopeo --help'            
           }
         }
       }
