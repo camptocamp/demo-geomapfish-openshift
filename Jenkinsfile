@@ -87,7 +87,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               '''
             }
           }
-          dir('charts') {
+          dir('public-charts') {
             git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
             sh '''
               helm inspect hello-world
