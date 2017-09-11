@@ -26,6 +26,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // set additional git envvars for image tagging
       helm.gitEnvVars()
 
+      // set chart version
+      sh "sed -i 's,^\(version: \).*,\1'${package_params.version}',' ../charts/Chart.yaml"
+
       // tag image with version, and branch-commit_id
       def image_tags_map = helm.getContainerTags()
 
@@ -164,7 +167,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.helmDeploy(
           dry_run       : true,
           name          : helm_release_testing,
-          version       : package_params.version,
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
           values : [
@@ -176,7 +178,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // run helm chart installation
         helm.helmDeploy(
           name          : helm_release_testing,
-          version       : package_params.version,
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
           values : [
@@ -222,7 +223,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.helmDeploy(
             dry_run           : true,
             name              : helm_release_dev,
-            version           : package_params.version,
             tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
@@ -235,7 +235,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           // run helm chart installation
           helm.helmDeploy(
             name              : helm_release_dev,
-            version           : package_params.version,
             tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
@@ -255,7 +254,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             // run helm chart installation of latest commit 
             helm.helmDeploy(
               name              : helm_release_last_dev,
-              version           : package_params.version,
               tiller_namespace  : tiller_namespace_dev,
               namespace         : namespace_dev,
               chart_dir         : chart_dir,
@@ -298,7 +296,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.helmDeploy(
             dry_run       : true,
             name          : helm_release_staging,
-            version       : package_params.version,
             namespace     : namespace_staging,
             chart_dir     : chart_dir,
             values : [
@@ -310,7 +307,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           // run helm chart installation
           helm.helmDeploy(
             name          : helm_release_staging,
-            version       : package_params.version,
             namespace     : namespace_staging,
             chart_dir     : chart_dir,
             values : [
@@ -351,7 +347,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             helm.helmDeploy(
               dry_run       : true,
               name          : helm_release_prod,
-              version       : package_params.version,
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
               values : [
@@ -364,7 +359,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             helm.helmDeploy(
               name          : helm_release_prod,
               namespace     : namespace_prod,
-              version       : package_params.version,
               chart_dir     : chart_dir,
               values : [
                 "imageTag"            : package_params.version,
