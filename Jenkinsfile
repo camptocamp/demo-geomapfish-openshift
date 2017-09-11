@@ -34,7 +34,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       // compile tag list
       def image_tags_list = helm.getMapValues(image_tags_map)
-      def dev_image_tag = "ref-${package_params.version}-${image_tags_list.get(0)}"
+      def dev_image_tag = "ref-${image_tags_list.get(0)}"
       def prod_image_tag = "v${package_params.version}"
 
       def pwd = pwd()
