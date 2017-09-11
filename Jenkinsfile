@@ -4,7 +4,7 @@
 @Library("github.com/camptocamp/jenkins-lib-helm")
 def helm = new com.camptocamp.Helm()
 
-podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
+podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
         image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
@@ -14,12 +14,6 @@ podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
         alwaysPullImage: false,
         workingDir: '/tmp',
         args: '${computer.jnlpmac} ${computer.name}'
-    ),
-    containerTemplate(
-        name: 'skopeo',
-        image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
-        ttyEnabled: true,
-        command: 'cat'
     )
   ]
 ){
@@ -69,8 +63,22 @@ podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
       def cleanup_ref_release = params.pipeline.cleanup_ref_release
       def deploy_last_dev_release = params.pipeline.deploy_last_dev_release
 
-      container('skopeo'){
-        sh 'skopeo --help'            
+      podTemplate(name: 'skopeo', label: 'skopeo', cloud: 'openshift', containers: [
+          containerTemplate(
+              name: 'jnlp',
+              image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
+              ttyEnabled: true,
+              command: '',
+              privileged: false,
+              alwaysPullImage: false,
+              workingDir: '/tmp',
+              args: '${computer.jnlpmac} ${computer.name}'
+          )
+        ]
+      ){
+        node('skopeo'){
+          sh 'skopeo --help'
+        }
       }
 
       if (!skip_build) {
@@ -369,11 +377,6 @@ podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
               ] 
             )
             helm.logout()
-          }
-        }
-        stage('publish') {
-          container('skopeo'){
-            sh 'skopeo --help'            
           }
         }
       }
