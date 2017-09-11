@@ -19,11 +19,7 @@ podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
         name: 'skopeo',
         image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
         ttyEnabled: true,
-        command: '',
-        privileged: false,
-        alwaysPullImage: false,
-        workingDir: '/tmp',
-        args: '${computer.jnlpmac} ${computer.name}'
+        command: 'cat'
     )
   ]
 ){
