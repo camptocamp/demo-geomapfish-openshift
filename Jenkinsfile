@@ -39,7 +39,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       def pwd = pwd()
       def chart_dir = "${pwd}/${params.app.chart_dir}"
-      def values_file = "Jenkinsfile.chart.values.yaml"
+      def values_file = "${pwd}/Jenkinsfile.chart.values.yaml"
 
       def helm_chart = params.app.name
       def openshift_subdomain = params.openshift.domain
