@@ -286,9 +286,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         stage('deploy-on-staging') {
           openshift.withProject( 'geomapfish-prod' ){
             // tag the latest image as staging
-            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: dev_image_tag, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
-            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: dev_image_tag, destStream: 'demo-geomapfish-print', destTag: 'staging')
-            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: dev_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: dev_image_tag, destStream: 'demo-geomapfish-mapserver', destTag: prod_image_tag)
+            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: dev_image_tag, destStream: 'demo-geomapfish-print', destTag: prod_image_tag)
+            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: dev_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: prod_image_tag)
           }
 
           helm.login()
@@ -306,7 +306,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             chart_dir     : chart_dir,
             values_file  : values_file,
             values : [
-              "imageTag"            : dev_image_tag,
+              "imageTag"            : prod_image_tag,
               "apps.wsgi.replicas"  : 2
             ] 
           )
@@ -318,7 +318,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             chart_dir     : chart_dir,
             values_file  : values_file,
             values : [
-              "imageTag"            : dev_image_tag,
+              "imageTag"            : prod_image_tag,
               "apps.wsgi.replicas"  : 2
             ] 
           )
