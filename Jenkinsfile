@@ -31,7 +31,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       // compile tag list
       def image_tags_list = helm.getMapValues(image_tags_map)
-      def ref_image_tag = "ref-${image_tags_list.get(0)}"
+      def dev_image_tag = "ref-${package_params.version}-${image_tags_list.get(0)}"
+      def prod_image_tag = "v${package_params.version}"
 
       def pwd = pwd()
       def chart_dir = "${pwd}/${params.app.chart_dir}"
@@ -47,7 +48,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // for dev
       def tiller_namespace_dev = params.openshift.tiller_namespace_dev
       def namespace_dev = params.openshift.namespace_dev
-      def helm_release_dev = ref_image_tag
+      def helm_release_dev = dev_image_tag
       def helm_release_last_dev = params.helm.release_last_dev
 
       // for staging
@@ -142,19 +143,19 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           srcStream: 'demo-geomapfish-mapserver',
           srcTag: 'latest',
           destStream: 'demo-geomapfish-mapserver',
-          destTag: ref_image_tag
+          destTag: dev_image_tag
         )
         openshiftTag(
           srcStream: 'demo-geomapfish-print',
           srcTag: 'latest',
           destStream: 'demo-geomapfish-print',
-          destTag: ref_image_tag
+          destTag: dev_image_tag
         )
         openshiftTag(
           srcStream: 'demo-geomapfish-wsgi',
           srcTag: 'latest',
           destStream: 'demo-geomapfish-wsgi',
-          destTag: ref_image_tag
+          destTag: dev_image_tag
         )
 
         helm.helmLint(chart_dir)
@@ -163,10 +164,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         helm.helmDeploy(
           dry_run       : true,
           name          : helm_release_testing,
+          version       : package_params.version,
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
           values : [
-            "imageTag"            : ref_image_tag,
+            "imageTag"            : dev_image_tag,
             "apps.wsgi.replicas"  : 1
           ]
         )
@@ -174,10 +176,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         // run helm chart installation
         helm.helmDeploy(
           name          : helm_release_testing,
+          version       : package_params.version,
           namespace     : namespace_testing,
           chart_dir     : chart_dir,
           values : [
-            "imageTag"            : ref_image_tag,
+            "imageTag"            : dev_image_tag,
             "apps.wsgi.replicas"  : 1
           ]
         )
@@ -219,11 +222,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.helmDeploy(
             dry_run           : true,
             name              : helm_release_dev,
+            version           : package_params.version,
             tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
             values : [
-              "imageTag"            : ref_image_tag,
+              "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 1
             ] 
           )
@@ -231,11 +235,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           // run helm chart installation
           helm.helmDeploy(
             name              : helm_release_dev,
+            version           : package_params.version,
             tiller_namespace  : tiller_namespace_dev,
             namespace         : namespace_dev,
             chart_dir         : chart_dir,
             values : [
-              "imageTag"            : ref_image_tag,
+              "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 1
             ] 
           )
@@ -250,11 +255,12 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             // run helm chart installation of latest commit 
             helm.helmDeploy(
               name              : helm_release_last_dev,
+              version           : package_params.version,
               tiller_namespace  : tiller_namespace_dev,
               namespace         : namespace_dev,
               chart_dir         : chart_dir,
               values : [
-                "imageTag"            : ref_image_tag,
+                "imageTag"            : dev_image_tag,
                 "apps.wsgi.replicas"  : 1
               ] 
             )
@@ -276,9 +282,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         stage('deploy-on-staging') {
           openshift.withProject( 'geomapfish-prod' ){
             // tag the latest image as staging
-            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: ref_image_tag, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
-            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: ref_image_tag, destStream: 'demo-geomapfish-print', destTag: 'staging')
-            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: ref_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: dev_image_tag, destStream: 'demo-geomapfish-mapserver', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: dev_image_tag, destStream: 'demo-geomapfish-print', destTag: 'staging')
+            openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: dev_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: 'staging')
           }
 
           helm.login()
@@ -292,10 +298,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.helmDeploy(
             dry_run       : true,
             name          : helm_release_staging,
+            version       : package_params.version,
             namespace     : namespace_staging,
             chart_dir     : chart_dir,
             values : [
-              "imageTag"            : ref_image_tag,
+              "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 2
             ] 
           )
@@ -303,10 +310,11 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           // run helm chart installation
           helm.helmDeploy(
             name          : helm_release_staging,
+            version       : package_params.version,
             namespace     : namespace_staging,
             chart_dir     : chart_dir,
             values : [
-              "imageTag"            : ref_image_tag,
+              "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 2
             ] 
           )
@@ -322,8 +330,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               parameters: [
                 [ $class: 'BooleanParameterDefinition',
                   defaultValue: false,
-                  description: 'Check the box for a Production deployment',
-                  name: 'Deploy to Production'
+                  description: "Check the box to deploy v${prod_image_tag} to Production",
+                  name: 'Deploy version v${prod_image_tag} to Production'
                 ]
               ]
             }
@@ -333,9 +341,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           if (promote) {
             openshift.withProject( 'geomapfish-prod' ){
               // tag the latest image as staging
-              openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: ref_image_tag, destStream: 'demo-geomapfish-mapserver', destTag: package_params.version)
-              openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: ref_image_tag, destStream: 'demo-geomapfish-print', destTag: package_params.version)
-              openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: ref_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: package_params.version)
+              openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: dev_image_tag, destStream: 'demo-geomapfish-mapserver', destTag: prod_image_tag)
+              openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: dev_image_tag, destStream: 'demo-geomapfish-print', destTag: prod_image_tag)
+              openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: dev_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: prod_image_tag)
             }
             helm.login()
 
@@ -343,6 +351,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             helm.helmDeploy(
               dry_run       : true,
               name          : helm_release_prod,
+              version       : package_params.version,
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
               values : [
@@ -355,6 +364,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             helm.helmDeploy(
               name          : helm_release_prod,
               namespace     : namespace_prod,
+              version       : package_params.version,
               chart_dir     : chart_dir,
               values : [
                 "imageTag"            : package_params.version,
@@ -385,18 +395,18 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${package_params.version} \
-                    docker://docker.io/camptocamp/demo-geomapfish-wsgi:${package_params.version}
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
+                    docker://docker.io/camptocamp/demo-geomapfish-wsgi:${prod_image_tag}
                   """
                 }
               }
               dir('public-charts') {
                 git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
                 sh """
-                  helm package ../charts/${params.app.name} -d docs
+                  helm package ../charts/${params.app.name} --version ${package_params.version} -d docs
                   helm repo index docs --url https://camptocamp.github.io/charts
                   git add .
-                  git commit -m "update chart ${params.app.name} to version ${package_params.version}"
+                  git commit -m "update chart ${params.app.name} to version ${prod_image_tag}"
                   git push origin master
                   helm inspect ${params.app.name}
                 """
