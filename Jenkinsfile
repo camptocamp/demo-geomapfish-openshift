@@ -345,15 +345,17 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               }
               dir('public-charts') {
                 git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
-                sh """
-                  helm package ../charts/${params.app.name} -d docs
-                  helm repo index docs --url https://camptocamp.github.io/charts
-                  git config --global user.email "jenkins@${params.openshift.domain}"
-                  git config --global user.name "Jenkins"
-                  git add .
-                  git commit -m "update chart ${params.app.name} to version ${prod_image_tag}"
-                  git push origin master
-                """
+                sshagent(['git-charts']) {
+                  sh """
+                    helm package ../charts/${params.app.name} -d docs
+                    helm repo index docs --url https://camptocamp.github.io/charts
+                    git config --global user.email "jenkins@${params.openshift.domain}"
+                    git config --global user.name "Jenkins"
+                    git add .
+                    git commit -m "update chart ${params.app.name} to version ${prod_image_tag}"
+                    git push origin master
+                  """
+                }
               }
             }
           }

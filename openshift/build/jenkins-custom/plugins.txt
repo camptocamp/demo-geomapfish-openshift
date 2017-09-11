@@ -1,3 +1,4 @@
 blueocean
 openshift-client
 pipeline-utility-steps
+ssh-agent
