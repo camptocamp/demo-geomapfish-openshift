@@ -69,6 +69,10 @@ podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
       def cleanup_ref_release = params.pipeline.cleanup_ref_release
       def deploy_last_dev_release = params.pipeline.deploy_last_dev_release
 
+      container('skopeo'){
+        sh 'skopeo --help'            
+      }
+
       if (!skip_build) {
         stage('build-applications') {
             sh returnStdout: true, script: 'pwd'
@@ -212,10 +216,6 @@ podTemplate(label: 'geomapfish', cloud: 'openshift', containers: [
       // deploy only the master branch
       if (env.BRANCH == 'dev') {
         stage('deploy-on-dev') {
-          container('skopeo'){
-            sh 'skopeo --help'            
-          }
-
           helm.login()
 
           // cleanup testing env
