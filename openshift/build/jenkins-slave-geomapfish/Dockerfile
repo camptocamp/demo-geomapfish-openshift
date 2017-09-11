@@ -61,11 +61,6 @@ RUN curl -sSLO https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION
 # Install helm template plugin
 RUN helm plugin install https://github.com/technosophos/helm-template
 
-# Install skopeo command line tool for working with remote image registries.
-RUN apt-get update && \
-    apt-get install -y skopeo && \
-    apt-get clean
-
 # Modify access to needed resource as this will run as user 1001
 RUN chmod 660 /etc/passwd && \
     fix-permissions $HOME && \
