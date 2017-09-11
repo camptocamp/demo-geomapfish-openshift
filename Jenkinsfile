@@ -62,7 +62,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def skip_deploy = params.pipeline.skip_deploy
       def cleanup_ref_release = params.pipeline.cleanup_ref_release
       def deploy_last_dev_release = params.pipeline.deploy_last_dev_release
-      stage('public-release')
+      stage('public-release') {
         podTemplate(name: 'skopeo', label: 'skopeo', cloud: 'openshift', containers: [
             containerTemplate(
                 name: 'jnlp',
