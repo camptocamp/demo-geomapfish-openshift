@@ -21,7 +21,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
     withCredentials([usernamePassword(credentialsId: 'openshift-token-pw', usernameVariable: 'HELM_USER', passwordVariable: 'HELM_TOKEN')]) {
       def scmVars = checkout scm
       def params = readJSON file: 'Jenkinsfile.json'
-      def package = readJSON file: 'package.json'
+      def package_params = readJSON file: 'package.json'
 
       // set additional git envvars for image tagging
       helm.gitEnvVars()
@@ -312,8 +312,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           helm.logout()
         }
 
+        def Boolean promote
+        promote = false
         stage('deploy-on-prod') {
-          def promote = false
           try {
             timeout(time: 7, unit: 'DAYS') {
               promote = input message: 'Input Required',
@@ -331,9 +332,9 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           if (promote) {
             openshift.withProject( 'geomapfish-prod' ){
               // tag the latest image as staging
-              openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: package.version)
-              openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: package.version)
-              openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: package.version)
+              openshiftTag(srcStream: 'demo-geomapfish-mapserver', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-mapserver', destTag: package_params.version)
+              openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-print', destTag: package_params.version)
+              openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: env.GIT_SHA, destStream: 'demo-geomapfish-wsgi', destTag: package_params.version)
             }
             helm.login()
 
@@ -344,7 +345,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
               values : [
-                "imageTag"            : package.version,
+                "imageTag"            : package_params.version,
                 "apps.wsgi.replicas"  : 4
               ] 
             )
@@ -355,48 +356,50 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               namespace     : namespace_prod,
               chart_dir     : chart_dir,
               values : [
-                "imageTag"            : package.version,
+                "imageTag"            : package_params.version,
                 "apps.wsgi.replicas"  : 4
               ] 
             )
             helm.logout()
           }
         }
-        stage('publish-public-chart') {
-          podTemplate(name: 'skopeo', label: 'skopeo', cloud: 'openshift', containers: [
-              containerTemplate(
-                  name: 'jnlp',
-                  image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
-                  ttyEnabled: true,
-                  command: '',
-                  privileged: false,
-                  alwaysPullImage: false,
-                  workingDir: '/tmp',
-                  args: '${computer.jnlpmac} ${computer.name}'
-              )
-            ]
-          ){
-            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
-              node('skopeo'){
-                sh """skopeo copy \
-                  --src-tls-verify=false \
-                  --src-creds $HELM_USER:$HELM_TOKEN \
-                  --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                  docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${package.version} \
-                  docker://docker.io/camptocamp/demo-geomapfish-wsgi:${package.version}
+        if (promote) {
+          stage('publish-public-chart') {
+            podTemplate(name: 'skopeo', label: 'skopeo', cloud: 'openshift', containers: [
+                containerTemplate(
+                    name: 'jnlp',
+                    image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
+                    ttyEnabled: true,
+                    command: '',
+                    privileged: false,
+                    alwaysPullImage: false,
+                    workingDir: '/tmp',
+                    args: '${computer.jnlpmac} ${computer.name}'
+                )
+              ]
+            ){
+              withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
+                node('skopeo'){
+                  sh """skopeo copy \
+                    --src-tls-verify=false \
+                    --src-creds $HELM_USER:$HELM_TOKEN \
+                    --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${package_params.version} \
+                    docker://docker.io/camptocamp/demo-geomapfish-wsgi:${package_params.version}
+                  """
+                }
+              }
+              dir('public-charts') {
+                git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
+                sh """
+                  helm package ../charts/${params.app.name} -d docs
+                  helm repo index docs --url https://camptocamp.github.io/charts
+                  git add .
+                  git commit -m "update chart ${params.app.name} to version ${package_params.version}"
+                  git push origin master
+                  helm inspect ${params.app.name}
                 """
               }
-            }
-            dir('public-charts') {
-              git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
-              sh """
-                helm package ../charts/${params.app.name} -d docs
-                helm repo index docs --url https://camptocamp.github.io/charts
-                git add .
-                git commit -m "update chart ${params.app.name} to version ${package.version}"
-                git push origin master
-                helm inspect ${params.app.name}
-              """
             }
           }
         }
