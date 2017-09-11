@@ -47,7 +47,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // for dev
       def tiller_namespace_dev = params.openshift.tiller_namespace_dev
       def namespace_dev = params.openshift.namespace_dev
-      def helm_release_dev = "${params.helm.release_dev_prefix}-${ref_image_tag}"
+      def helm_release_dev = ref_image_tag
       def helm_release_last_dev = params.helm.release_last_dev
 
       // for staging

@@ -13,7 +13,6 @@
   },
   "helm": {
     "release_testing": "testing",
-    "release_dev_prefix": "ref",
     "release_last_dev": "dev",
     "release_staging": "staging",
     "release_prod": "prod"
