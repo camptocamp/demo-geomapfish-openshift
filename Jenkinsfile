@@ -275,48 +275,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
         return
       }
 
-      if (publish_helm_chart) {
-        stage('publish-helm-chart') {
-          podTemplate(name: 'skopeo', label: 'skopeo', cloud: 'openshift', containers: [
-              containerTemplate(
-                  name: 'jnlp',
-                  image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
-                  ttyEnabled: true,
-                  command: '',
-                  privileged: false,
-                  alwaysPullImage: false,
-                  workingDir: '/tmp',
-                  args: '${computer.jnlpmac} ${computer.name}'
-              )
-            ]
-          ){
-            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
-              node('skopeo'){
-                sh """skopeo copy \
-                  --src-tls-verify=false \
-                  --src-creds $HELM_USER:$HELM_TOKEN \
-                  --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                  docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
-                  docker://docker.io/camptocamp/demo-geomapfish-wsgi:${prod_image_tag}
-                """
-              }
-            }
-            dir('public-charts') {
-              git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
-              sh """
-                helm package ../charts/${params.app.name} -d docs
-                helm repo index docs --url https://camptocamp.github.io/charts
-                helm inspect ${params.app.name}
-                git config --global user.email "jenkins@${params.openshift.domain}"
-                git config --global user.name "Jenkins"
-                git add .
-                git commit -m "update chart ${params.app.name} to version ${prod_image_tag}"
-                git push origin master
-              """
-            }
-          }
-        }
-      }
       // deploy only the master branch
       if (env.BRANCH == 'master') {
         stage('deploy-on-staging') {
@@ -357,6 +315,48 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             ] 
           )
           helm.logout()
+        }
+
+        if (publish_helm_chart) {
+          stage('publish-helm-chart') {
+            podTemplate(name: 'skopeo', label: 'skopeo', cloud: 'openshift', containers: [
+                containerTemplate(
+                    name: 'jnlp',
+                    image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
+                    ttyEnabled: true,
+                    command: '',
+                    privileged: false,
+                    alwaysPullImage: false,
+                    workingDir: '/tmp',
+                    args: '${computer.jnlpmac} ${computer.name}'
+                )
+              ]
+            ){
+              withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
+                node('skopeo'){
+                  sh """skopeo copy \
+                    --src-tls-verify=false \
+                    --src-creds $HELM_USER:$HELM_TOKEN \
+                    --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
+                    docker://172.30.26.108:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
+                    docker://docker.io/camptocamp/demo-geomapfish-wsgi:${prod_image_tag}
+                  """
+                }
+              }
+              dir('public-charts') {
+                git credentialsId: 'git-charts', url: 'git@github.com:camptocamp/charts.git'
+                sh """
+                  helm package ../charts/${params.app.name} -d docs
+                  helm repo index docs --url https://camptocamp.github.io/charts
+                  git config --global user.email "jenkins@${params.openshift.domain}"
+                  git config --global user.name "Jenkins"
+                  git add .
+                  git commit -m "update chart ${params.app.name} to version ${prod_image_tag}"
+                  git push origin master
+                """
+              }
+            }
+          }
         }
 
         def Boolean promote
