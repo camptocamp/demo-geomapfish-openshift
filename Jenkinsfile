@@ -26,8 +26,8 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // set additional git envvars for image tagging
       helm.gitEnvVars()
 
-      // set chart version
-      sh("sed -i.bak 's#version: 0.0.1#version: ${package_params.version}#' charts/Chart.yaml")
+      // set chart version defined in package.json
+      sh("sed -i.bak 's#version: 0.0.1#version: ${package_params.version}#' charts/${params.app.name}/Chart.yaml")
 
       // tag image with version, and branch-commit_id
       def image_tags_map = helm.getContainerTags()
