@@ -20,7 +20,7 @@
   },
   "pipeline": {
     "debug": false,
-    "skip_build": false,
+    "skip_build": true,
     "skip_deploy": false,
     "cleanup_ref_release": true,
     "deploy_last_dev_release": true
