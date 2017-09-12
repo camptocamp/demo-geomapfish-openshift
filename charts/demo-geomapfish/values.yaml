@@ -21,7 +21,6 @@ replicas: 1
 
 registry:
   host: docker.io
-  port: 443
   namespace: camptocamp
 
 db:
