@@ -23,7 +23,7 @@
     "skip_deploy": false,
     "cleanup_ref_release": true,
     "deploy_last_dev_release": true,
-    "publish_helm_chart": true
+    "publish_helm_chart": false
   }
 }
 
