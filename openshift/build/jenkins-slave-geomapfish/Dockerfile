@@ -1,4 +1,4 @@
-FROM camptocamp/geomapfish_build:jenkins
+FROM camptocamp/geomapfish_build_dev:jenkins
 
 MAINTAINER Marc Sutter <marc.sutter@camptocamp.com>
 
