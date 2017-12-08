@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  namespace: kube-system
+  labels:
+    build: openshift-api-group
+  name: openshift-api-group
+spec: {}

@@ -9,7 +9,7 @@ ENV HOME=/home/jenkins-slave \
     OPENSHIFT_CLIENT_VERSION=v1.5.0 \
     OPENSHIFT_CLIENT_VERSION_TAG=031cbe4 \
     KOMPOSE_VERSION=v1.0.0 \
-    HELM_VERSION=v2.6.0
+    HELM_VERSION=v2.7.2
 
 # Update
 RUN apt-get update && \
