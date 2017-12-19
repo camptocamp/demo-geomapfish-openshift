@@ -1,5 +1,5 @@
 {{- if eq .Values.clusterType "openshift" -}}
-apiVersion: {{ template "geomapfish.api_version" . }}
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: {{ template "geomapfish.fullname" . }}-wsgi

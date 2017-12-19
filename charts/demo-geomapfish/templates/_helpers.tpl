@@ -11,17 +11,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Sets the apiVersion string for openshift api group proxy usage
-*/}}
-{{- define "geomapfish.api_version" -}}
-{{- if eq .Values.clusterType "openshift" -}}
-{{- printf "openshift.org/v1" -}}
-{{- else -}}
-{{- printf "v1" -}}
-{{- end -}}
-{{- end -}}
-
 {{- define "geomapfish.release_labels" }}
 app: {{ template "geomapfish.name" . }}
 chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
