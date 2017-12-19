@@ -5,9 +5,7 @@
 author: "marc.sutterATcamptocamp.com"
 
 # target cluser ('openshift' or 'kubernetes')
-# this will adjust the apiVersion to 'openshift.org/v1' in openshft
-# only templates
-# More infos on this: https://github.com/megalord/openshift-api-group
+# this will adjust the resources available only in openshift and not in kubernetes
 clusterType: openshift
 
 # domain
