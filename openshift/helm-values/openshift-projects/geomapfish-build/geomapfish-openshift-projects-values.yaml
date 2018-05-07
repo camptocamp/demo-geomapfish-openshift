@@ -1,0 +1,30 @@
+---
+tiller:
+  image: gcr.io/kubernetes-helm/tiller
+  tag: v2.8.1
+  tillerUserServiceAccountName: jenkins
+  tillerUserServiceAccountNamespace: gmf-cicd
+projects:
+  gmf-cicd:
+    description: |-
+      GeoMapFish Demo
+      Continuous integration and deployement project
+    tiller: true
+  gmf-dev:
+    description: |-
+      GeoMapFish Demo
+      Developement project
+    tiller: true
+    editAccess: true
+  gmf-int:
+    description: |-
+      GeoMapFish Demo
+      Integration project
+    tiller: true
+    editAccess: true
+  gmf-prd:
+    description: |-
+      GeoMapFish Demo
+      Production project
+    tiller: true
+    editAccess: true
