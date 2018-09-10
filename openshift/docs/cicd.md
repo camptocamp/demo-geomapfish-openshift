@@ -51,6 +51,11 @@ oc create -f ./openshift/resources/jenkins
 oc create -f ./openshift/resources/pipeline
 ````
 
+
+```
+oc create -f ./openshift/resources/geomapfish-build
+```
+
 # Jenkins token
 
 ```
