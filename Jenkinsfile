@@ -46,6 +46,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
 
       // define release and namespaces (Caution: release must be unique over namespaces)
       // for testing
+      def tiller_namespace_testing = params.openshift.tiller_namespace_testing
       def namespace_testing = params.openshift.namespace_testing
       def helm_release_testing = params.helm.release_testing
 
@@ -60,6 +61,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       def helm_release_staging = params.helm.release_staging
 
       // for prod
+      def tiller_namespace_prod = params.openshift.tiller_namespace_prod
       def namespace_prod = params.openshift.namespace_prod
       def helm_release_prod = params.helm.release_prod
 
