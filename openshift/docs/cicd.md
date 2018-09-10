@@ -4,7 +4,7 @@ First we had to generate an RSA key that is going to be uploaded to OpenShift.
 This step is already done and you can find the keys in pass with:
 
 ```
-pass c2c_mgmtsrv/github-c2c-admin-ci | jq -r '.ssh_private_key' > $HOME/.ssh/id_rsa_github_c2c_admin_ci
+gopass show c2c/c2c_mgmtsrv/github-c2c-admin-ci | jq -r '.ssh_private_key' > $HOME/.ssh/id_rsa_github_c2c_admin_ci
 chmod 400 $HOME/.ssh/id_rsa_github_c2c_admin_ci
 ```
 
