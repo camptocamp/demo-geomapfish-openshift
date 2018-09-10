@@ -64,10 +64,14 @@ oc describe secret jenkins-token-w3qln
 ```
 
 Launch a first build by pushing to the repo. Open the logs, login to Jenkins.
-Add a new Credential in Jenkins with:
-* user `jenkins`
+Add a new Credential in Jenkins of type "OpenShift Token Client Plugin" with: 
+* ID `openshift-token`
+* the token from the previously described secret
+
+
+Add a new Credential in Jenkins of type "OpenShift Username and Password" with:
 * ID `openshift-token-pw`
-* password the token from the previously described secret
+* your login and password
 
 
 ```
