@@ -57,9 +57,18 @@ oc create -f ./openshift/resources/pipeline
 oc describe sa jenkins
 ```
 
+Note the token name and inspect it:
+
 ```
 oc describe secret jenkins-token-w3qln
 ```
+
+Launch a first build by pushing to the repo. Open the logs, login to Jenkins.
+Add a new Credential in Jenkins with:
+* user `jenkins`
+* ID `openshift-token-pw`
+* password the token from the previously described secret
+
 
 ```
  oc policy add-role-to-user edit system:serviceaccount:geomapfish-cicd:jenkins -n geomapfish-cicd
