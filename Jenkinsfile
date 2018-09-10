@@ -7,7 +7,7 @@ def helm = new com.camptocamp.Helm()
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
-        image: '172.30.127.248:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
+        image: 'docker-registry.default.svc:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
         ttyEnabled: true,
         command: '',
         privileged: false,
@@ -330,7 +330,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             podTemplate(name: 'skopeo', label: 'skopeo', cloud: 'openshift', containers: [
                 containerTemplate(
                     name: 'jnlp',
-                    image: '172.30.127.248:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
+                    image: 'docker-registry.default.svc:5000/geomapfish-cicd/jenkins-slave-skopeo:latest',
                     ttyEnabled: true,
                     command: '',
                     privileged: false,
@@ -347,7 +347,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                    docker://172.30.127.248:5000/geomapfish-cicd/demo-geomapfish-mapserver:${prod_image_tag} \
+                    docker://docker-registry.default.svc:5000/geomapfish-cicd/demo-geomapfish-mapserver:${prod_image_tag} \
                     docker://docker.io/camptocamp/demo-geomapfish-mapserver:${prod_image_tag}
                   """
                   // print
@@ -355,7 +355,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                    docker://172.30.127.248:5000/geomapfish-cicd/demo-geomapfish-print:${prod_image_tag} \
+                    docker://docker-registry.default.svc:5000/geomapfish-cicd/demo-geomapfish-print:${prod_image_tag} \
                     docker://docker.io/camptocamp/demo-geomapfish-print:${prod_image_tag}
                   """
                   // wsgi
@@ -363,7 +363,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                    docker://172.30.127.248:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
+                    docker://docker-registry.default.svc:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
                     docker://docker.io/camptocamp/demo-geomapfish-wsgi:${prod_image_tag}
                   """
 
@@ -373,7 +373,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                    docker://172.30.127.248:5000/geomapfish-cicd/demo-geomapfish-mapserver:${prod_image_tag} \
+                    docker://docker-registry.default.svc:5000/geomapfish-cicd/demo-geomapfish-mapserver:${prod_image_tag} \
                     docker://docker.io/camptocamp/demo-geomapfish-mapserver:latest
                   """
                   // print
@@ -381,7 +381,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                    docker://172.30.127.248:5000/geomapfish-cicd/demo-geomapfish-print:${prod_image_tag} \
+                    docker://docker-registry.default.svc:5000/geomapfish-cicd/demo-geomapfish-print:${prod_image_tag} \
                     docker://docker.io/camptocamp/demo-geomapfish-print:latest
                   """
                   // wsgi
@@ -389,7 +389,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                     --src-tls-verify=false \
                     --src-creds $HELM_USER:$HELM_TOKEN \
                     --dest-creds $DOCKERHUB_USER:$DOCKERHUB_PWD \
-                    docker://172.30.127.248:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
+                    docker://docker-registry.default.svc:5000/geomapfish-cicd/demo-geomapfish-wsgi:${prod_image_tag} \
                     docker://docker.io/camptocamp/demo-geomapfish-wsgi:latest
                   """
                 }

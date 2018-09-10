@@ -18,7 +18,7 @@ imageTag: latest
 replicas: 1
 
 registry:
-  host: 172.30.127.248:5000
+  host: docker-registry.default.svc:5000
   namespace: geomapfish-cicd
 
 db:
