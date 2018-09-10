@@ -190,8 +190,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
           ]
         )
 
-        helm.logout()
-
         openshiftVerifyDeployment(
           namespace: namespace_testing,
           depCfg: "$helm_release_testing-$helm_chart-mapserver"
@@ -268,7 +266,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               ]
             )
           }
-          helm.logout()
         }
 
       }
@@ -318,7 +315,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               "apps.wsgi.replicas"  : 2
             ]
           )
-          helm.logout()
         }
 
         if (publish_helm_chart) {
@@ -457,7 +453,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                 "apps.wsgi.replicas"  : 4
               ]
             )
-            helm.logout()
           }
         }
       }
