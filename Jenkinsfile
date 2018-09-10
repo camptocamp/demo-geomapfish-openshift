@@ -129,8 +129,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       }
 
       stage('deploy-on-testing') {
-        helm.login()
-
         if (debug) {
           echo "---------------- scm vars ----------------------------"
           for (var in scmVars) {
@@ -216,8 +214,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
       // deploy only the master branch
       if (env.BRANCH == 'dev') {
         stage('deploy-on-dev') {
-          helm.login()
-
           // cleanup testing env
           helm.helmDelete(
             name: helm_release_testing
@@ -290,8 +286,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: dev_image_tag, destStream: 'demo-geomapfish-print', destTag: prod_image_tag)
             openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: dev_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: prod_image_tag)
           }
-
-          helm.login()
 
           // cleanup testing env
           helm.helmDelete(
@@ -436,7 +430,6 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               openshiftTag(srcStream: 'demo-geomapfish-print', srcTag: dev_image_tag, destStream: 'demo-geomapfish-print', destTag: prod_image_tag)
               openshiftTag(srcStream: 'demo-geomapfish-wsgi', srcTag: dev_image_tag, destStream: 'demo-geomapfish-wsgi', destTag: prod_image_tag)
             }
-            helm.login()
 
             // run dry-run helm chart installation
             helm.helmDeploy(
