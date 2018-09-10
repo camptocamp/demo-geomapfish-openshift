@@ -1,5 +1,5 @@
 FROM camptocamp/geomapfish_build:jenkins
-LABEL maintainer Camptocamp "info@camptocamp.com"
+LABEL maintainer='Camptocamp <info@camptocamp.com>'
 
 COPY . /app/
 RUN pip install --no-cache-dir --editable /app/
