@@ -7,7 +7,7 @@ def helm = new com.camptocamp.Helm()
 podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift', containers: [
     containerTemplate(
         name: 'jnlp',
-        image: '172.30.26.108:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
+        image: '172.30.127.248:5000/geomapfish-cicd/jenkins-slave-geomapfish:latest',
         ttyEnabled: true,
         command: '',
         privileged: false,
@@ -121,7 +121,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
                       ).out
                     }"""
                   }
-                )    
+                )
               }
             }
           }
@@ -234,7 +234,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             values : [
               "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 1
-            ] 
+            ]
           )
 
           // run helm chart installation
@@ -247,7 +247,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             values : [
               "imageTag"            : dev_image_tag,
               "apps.wsgi.replicas"  : 1
-            ] 
+            ]
           )
           if (cleanup_ref_release) {
           // cleanup testing env
@@ -257,7 +257,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             )
           }
           if (deploy_last_dev_release) {
-            // run helm chart installation of latest commit 
+            // run helm chart installation of latest commit
             helm.helmDeploy(
               name              : helm_release_last_dev,
               tiller_namespace  : tiller_namespace_dev,
@@ -267,7 +267,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               values : [
                 "imageTag"            : dev_image_tag,
                 "apps.wsgi.replicas"  : 1
-              ] 
+              ]
             )
           }
           helm.logout()
@@ -308,7 +308,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             values : [
               "imageTag"            : prod_image_tag,
               "apps.wsgi.replicas"  : 2
-            ] 
+            ]
           )
 
           // run helm chart installation
@@ -320,7 +320,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
             values : [
               "imageTag"            : prod_image_tag,
               "apps.wsgi.replicas"  : 2
-            ] 
+            ]
           )
           helm.logout()
         }
@@ -448,7 +448,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               values : [
                 "imageTag"            : prod_image_tag,
                 "apps.wsgi.replicas"  : 4
-              ] 
+              ]
             )
 
             // run helm chart installation
@@ -460,7 +460,7 @@ podTemplate(name: 'geomapfish-builder', label: 'geomapfish', cloud: 'openshift',
               values : [
                 "imageTag"            : prod_image_tag,
                 "apps.wsgi.replicas"  : 4
-              ] 
+              ]
             )
             helm.logout()
           }
