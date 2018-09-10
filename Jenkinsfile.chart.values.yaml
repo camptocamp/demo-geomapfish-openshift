@@ -18,7 +18,7 @@ imageTag: latest
 replicas: 1
 
 registry:
-  host: 172.30.26.108:5000
+  host: 172.30.127.248:5000
   namespace: geomapfish-cicd
 
 db:
