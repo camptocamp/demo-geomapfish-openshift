@@ -64,6 +64,24 @@ oc describe secret jenkins-token-w3qln
 ```
  oc policy add-role-to-user edit system:serviceaccount:geomapfish-cicd:jenkins -n geomapfish-cicd
 ```
+
+
+# Add webhook to GitHub
+
+```
+oc describe bc demo-geomapfish-pipeline-master -n geomapfish-cicd
+```
+
+Copy GitHub Webhook URL and add as a Webhook on GitHub (SSL verification
+disabled, just the push event)
+
+Do the same for
+
+```
+oc describe bc demo-geomapfish-pipeline-dev -n geomapfish-cicd
+```
+
+
 # Remove
 
 ```
