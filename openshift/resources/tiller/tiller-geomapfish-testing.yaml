@@ -1,15 +1,17 @@
-kind: Template
+kind: List
 apiVersion: v1
-objects:
+items:
 - kind: ServiceAccount
   apiVersion: v1
   metadata:
     name: tiller
+    namespace: geomapfish-testing
 
 - kind: Role
   apiVersion: v1
   metadata:
     name: tiller
+    namespace: geomapfish-testing
   rules:
   - apiGroups:
     - ""
@@ -32,9 +34,10 @@ objects:
   apiVersion: v1
   metadata:
     name: tiller
+    namespace: geomapfish-testing
   roleRef:
     name: tiller
-    namespace: ${TILLER_NAMESPACE}
+    namespace: geomapfish-testing
   subjects:
   - kind: ServiceAccount
     name: tiller
@@ -43,6 +46,7 @@ objects:
   kind: Deployment
   metadata:
     name: tiller
+    namespace: geomapfish-testing
   spec:
     replicas: 1
     selector:
@@ -75,7 +79,3 @@ objects:
               path: /liveness
               port: 44135
         serviceAccountName: tiller
-
-parameters:
-- name: TILLER_NAMESPACE
-  required: true

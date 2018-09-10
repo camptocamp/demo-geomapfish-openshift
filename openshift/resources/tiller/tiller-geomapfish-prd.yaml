@@ -1,0 +1,81 @@
+kind: List
+apiVersion: v1
+items:
+- kind: ServiceAccount
+  apiVersion: v1
+  metadata:
+    name: tiller
+    namespace: geomapfish-prd
+
+- kind: Role
+  apiVersion: v1
+  metadata:
+    name: tiller
+    namespace: geomapfish-prd
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - create
+    - get
+    - list
+    - update
+    - delete
+  - apiGroups:
+    - ""
+    resources:
+    - namespaces
+    verbs:
+    - get
+
+- kind: RoleBinding
+  apiVersion: v1
+  metadata:
+    name: tiller
+    namespace: geomapfish-prd
+  roleRef:
+    name: tiller
+    namespace: geomapfish-prd
+  subjects:
+  - kind: ServiceAccount
+    name: tiller
+
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: tiller
+    namespace: geomapfish-prd
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: helm
+        name: tiller
+    template:
+      metadata:
+        labels:
+          app: helm
+          name: tiller
+      spec:
+        containers:
+        - name: tiller
+          image: gcr.io/kubernetes-helm/tiller:v2.6.1
+          env:
+          - name: TILLER_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          ports:
+          - name: tiller
+            containerPort: 44134
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 44135
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 44135
+        serviceAccountName: tiller
