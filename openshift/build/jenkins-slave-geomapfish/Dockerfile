@@ -5,6 +5,7 @@ MAINTAINER Marc Sutter <marc.sutter@camptocamp.com>
 ENV HOME=/home/jenkins-slave \
     JAVA_HOME=/usr/lib/jvm/java-8-oracle \
     PATH=$JAVA_HOME/bin:$PATH \
+	PYTHONPATH="" \
     JENKINS_SWARM_VERSION=3.4 \
     OPENSHIFT_CLIENT_VERSION=v1.5.0 \
     OPENSHIFT_CLIENT_VERSION_TAG=031cbe4 \
