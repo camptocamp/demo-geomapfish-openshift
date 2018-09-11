@@ -16,35 +16,35 @@ spec:
     spec:
       containers:
       - name: wsgi
-        image: 'https://docker-registry-default.cloudapp.openshift-poc.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest'
+        image: 'https://docker-registry-default.paas-ch.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-wsgi:latest'
         ports:
         - containerPort: 80
         readinessProbe:
           httpGet:
             path: /desktop
             port: 80
-            scheme: HTTP        
+            scheme: HTTP
         resources: {}
 
       - name: print
-        image: 'https://docker-registry-default.cloudapp.openshift-poc.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-print:latest'
+        image: 'https://docker-registry-default.paas-ch.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-print:latest'
         ports:
         - containerPort: 8080
         readinessProbe:
           httpGet:
             port: 8080
-            scheme: HTTP        
+            scheme: HTTP
         resources: {}
 
       - name: mapserver
-        image: https://docker-registry-default.cloudapp.openshift-poc.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-mapserver:latest
+        image: https://docker-registry-default.paas-ch.camptocamp.com:5000/geomapfish-cicd/demo-geomapfish-mapserver:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
         readinessProbe:
           httpGet:
             port: 80
-            scheme: HTTP        
+            scheme: HTTP
         resources: {}
 
       restartPolicy: Always

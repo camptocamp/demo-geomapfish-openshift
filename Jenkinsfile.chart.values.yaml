@@ -9,7 +9,7 @@ author: "marc.sutterATcamptocamp.com"
 clusterType: openshift
 
 # domain
-domain: cloudapp.openshift-poc.camptocamp.com
+domain: paas-ch.camptocamp.com
 
 # Image tag to use
 imageTag: latest
